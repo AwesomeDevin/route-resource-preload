@@ -6,3 +6,18 @@
 - Focus On Improving The First Screen Loading Experience Of Your SPA(Single-Page App), Just Like MPA(Multi-Page App) 🚀🚀🚀
 - Supports The Preloading Of Resources ( JS / Component / Module-Federation / Svg / Png , Etc) By Route.
 
+## Install
+```shell
+npm install route-resource-preload
+```
+
+## Usage
+#### Usage 1 - Manual Preloading
+
+
+
+#### Usage 2 - Automatic Preloading
+
+
+## API
+

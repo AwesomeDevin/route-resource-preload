@@ -1,15 +1,14 @@
-const _path = require('path')
 import { defineConfig } from 'vite'
 
 import react from '@vitejs/plugin-react'
-import commonjs from '@rollup/plugin-commonjs';
 
 export default  defineConfig({
+  mode: "production",
   // 配置选项
   build: {
     // minify: false,
     lib: {
-      entry: [_path.resolve(__dirname, './src/index.ts'),_path.resolve(__dirname, './src/webpack-plugin.ts'), _path.resolve(__dirname, './src/react/index.react.ts')], // 设置入口文件
+      entry: [ './src/index.ts', './src/webpack-plugin.ts',  './src/react/index.react.ts'], // 设置入口文件
 
       name: 'route-resource-preload', 
       formats: ['es','cjs'],
@@ -26,8 +25,8 @@ export default  defineConfig({
     },
     // sourcemap: true, // 输出.map文件
     rollupOptions: {
-      external: ['react'],
+      external: ['react','react-dom','react/jsx-runtime'],
     }
   },
-  plugins: [react(),commonjs()]
+  plugins: [react()]
 })
