@@ -9,6 +9,9 @@ import './App.css';
 
 
 function App() {
+
+
+
   return (
     <BrowserRouter>
     <div className="App">
@@ -18,24 +21,6 @@ function App() {
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <Router />
-        <div>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Component A
-          </a>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Component B
-          </a>
-        </div>
       </header>
     </div>
     </BrowserRouter>

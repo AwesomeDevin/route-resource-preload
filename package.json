@@ -1,6 +1,6 @@
 {
   "name": "route-resource-preload",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.6",
   "description": "Supports the preloading of resources and modules by route.",
   "scripts": {
     "build": "npx vite build && npx tsc -p tsconfig.json --emitDeclarationOnly",
@@ -18,40 +18,30 @@
     "module-preload",
     "module-federation-preload"
   ],
+  
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/typings/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./webpack-plugin": {
+      "types": "./dist/typings/webpack-plugin.d.ts",
+      "import": "./dist/webpack-plugin.es.js",
+      "require": "./dist/webpack-plugin.cjs.js",
+      "node": "./dist/webpack-plugin.cjs.js"
+    },
+    "./react": {
+      "types": "./dist/typings/react/index.react.d.ts",
+      "import":  "./dist/react/index.es.js",
+      "require":  "./dist/react/index.cjs.js"
+    }
+  },
   "types": "./dist/typings/index.d.ts",
   "module": "./dist/index.es.js",
   "main": "./dist/index.cjs.js",
-  "exports": {
-    ".": {
-      "types": {
-        "default": "./dist/typings/index.d.ts"
-      },
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js",
-      "default": "./dist/index.cjs.js"
-    },
-    "./webpack-plugin": {
-      "types":{
-        "default": "./dist/typings/webpack-plugin.d.ts"
-      },
-      "import": "./dist/webpack-plugin.es.js",
-      "require": "./dist/webpack-plugin.cjs.js",
-      "node": "./dist/webpack-plugin.cjs.js",
-      "default": "./dist/webpack-plugin.cjs.js"
-    },
-    "./react": {
-      "types": {
-        "default": "./dist/typings/react/index.react.d.ts"
-      },
-      "import": "./dist/react/index.es.js",
-      "require": "./dist/react/index.cjs.js",
-      "default": "./dist/react/index.cjs.js"
-    }
-  },
   "sideEffects": false,
-  "dependencies": {
-    "react": "17.0.0"
-  },
   "engines": {
     "node": ">=16"
   },

@@ -3,11 +3,12 @@ import { createElement, useCallback, useEffect, useRef, useState, FunctionCompon
 import { loadMap } from '../constant'
 interface IProps {
   to: string
-  preload?: boolean
-  inview?: boolean
   children: React.ReactNode
   basename?: string
-  containerRender?: FunctionComponent<any>
+  onClick?: ()=>void
+  filename?: string
+  action?: 'init' | 'inview'
+  className: string
 }
 
 interface IFile {
@@ -18,14 +19,17 @@ interface IFile {
 
 declare global{
   interface Window {
-    routerManifest: any
+    routerResourceManifest: any
   }
 }
 
 
 export default function PreloadLink(props: IProps) {
-  const { to, children, preload, inview, basename, containerRender } = props
+  const { to, children,  basename = '', onClick, filename = 'route-resource-manifest.json', action, className } = props
 
+
+  const [preload, setPreload] = useState(false)
+  const [inview, setInview] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [preloadFiles, setPreloadFiles] = useState<IFile[]>([])
   const ref = useRef<HTMLAnchorElement>(null)
@@ -93,7 +97,7 @@ export default function PreloadLink(props: IProps) {
 
   const getPreloadFiles = useCallback((to: string) => {
     if (!to) return
-    const files = window.routerManifest && window.routerManifest[to]
+    const files = window.routerResourceManifest && window.routerResourceManifest[to]
     if (files && files.length && files instanceof Array) {
       setPreloadFiles(files)
     }
@@ -133,28 +137,34 @@ export default function PreloadLink(props: IProps) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    if (window.routerManifest) {
+    if (window.routerResourceManifest) {
       getPreloadFiles(to)
       return
     }
-    fetch(basename + './router-manifest.json')
+    fetch(basename + './' + filename)
       .then(res => res.json())
       .then(res => {
-        window.routerManifest = res
+        window.routerResourceManifest = res
         getPreloadFiles(to)
       })
   }, [to])
+  
+  useEffect(()=>{
+    if(action === 'init'){
+      setPreload(true)
+    }else if(action === 'inview'){
+      setInview(true)
+    }
+  },[action])
 
   const commonProps = useMemo(()=>({
     onMouseEnter: handleMouseEnter,
+    onClick: onClick,
     ref
-  }),[handleMouseEnter, ref])
+  }),[handleMouseEnter, onClick, ref])
 
 
-  return (
-    containerRender ? createElement("div", commonProps, containerRender, children):
-    <a href={basename + to} {...commonProps}>
+  return  <span {...commonProps} className={className}>
       {children}
-    </a>
-  )
+    </span>
 }

@@ -61,7 +61,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 	constructor(opts: NameSpaceRouteResourcePreloadPlugin.Options) {
 		const { assets, headers, minify, modulePrefetchMap, mfPrefetchMap  } = opts || {};
-		const { filename='manifest.json',  basename = '' } = opts || {};
+		const { filename = 'route-resource-manifest.json',  basename = '' } = opts || {};
 		let { routes } = opts || {}
 
 		if (!routes && !modulePrefetchMap && !mfPrefetchMap) {
@@ -84,6 +84,10 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 			}
 		}
 
+		if(!routes){
+			routes = (str) => str
+		}
+
 		const toRoute = toFunction(routes);
 		const toHeaders = toFunction(headers) || headers === true && toLink;
 		const toType = toFunction(assets) || toAsset;
@@ -93,81 +97,88 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 			const Manifest: Record<string, any> = {};
 			const Files: Record<string, {type: string, href: string}[]> = {};
 
-			const { chunks, modules } = bundle.getStats().toJson();
+			try{
+				const { chunks, modules } = bundle.getStats().toJson();
 
-			chunks.forEach((chunk: any) => {
-				const { id, files, origins, entry } = chunk;
-				const origin = origins[0].request;
-				const route = origin && !entry ? toRoute(origin) : '*';
-				if (route) {
-					Pages.set(id, {
-						assets: new Set(files),
-						pattern: route
+				chunks.forEach((chunk: any) => {
+					const { id, files, origins, entry } = chunk;
+					const origin = origins[0].request;
+					const route = origin && !entry ? toRoute(origin) : '*';
+					if (route) {
+						Pages.set(id, {
+							assets: new Set(files),
+							pattern: route
+						});
+					}
+				});
+
+				modules.forEach((mod: {
+					assets: string[]
+					chunks: string[]
+				}) => {
+					mod.assets.forEach((asset: any) => {
+						mod.chunks.forEach(id => {
+							const tmp = Pages.get(id);
+							if (tmp) {
+								tmp.assets.add(asset);
+								Pages.set(id, tmp);
+							}
+						});
 					});
+				});
+
+				Pages.forEach(obj => {
+					let tmp = Files[obj.pattern] = Files[obj.pattern] || [];
+
+					obj.assets.forEach((str: string) => {
+						let type = toType(str);
+						let href = _path.join(basename, str)
+						if (type) tmp.push({ type, href });
+					});
+				});
+
+				function write(data: Record<string, any>) {
+
+					const str = JSON.stringify(data, null, minify ? 0 : 2);
+					bundle.assets[filename] = {
+						size: () => str.length,
+						source: () => str
+					};
 				}
-			});
-
-			modules.forEach((mod: {
-				assets: string[]
-				chunks: string[]
-			}) => {
-				mod.assets.forEach((asset: any) => {
-					mod.chunks.forEach(id => {
-						const tmp = Pages.get(id);
-						if (tmp) {
-							tmp.assets.add(asset);
-							Pages.set(id, tmp);
-						}
-					});
-				});
-			});
-
-			Pages.forEach(obj => {
-				let tmp = Files[obj.pattern] = Files[obj.pattern] || [];
-
-				obj.assets.forEach((str: string) => {
-					let type = toType(str);
-					let href = _path.join(basename, str)
-					if (type) tmp.push({ type, href });
-				});
-			});
-
-			function write(data: Record<string, any>) {
-
-				const str = JSON.stringify(data, null, minify ? 0 : 2);
-				bundle.assets[filename] = {
-					size: () => str.length,
-					source: () => str
-				};
-			}
 
 
-			const routes = Object.keys(Files);
+				const routes = Object.keys(Files);
 
 
-			if(mfPrefetchKeys.length){
-				mfPrefetchKeys.forEach(key=>{
-					routes.forEach(route=>{
-						if(mfPrefetchMap[key].includes(route)){
-							Files[key].push({type: 'mf', href: route})
-							delete Files[route]
-						}
+				if(mfPrefetchKeys.length && routes.length){
+					mfPrefetchKeys.forEach(key=>{
+						routes.forEach(route=>{
+							if(mfPrefetchMap[key].includes(route)){
+								if(! (Files[key] instanceof Array)){
+									Files[key] = []
+								}
+								Files[key].push({type: 'mf', href: route})
+								delete Files[route]
+							}
+						})
 					})
-				})
+				}
+			
+
+				if (!toHeaders) {
+					return write(Files)
+				}
+
+				routes.forEach(pattern => {
+					const files = Files[pattern];
+					const headers = toHeaders(files, pattern, Files) || [];
+					Manifest[pattern] = { files, headers };
+				});
+
+				return write(Manifest);
+			}catch(e){
+				throw new Error(e)
 			}
-		
-
-			if (!toHeaders) {
-				return write(Files)
-			}
-
-			routes.forEach(pattern => {
-				const files = Files[pattern];
-				const headers = toHeaders(files, pattern, Files) || [];
-				Manifest[pattern] = { files, headers };
-			});
-
-			return write(Manifest);
 		};
 	}
 
