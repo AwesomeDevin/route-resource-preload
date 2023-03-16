@@ -69,7 +69,7 @@ webpack: {
 }
 ```
 
-Step 2
+Step 2: dynamic import component and render **PreloadLink** 
 ```js
 import { dynamic, PreloadLink } from 'route-resource-preload/react'
 
@@ -108,12 +108,14 @@ loading | A spinner for displaying loading state | FunctionComponent<any> | - | 
 submodule | maybe you didn't export default, you need it | string | - | ❎
 
 #### PreloadLink
+> PreloadLink's basename param is the same as RouteResourcePreloadPlugin's basename param
+
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 to | route path to preload | string | - | ✅
 children | children ReactNode | ReactNode | - | ✅
 basename | router basename | string | - | ❎
-action | trigger preload action | 'inview' / 'init' | - | ❎
+action | trigger preload action | <a href="#'init'-/-'inview'">'init' / 'inview'</a> | - | ❎
 onClick | PreloadLink click event | () => void | - | ❎
 className | PreloadLink classname | string | - | ❎
 
@@ -121,6 +123,8 @@ className | PreloadLink classname | string | - | ❎
 ## Plugin
 
 #### RouteResourcePreloadPlugin
+> RouteResourcePreloadPlugin's basename param is the same as PreloadLink's basename param
+
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 modulePreloadMap | project's components(modules) | <a href="#modulepreloadmap-object">modulePreloadMap Object</a> | - | ❎
@@ -130,6 +134,13 @@ basename | router basename | string | - | ❎
 
 
 ## Others
+
+#### 'init' / 'inview'
+Value | Description
+--- | ---
+init | Trigger preload after PreloadLink rendering 
+inview | Trigger preload after PreloadLink in the view
+
 
 #### modulePreloadMap Object
 ```js
