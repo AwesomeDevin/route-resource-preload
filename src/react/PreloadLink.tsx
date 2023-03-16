@@ -83,6 +83,7 @@ export default function PreloadLink(props: IProps) {
           dom.as = type
           dom.rel = 'prefetch'
           dom.href = `${href}`
+          dom.crossOrigin = 'crossorigin'
           break
       }
       dom && document.head.appendChild(dom)
