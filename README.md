@@ -11,6 +11,8 @@
 - Supports automatic the preloading of resources ( JS / Component / Module-Federation / Svg / Png , Etc) by route and providing the best user experience.
 - Supports typescript.
 
+## [DEMO](https://route-resource-preload.netlify.app/)
+
 ## Install
 ```shell
 npm install route-resource-preload
