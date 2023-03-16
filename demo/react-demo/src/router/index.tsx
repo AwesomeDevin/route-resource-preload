@@ -55,10 +55,10 @@ export default function Router(){
     
         
     {!showPreload ? <div>
-      <Link to="/A" >
+      <Link to="/A"  className="App-link">
         Load Component A
       </Link>
-      <Link to="/MF" >
+      <Link to="/MF" className="App-link">
         Load MF
       </Link>
     </div>
@@ -66,7 +66,7 @@ export default function Router(){
       <PreloadLink to="/A"  onClick={()=>{navigate('/A')}} className="App-link">
         Preload Component A
       </PreloadLink>
-      <PreloadLink to="/MF" >
+      <PreloadLink to="/MF" className="App-link">
         <Link to="/MF" >Preload MF</Link>
       </PreloadLink>
     </div>}
