@@ -7,9 +7,9 @@
 ## Why do you need route-resource-preload ?
 - Split modules, improving the first screen loading experience of your App. 
 - Minimize dynamic component loading time and providing the best user experience.
-- Supports manually to preloading.
-- Supports automatic the preloading of resources ( JS / Component / Module-Federation / Svg / Png , Etc) by route and providing the best user experience.
-- Supports typescript.
+- Support manually to preloading.
+- Support automatic the preloading of resources ( JS / Component / Module-Federation / Svg / Png , Etc) by route and providing the best user experience.
+- Support typescript.
 
 ## [DEMO](https://route-resource-preload.netlify.app/)
 
