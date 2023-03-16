@@ -1,7 +1,7 @@
 {
   "name": "route-resource-preload",
   "version": "1.0.0-beta.9",
-  "description": "Supports the preloading of resources and modules by route.",
+  "description": "Focus on improving the first screen loading speed of applications and providing the best user experience.",
   "scripts": {
     "build": "npx vite build && npx tsc -p tsconfig.json --emitDeclarationOnly",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,12 +11,20 @@
     "url": "git+https://github.com/AwesomeDevin/route-resource-preload.git"
   },
   "keywords": [
+    "prefetch",
     "preload",
+    "route-prefetch",
+    "router-prefetch",
     "route-preload",
+    "router-preload",
     "js-preload",
     "resource-preload",
     "module-preload",
-    "module-federation-preload"
+    "module-federation-preload",
+    "route-resource-preload",
+    "route-resource-prefetch",
+    "react-preload",
+    "react-prefetch"
   ],
   
   "exports": {
