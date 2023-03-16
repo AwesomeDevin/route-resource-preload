@@ -166,5 +166,4 @@ inview | Trigger preload after PreloadLink in the view
 }
 ```
 
-## Thanks！！！
-Inspired by [webpack-route-manifest](https://github.com/lukeed/webpack-route-manifest)，thanks for lukeed.
+
