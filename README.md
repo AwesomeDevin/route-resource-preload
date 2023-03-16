@@ -165,3 +165,6 @@ inview | Trigger preload after PreloadLink in the view
   // [route-path]: ['your assets link']
 }
 ```
+
+## Thanks！！！
+Inspired by [webpack-route-manifest](https://github.com/lukeed/webpack-route-manifest)，thanks for lukeed.
