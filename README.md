@@ -115,7 +115,7 @@ Param | Description | Type | Default Value | necessary
 to | route path to preload | string | - | ✅
 children | children ReactNode | ReactNode | - | ✅
 basename | router basename | string | - | ❎
-action | trigger preload action | <a href="#'init'-/-'inview'">'init' / 'inview'</a> | - | ❎
+action | trigger preload action | <a href="#init--inview">'init' / 'inview'</a> | - | ❎
 onClick | PreloadLink click event | () => void | - | ❎
 className | PreloadLink classname | string | - | ❎
 
@@ -135,7 +135,7 @@ basename | router basename | string | - | ❎
 
 ## Others
 
-#### 'init' / 'inview'
+#### init / inview
 Value | Description
 --- | ---
 init | Trigger preload after PreloadLink rendering 
