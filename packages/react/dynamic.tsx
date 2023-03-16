@@ -1,6 +1,6 @@
 import { createElement, FunctionComponent, useEffect, useLayoutEffect, useState } from 'react'
 
-import { loadMap } from '../constant'
+import { loadMap } from './constant'
 
 interface IPrams {
   loader: () => Promise<FunctionComponent<any> | Record<string, FunctionComponent<any>>>

@@ -1,6 +1,6 @@
 import { createElement, useCallback, useEffect, useRef, useState, FunctionComponent, useMemo } from 'react'
 
-import { loadMap } from '../constant'
+import { loadMap } from './constant'
 interface IProps {
   to: string
   children: React.ReactNode
