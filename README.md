@@ -49,19 +49,19 @@ webpack: {
   plugins: {
     add: [
       new RouteResourcePreloadPlugin({
-        // project's components, the key is route path
+        // project's components(modules), the key is route path
         modulePreloadMap: {
           "/A": ["../components/A"]
         },
         
-        // module-federation's components, the key is route path
+        // module-federation's components(modules), the key is route path
         mfPreloadMap: {
           "/MF": ["ling_core/Components"]
         },
         
         // static assets (just like js/css/png/jpg/font, etc.), the key is route path
         assetsPreloadMap: {
-          "/A": ['https://img20.360buyimg.com/img/jfs/t1/86699/27/29562/39551/62bec631E155c7e41/55d63c89279226f0.png']
+          "/A": ['https://domain.com/xxx.png']
         }
       })
     ]
@@ -83,7 +83,7 @@ const ComponentA = dynamic({
 const Image = dynamic({
   loader: ()=>import('your_lib/Components'),
   loading: () => <>loading...</>,
-  submodule: 'Image' // may be you export a object, just like " export { Image, ...Others } " in js.
+  submodule: 'Image' // may be you didn't export default, just like " export { Image, ...Others } " in js.
 })
 
 export default function Main(props){
@@ -101,11 +101,56 @@ export default function Main(props){
 ## API
 
 #### dynamic
+Param | Description | Type | Default Value | necessary
+---- | ---- | ---- | ---- | ---
+loader | dynamic import module | () => Promise<FunctionComponent<any> | Record<string, FunctionComponent<any>>> | - | ✅
+loading | A spinner for displaying loading state | FunctionComponent<any> | - | ❎
+submodule | maybe you didn't export default, you need it | string | - | ❎
 
 #### PreloadLink
+Param | Description | Type | Default Value | necessary
+---- | ---- | ---- | ---- | ---
+to | route path to preload | string | - | ✅
+children | children ReactNode | ReactNode | - | ✅
+basename | router basename | string | - | ❎
+action | trigger preload action | 'inview' / 'init' | - | ❎
+onClick | PreloadLink click event | () => void | - | ❎
+className | PreloadLink classname | string | - | ❎
 
 
 ## Plugin
 
 #### RouteResourcePreloadPlugin
+Param | Description | Type | Default Value | necessary
+---- | ---- | ---- | ---- | ---
+modulePreloadMap | project's components(modules) | [modulePreloadMap Object](#modulePreloadMap Object) | - | ❎
+mfPreloadMap | module-federation's components(modules) | [mfPreloadMap Object](#mfPreloadMap Object) | - | ❎
+assetsPreloadMap | static assets | | [assetsPreloadMap Object](#assetsPreloadMap Object) | - | ❎
+basename | router basename | string | - | ❎
 
+
+## Others
+
+#### modulePreloadMap Object
+```js
+{
+  "/A": ["../components/A"],
+  // [route-path]: ['your components path']
+}
+```
+
+#### mfPreloadMap Object
+```js
+{
+  "/MF": ["ling_core/Components"]
+  // [route-path]: ['your components path']
+}
+```
+
+#### assetsPreloadMap Object
+```js
+{
+  "/A": ['https://domain.com/xxx.png']
+  // [route-path]: ['your assets link']
+}
+```

@@ -8,7 +8,7 @@ interface IProps {
   onClick?: ()=>void
   filename?: string
   action?: 'init' | 'inview'
-  className: string
+  className?: string
 }
 
 interface IFile {
