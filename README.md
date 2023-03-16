@@ -28,11 +28,15 @@ const Image = dynamic({
   loading: (props) => <>loading...</>,
 })
 
-// Manual Preloading
-Image.preload()
+const handleClick = () => {
+  // Manual Preloading
+  Image.preload()
+}
 
 export default function Main(props){
-  return <Image {...props} />
+  return <div onClick={handleClick}>
+    <Image {...props} />
+  </div>
 }
 ```
 
