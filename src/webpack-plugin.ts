@@ -3,7 +3,7 @@ const _path = require('path')
 const NAME = 'webpack-route-resource-manifest';
 
 declare namespace NameSpaceRouteResourcePreloadPlugin {
-	type Pattern = string;
+	type Pattern = string[];
 	type Filter<T> = T | false | void | null;
 
 	interface Asset {
@@ -11,12 +11,13 @@ declare namespace NameSpaceRouteResourcePreloadPlugin {
 		href: string;
 	}
 
-	type FileMap = Record<Pattern, Asset[]>;
+	type FileMap = Record<string, Asset[]>;
 
 	interface Options {
-		modulePrefetchMap?: Record<string, Pattern>
-		mfPrefetchMap?: Record<string, Pattern>
-		routes?: Record<string, Pattern> | ((input: string) => Filter<Pattern>);
+		modulePreloadMap?: Record<string, Pattern>
+		mfPreloadMap?: Record<string, Pattern>
+		assetsPreloadMap?: Record<string, Pattern>
+		routes?: Record<string, Pattern> | ((input: string) => Filter<string>);
 		assets?: Record<string, string> | ((filepath: string) => Filter<string>);
 		headers?: true | ((files: Asset[], pattern: Pattern, filemap: FileMap) => any[]);
 		filename?: string;
@@ -60,23 +61,24 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 	run: (compilation: any) => void;
 
 	constructor(opts: NameSpaceRouteResourcePreloadPlugin.Options) {
-		const { assets, headers, minify, modulePrefetchMap, mfPrefetchMap  } = opts || {};
+		const { assets, headers, minify, modulePreloadMap, mfPreloadMap, assetsPreloadMap  } = opts || {};
 		const { filename = 'route-resource-manifest.json',  basename = '' } = opts || {};
 		let { routes } = opts || {}
 
-		if (!routes && !modulePrefetchMap && !mfPrefetchMap) {
-			throw new Error('One of routes/modulePrefetchMap/mfPrefetchMap mapping is required');
+		if (!routes && !modulePreloadMap && !mfPreloadMap && !assetsPreloadMap) {
+			throw new Error('One of routes/modulePreloadMap/mfPreloadMap/assetsPreloadMap mapping is required');
 		}
 
-		const routePrefetchKeys = modulePrefetchMap ? Object.keys(modulePrefetchMap) : []
-		const mfPrefetchKeys = mfPrefetchMap ? Object.keys(mfPrefetchMap) : []
+		const modulePreloadKeys = modulePreloadMap ? Object.keys(modulePreloadMap) : []
+		const mfPreloadKeys = mfPreloadMap ? Object.keys(mfPreloadMap) : []
+		const assetsPreloadKeys = assetsPreloadMap ? Object.keys(assetsPreloadMap) : []
 
 
-		if(!routes && routePrefetchKeys.length){
+		if(!routes && modulePreloadKeys.length){
 			routes =  (str) => {
-				for(var index = 0; index < routePrefetchKeys.length; index++){
-					const route = routePrefetchKeys[index]
-					if(modulePrefetchMap[route].includes(str)){
+				for(var index = 0; index < modulePreloadKeys.length; index++){
+					const route = modulePreloadKeys[index]
+					if(modulePreloadMap[route].includes(str)){
 						return route
 					}
 				}
@@ -150,10 +152,10 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 				const routes = Object.keys(Files);
 
 
-				if(mfPrefetchKeys.length && routes.length){
-					mfPrefetchKeys.forEach(key=>{
+				if(mfPreloadKeys.length && routes.length){
+					mfPreloadKeys.forEach(key=>{
 						routes.forEach(route=>{
-							if(mfPrefetchMap[key].includes(route)){
+							if(mfPreloadMap[key].includes(route)){
 								if(! (Files[key] instanceof Array)){
 									Files[key] = []
 								}
@@ -163,7 +165,17 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 						})
 					})
 				}
-			
+
+				if(assetsPreloadKeys.length && routes.length){
+					assetsPreloadKeys.forEach(key=>{
+						const preloadAssets = assetsPreloadMap[key]?.map(href=>({type: toType(href), href}))
+						if(Files[key] && preloadAssets instanceof Array){
+							Files[key] = Files[key].concat(preloadAssets)
+						}else{
+							Files[key] = preloadAssets
+						}
+					})
+				}
 
 				if (!toHeaders) {
 					return write(Files)
