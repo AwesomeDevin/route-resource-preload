@@ -15,7 +15,7 @@ function App() {
     <BrowserRouter>
     <div className="App">
       <header className="App-header">
-          <a target='_blank' href="https://github.com/AwesomeDevin/route-resource-preload" rel="noreferrer">DOCS</a>
+          <a className="App-link" target='_blank' href="https://github.com/AwesomeDevin/route-resource-preload" rel="noreferrer">DOCS</a>
         <h1>route-resource-preload</h1>
         <p style={{width: '30em', margin: 0}}>Focus on <strong>improving the first screen loading speed of applications</strong> and <strong>providing the best user experience.</strong> 🚀🚀🚀</p>
        
