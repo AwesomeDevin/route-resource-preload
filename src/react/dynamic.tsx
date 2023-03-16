@@ -1,4 +1,4 @@
-import { createElement, FunctionComponent, useEffect, useState } from 'react'
+import { createElement, FunctionComponent, useEffect, useLayoutEffect, useState } from 'react'
 
 import { loadMap } from '../constant'
 
@@ -53,6 +53,9 @@ export default function dynamic(params: IPrams) {
 
   const Component = (props: any) => {
     const [enable, setEnable] = useState( id ? loadMap.component[id] : false)
+
+    const { onEnd, ...rets } = props
+
     useEffect(() => {
       if (!loaded) {
         load().then(() => {
@@ -63,7 +66,13 @@ export default function dynamic(params: IPrams) {
       }
     }, [])
 
-    return enable && module ? render(module, props) : loading ? createElement(loading) : null
+    useLayoutEffect(()=>{
+      if(enable && module ){
+        onEnd && onEnd()
+      }
+    },[enable && module ])
+
+    return enable && module ? render(module, rets) : loading ? createElement(loading, rets) : null
   }
 
   return Object.assign(Component, { preload })
