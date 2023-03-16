@@ -13,5 +13,5 @@
     "jsx": "react-jsx",
     "emitDeclarationOnly":true
   },
-  "include": ["src"]
+  "include": ["src", "packages/react", "packages/webpack-plugin/index.ts"]
 }
