@@ -1,0 +1,48 @@
+{
+  "name": "@route-resource-preload/react",
+  "version": "1.0.0-beta.1",
+  "description": "Support automatic the preloading of resources ( JS / Component / Module-Federation / Svg / Png , Etc) by route and providing the best user experience. ",
+  "scripts": {
+    "build": "npx vite build && npx tsc -p tsconfig.json --emitDeclarationOnly",
+    "pub": "pnpm publish --access public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AwesomeDevin/route-resource-preload.git"
+  },
+  "types": "./dist/typings/index.d.ts",
+  "module": "./dist/index.mjs",
+  "main": "./dist/index.js",
+  "sideEffects": false,
+  "files": [
+    "dist/"
+  ],
+  "engines": {
+    "node": ">=14.19.1"
+  },
+  "keywords": [
+    "prefetch",
+    "preload",
+    "route-prefetch",
+    "router-prefetch",
+    "route-preload",
+    "router-preload",
+    "js-preload",
+    "resource-preload",
+    "module-preload",
+    "module-federation-preload",
+    "router-resource-preload",
+    "router-resource-prefetch",
+    "route-resource-preload",
+    "route-resource-prefetch",
+    "react-preload",
+    "react-prefetch"
+  ],
+  "author": "AwesomeDevin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AwesomeDevin/route-resource-preload/issues"
+  },
+  "homepage": "https://github.com/AwesomeDevin/route-resource-preload#readme"
+}
