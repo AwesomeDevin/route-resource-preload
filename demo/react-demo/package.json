@@ -22,7 +22,7 @@
   "scripts": {
     "start": "npx craco start",
     "build1": "npx craco build",
-    "build": "npm run build1 --legacy-peer-deps",
+    "build": "pnpm run build1 --legacy-peer-deps",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -45,7 +45,7 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^6.4.5",
+    "@craco/craco": "^6.0.0",
     "craco-module-federation": "^1.1.0"
   }
 }
