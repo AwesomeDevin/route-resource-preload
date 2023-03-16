@@ -25,9 +25,9 @@
 }
 
 .App-link, a {
-  color: #61dafb;
+  color: #61dafb !important;
   margin: 0 20px;
-  text-decoration: underline;
+  text-decoration: underline !important;;
   cursor: pointer;
  
 }
