@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import 'ling_core/lingcore.css'
 
 import Router from './router';
@@ -12,7 +12,7 @@ function App() {
 
 
   return (
-    <BrowserRouter>
+    <HashRouter>
     <div className="App">
       <header className="App-header">
           <a className="App-link" target='_blank' href="https://github.com/AwesomeDevin/route-resource-preload" rel="noreferrer">DOCS</a>
@@ -22,7 +22,7 @@ function App() {
         <Router />
       </header>
     </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

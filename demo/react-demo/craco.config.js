@@ -1,5 +1,4 @@
-
-const RouteResourceManifest = require('route-resource-preload/webpack-plugin')
+const RouteResourceManifest = require('@route-resource-preload/webpack-plugin')
 const cracoModuleFederation = require('craco-module-federation')
 
 module.exports = async function () {

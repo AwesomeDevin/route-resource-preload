@@ -1,7 +1,7 @@
 import { Route, Routes as Switch, Link, useNavigate, useSearchParams } from 'react-router-dom'
 
 
-import { dynamic, PreloadLink } from 'route-resource-preload/react'
+import { dynamic, PreloadLink } from '@route-resource-preload/react'
 
 import Hoc from '../components/TimerHoc'
 import { useCallback, useState } from 'react'
