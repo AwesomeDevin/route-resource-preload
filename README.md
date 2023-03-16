@@ -41,7 +41,7 @@ export default function Main(props){
 ```
 
 #### Method 2 - Automatic preloading by route.
-Step 1: first, you need add plugin in webpack
+Step 1: First, you need add **plugin** in your build config.
 ```js
 const RouteResourcePreloadPlugin = require('route-resource-preload/webpack-plugin')
 
@@ -69,7 +69,7 @@ webpack: {
 }
 ```
 
-Step 2: dynamic import component and render **PreloadLink** 
+Step 2: **Dynamic** import component and render **PreloadLink** 
 ```js
 import { dynamic, PreloadLink } from 'route-resource-preload/react'
 
@@ -104,7 +104,7 @@ export default function Main(props){
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 loader | dynamic import module | () => Promise<FunctionComponent<any> / Record<string, FunctionComponent<any>>> | - | ✅
-loading | A spinner for displaying loading state | FunctionComponent<any> | - | ❎
+loading | A spinner for displaying loading state | FunctionComponent<any> | - | 
 submodule | maybe you didn't export default, you need it | string | - | ❎
 
 #### PreloadLink
@@ -115,7 +115,7 @@ Param | Description | Type | Default Value | necessary
 to | route path to preload | string | - | ✅
 children | children ReactNode | ReactNode | - | ✅
 basename | router basename | string | - | ❎
-action | trigger preload action | <a href="#init--inview">'init' / 'inview'</a> | - | ❎
+action | trigger preload action | <a href="#init--inview">string (init / inview)</a> | hover | ❎
 onClick | PreloadLink click event | () => void | - | ❎
 className | PreloadLink classname | string | - | ❎
 
