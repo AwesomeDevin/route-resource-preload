@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "npx craco start",
-    "build": "npx craco build",
+    "build": "npx craco build --legacy-peer-deps",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
