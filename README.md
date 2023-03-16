@@ -1,6 +1,4 @@
 # route-resource-preload 
-[![Build Size](https://img.shields.io/bundlephobia/minzip/route-resource-preload?label=bundle%20size)](https://bundlephobia.com/result?p=route-resource-preload)
-[![Version](https://img.shields.io/npm/v/route-resource-preload?style=flat)](https://www.npmjs.com/package/route-resource-preload)
 
 🚀 Focus on improving the first screen loading speed of applications and providing the best user experience. 
 
