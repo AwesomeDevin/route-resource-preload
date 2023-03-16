@@ -103,7 +103,7 @@ export default function Main(props){
 #### dynamic
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
-loader | dynamic import module | () => Promise<FunctionComponent<any> | Record<string, FunctionComponent<any>>> | - | ✅
+loader | dynamic import module | () => Promise<FunctionComponent<any> / Record<string, FunctionComponent<any>>> | - | ✅
 loading | A spinner for displaying loading state | FunctionComponent<any> | - | ❎
 submodule | maybe you didn't export default, you need it | string | - | ❎
 
