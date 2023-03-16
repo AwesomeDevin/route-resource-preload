@@ -3,7 +3,7 @@ import { createElement, FunctionComponent, useEffect, useLayoutEffect, useState 
 import { loadMap } from '../constant'
 
 interface IPrams {
-  loader: () => any
+  loader: () => Promise<FunctionComponent<any> | Record<string, FunctionComponent<any>>>
   loading?: FunctionComponent<any>
   submodule?: string
 }
@@ -42,7 +42,7 @@ export default function dynamic(params: IPrams) {
   }
 
 
-  const preload: () => Promise<FunctionComponent<any>> = () => load()
+  const preload: () => Promise<FunctionComponent<any> | Record<string, FunctionComponent<any>>> = () => load()
 
   if(id){
     loadMap.component[id] = {

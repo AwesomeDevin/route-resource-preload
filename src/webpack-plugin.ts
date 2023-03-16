@@ -61,8 +61,8 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 	run: (compilation: any) => void;
 
 	constructor(opts: NameSpaceRouteResourcePreloadPlugin.Options) {
-		const { assets, headers, minify, modulePreloadMap, mfPreloadMap, assetsPreloadMap  } = opts || {};
-		const { filename = 'route-resource-manifest.json',  basename = '' } = opts || {};
+		const { assets, headers, modulePreloadMap, mfPreloadMap, assetsPreloadMap  } = opts || {};
+		const { filename = 'route-resource-manifest.json', minify = true,  basename = '' } = opts || {};
 		let { routes } = opts || {}
 
 		if (!routes && !modulePreloadMap && !mfPreloadMap && !assetsPreloadMap) {
@@ -176,6 +176,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 						}
 					})
 				}
+			
 
 				if (!toHeaders) {
 					return write(Files)
