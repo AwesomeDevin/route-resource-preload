@@ -6,7 +6,7 @@ Focus on improving the first screen loading speed of applications and providing 
 
 ## Why do you need route-resource-preload ?
 - Improving the first screen loading experience of your SPA(Single-Page App), just like MPA(Multi-Page App) 
-- Supports the preloading of resources ( JS / Component / Module-Federation / Svg / Png , Etc) by route.
+- Supports the preloading of resources ( JS / Component / Module-Federation / Svg / Png , Etc) by route and providing the best user experience.
 
 ## Install
 ```shell
