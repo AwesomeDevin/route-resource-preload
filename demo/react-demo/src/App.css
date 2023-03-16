@@ -55,6 +55,17 @@
   background-color: #000;
 }
 
+h1{
+  color: #fff;
+}
+
+strong{
+  color: #fff; 
+}
+
+p{
+  color: #ccc;
+}
 
 .tabs a{
   display: inline-block;
@@ -62,6 +73,11 @@
 }
 .tabs a:hover{
   color: black;
+}
+
+.core{
+  padding: 20px;
+  border: 1px solid #fff;
 }
 
 
