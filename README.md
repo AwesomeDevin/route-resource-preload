@@ -123,15 +123,15 @@ className | PreloadLink classname | string | - | ❎
 #### RouteResourcePreloadPlugin
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
-modulePreloadMap | project's components(modules) | [modulePreloadMap Object](#modulePreloadMap Object) | - | ❎
+modulePreloadMap | project's components(modules) | <a href="#modulePreloadMap">modulePreloadMap Object</a> | - | ❎
 mfPreloadMap | module-federation's components(modules) | [mfPreloadMap Object](#mfPreloadMap Object) | - | ❎
-assetsPreloadMap | static assets | | [assetsPreloadMap Object](#assetsPreloadMap Object) | - | ❎
+assetsPreloadMap | static assets | [assetsPreloadMap Object](#assetsPreloadMap Object) | - | ❎
 basename | router basename | string | - | ❎
 
 
 ## Others
 
-#### modulePreloadMap Object
+#### <a id="modulePreloadMap">modulePreloadMap Object</a>
 ```js
 {
   "/A": ["../components/A"],
