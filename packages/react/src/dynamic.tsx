@@ -1,4 +1,4 @@
-import { createElement, FunctionComponent, useEffect, useLayoutEffect, useState } from 'react'
+import { createElement, FunctionComponent, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 
 import { loadMap } from './constant'
 
@@ -19,23 +19,25 @@ function render(target: FunctionComponent<any>, props: any) {
 export default function dynamic(params: IPrams) {
   const { loader, loading, submodule } = params
 
-  let loaded = false
   let module: FunctionComponent<any>
 
   const functionStr = loader.toString()
   const matches = functionStr.match(/"(\w*)"/)
-  const id = matches ? matches[1] : ''
+  const id = matches ? matches[1].toLocaleLowerCase() : ''
+
+  
 
   const load = () => {
+    console.log(id,'load')
     const promise = loader()
       .then((res: FunctionComponent<any> | Record<string, FunctionComponent<any>>) => {
-        loaded = true
         //@ts-ignore
         module = submodule ? res[submodule] : res 
+        loadMap.component[id].loaded = true
         return res
       })
       .catch((err: string) => {
-        loaded = true
+        loadMap.component[id].loaded = true
         throw new Error(err)
       })
     return promise
@@ -52,27 +54,28 @@ export default function dynamic(params: IPrams) {
   }
 
   const Component = (props: any) => {
-    const [enable, setEnable] = useState( id ? loadMap.component[id] : false)
+    const [enable, setEnable] = useState( id && loadMap.component[id].loaded ? true : false)
 
     const { onEnd, ...rets } = props
 
     useEffect(() => {
-      if (!loaded) {
+      if (!loadMap.component[id].loaded || !module) {
         load().then(() => {
           setEnable(true)
         })
-      } else if (!!loaded && !!module) {
+      } else if (!!loadMap.component[id].loaded && !!module && !enable) {
         setEnable(true)
       }
     }, [])
 
+
     useLayoutEffect(()=>{
-      if(enable && module ){
+      if(enable ){
         onEnd && onEnd()
       }
-    },[enable && module ])
+    },[enable ])
 
-    return enable && module ? render(module, rets) : loading ? createElement(loading, rets) : null
+    return enable ? render(module, rets) : loading ? createElement(loading, rets) : null
   }
 
   return Object.assign(Component, { preload })

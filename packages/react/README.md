@@ -98,13 +98,13 @@ const Image = dynamic({
 export default function Main(props){
   return <>
     <PreloadLink key="/A"  onClick={()=>{
-      navigate('/A')
+      navigate('/A')   // navigate comes from react-router-dom, you can custom your code.
       }} 
     >
       Preload Component A
     </PreloadLink>
     <PreloadLink key="/MF">
-      {/* react-router-dom to navigate */}
+      {/* Link comes from react-router-dom, you can custom your code. */}
       <Link to="/MF" >Preload MF</Link>
     </PreloadLink>
   </>
@@ -135,7 +135,7 @@ publicPath | server publicPath | string | - | ❎
 
 ## Plugin
 
-#### RouteResourcePreloadPlugin
+#### Webpack-RouteResourcePreloadPlugin
 > RouteResourcePreloadPlugin's `publicPath` is the same as PreloadLink's `publicPath`
 
 Param | Description | Type | Default Value | necessary

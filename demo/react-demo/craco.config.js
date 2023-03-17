@@ -21,7 +21,7 @@ module.exports = async function () {
               "/MF": ["ling_core/Components"]
             },
             assetPreloadMap: {
-              "/A": ['https://img20.360buyimg.com/img/jfs/t1/86699/27/29562/39551/62bec631E155c7e41/55d63c89279226f0.png']
+              "/A": ['https://img14.360buyimg.com/ling/s516x0_jfs/t1/97522/12/25179/1393762/622aa4c9E4ff1c9d2/3de6b0ab3c754b8d.png']
             }
           })
         ]
