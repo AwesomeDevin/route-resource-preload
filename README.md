@@ -1,6 +1,6 @@
 # route-resource-preload 
 
-🚀 Focus on improving the first screen loading speed of applications and providing the best user experience. 
+🚀 Focus on improving the first screen loading speed of applications and providing the best user experience, like the preloading of NextJS . 
 
 ## Why do you need route-resource-preload ?
 - Split modules, improving the first screen loading experience of your App. 
