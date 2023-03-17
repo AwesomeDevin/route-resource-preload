@@ -24,6 +24,11 @@
   color: white;
 }
 
+h1{
+  display: flex;
+  align-items: center;
+}
+
 .App-link, a {
   color: #61dafb !important;
   margin: 0 20px;
@@ -32,8 +37,27 @@
  
 }
 
+.icon{
+ width: 40px;
+ height: 40px;
+}
+
+.github{
+  text-decoration: none !important;
+}
+
+
+.trigger {
+  color: rgba(255,0,0 ,0.25);
+  /* text-decoration: underline;
+  cursor: pointer ; */
+}
+/* .trigger:hover{
+  color: red;
+} */
+
 .App-link:hover, a:hover{
-  color: #fff;
+  color: #fff !important;
 }
 
 .tabs{
@@ -43,13 +67,17 @@
   position: relative;
 }
 
+.tabs a:hover{
+  color: #333 !important;
+}
+
 .tabs::after{
   content: '';
   display: block;
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 23px;
+  transform: translateX(-50%);
   width: 1px;
   height: 20px;
   background-color: #000;
