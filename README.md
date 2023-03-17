@@ -9,7 +9,13 @@
 - Support automatic the preloading of resources ( JS / Component / Module-Federation / Svg / Png , Etc) by route and providing the best user experience.
 - Support typescript.
 
-## [DEMO](https://route-resource-preload.netlify.app/)
+## [DEMO TEST](https://route-resource-preload.netlify.app/)
+Component | Normal Load(ms) | Preload (ms)
+--- | --- | ---
+Simple Component (single-resource) | 100 | 1
+Complex component (multi-resource) | 300 | 8
+
+> It can be seen from the table that preloading significantly improves the loading speed of components, especially for complex components, the improvement of loading speed is more obvious. This shows that in complex business scenarios, **preloading can significantly improve page loading speed and user experience**.
 
 ## Install
 ```shell
