@@ -63,10 +63,10 @@ export default function Router(){
       </Link>
     </div>
      :<div>
-      <PreloadLink to="/A"  onClick={()=>{navigate('/A')}} className="App-link">
+      <PreloadLink flag="/A"  onClick={()=>{navigate('/A')}} className="App-link">
         Preload Component A
       </PreloadLink>
-      <PreloadLink to="/MF" className="App-link">
+      <PreloadLink flag="/MF" className="App-link">
         <Link to="/MF" >Preload MF</Link>
       </PreloadLink>
     </div>}
