@@ -1,6 +1,6 @@
 {
   "name": "@route-resource-preload/react",
-  "version": "1.0.0-beta.8",
+  "version": "1.0.0-beta.9",
   "description": "Support automatic the preloading of resources ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) by route and providing the best user experience. ",
   "scripts": {
     "build": "npx vite build && npx tsc -p tsconfig.json --emitDeclarationOnly",

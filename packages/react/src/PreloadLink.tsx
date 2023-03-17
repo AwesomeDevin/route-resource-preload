@@ -143,9 +143,7 @@ export default function PreloadLink(props: IProps) {
       return
     }
     let url = publicPath.endsWith('/') ? publicPath + filename : `${publicPath}/${filename}`
-    if(publicPath && !/^(https?:)\/\//i.test(publicPath)){
-      url = `https:${url}`
-    }
+
 
     fetch(url)
       .then(res => res.json())
