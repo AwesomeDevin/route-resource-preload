@@ -28,7 +28,6 @@ export default function dynamic(params: IPrams) {
   
 
   const load = () => {
-    console.log(id,'load')
     const promise = loader()
       .then((res: FunctionComponent<any> | Record<string, FunctionComponent<any>>) => {
         //@ts-ignore

@@ -67,14 +67,12 @@ export default function PreloadLink(props: IProps) {
       let dom
       switch (type) {
         case 'script':
-          console.log(checkComponentLoaded(href.toLocaleLowerCase(), 'script'), href.toLocaleLowerCase(), loadMap.component)
           if(!checkComponentLoaded(href.toLocaleLowerCase(), 'script')){
             dom = document.createElement('script')
             dom.src = href.startsWith('/') ? href : `/${href}`
           }
           break
         case 'mf':
-          console.log(checkComponentLoaded(`${mfInfo[0].toLocaleLowerCase()}_${mfInfo[1].toLocaleLowerCase()}`, 'mf'),`${mfInfo[0].toLocaleLowerCase()}_${mfInfo[1].toLocaleLowerCase()}`, loadMap.component)
           if(!checkComponentLoaded(`${mfInfo[0].toLocaleLowerCase()}_${mfInfo[1].toLocaleLowerCase()}`, 'mf')){
             // @ts-ignore
             mfInfo[0] && window[mfInfo[0]].get('./' + mfInfo[1])

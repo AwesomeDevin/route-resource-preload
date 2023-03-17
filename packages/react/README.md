@@ -56,7 +56,7 @@ webpack: {
   plugins: {
     add: [
       new RouteResourcePreloadPlugin({
-        // [the-preloading-key]: ['path']
+        // [the-preloading-flag]: ['path']
 
         // project's components(modules)
         modulePreloadMap: {
@@ -97,13 +97,13 @@ const Image = dynamic({
 
 export default function Main(props){
   return <>
-    <PreloadLink key="/A"  onClick={()=>{
+    <PreloadLink flag="/A"  onClick={()=>{
       navigate('/A')   // navigate comes from react-router-dom, you can custom your code.
       }} 
     >
       Preload Component A
     </PreloadLink>
-    <PreloadLink key="/MF">
+    <PreloadLink flag="/MF">
       {/* Link comes from react-router-dom, you can custom your code. */}
       <Link to="/MF" >Preload MF</Link>
     </PreloadLink>
@@ -125,7 +125,7 @@ submodule | maybe you didn't export default, you need it | string | - | ❎
 
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
-key | the preloading key | string | - | ✅
+flag | the preloading flag | string | - | ✅
 children | children ReactNode | ReactNode | - | ✅
 action | trigger preload action | <a href="#init--inview">string (init / inview)</a> | hover | ❎
 onClick | PreloadLink click event | () => void | - | ❎
@@ -159,7 +159,7 @@ inview | Trigger preload after PreloadLink in the view
 ```js
 {
   "/A": ["../components/A"],
-  // [the-preloading-key]: ['your components path']
+  // [the-preloading-flag]: ['your components path']
 }
 ```
 
@@ -167,7 +167,7 @@ inview | Trigger preload after PreloadLink in the view
 ```js
 {
   "/MF": ["ling_core/Components"]
-  // [the-preloading-key]: ['your components path']
+  // [the-preloading-flag]: ['your components path']
 }
 ```
 
@@ -175,6 +175,6 @@ inview | Trigger preload after PreloadLink in the view
 ```js
 {
   "/A": ['https://domain.com/xxx.png']
-  // [the-preloading-key]: ['your assets link']
+  // [the-preloading-flag]: ['your assets link']
 }
 ```
