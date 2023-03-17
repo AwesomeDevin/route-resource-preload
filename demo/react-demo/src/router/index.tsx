@@ -1,4 +1,4 @@
-import { Route, Routes as Switch, Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Route, Routes as Switch, Link, useNavigate } from 'react-router-dom'
 
 
 import { dynamic, PreloadLink } from '@route-resource-preload/react'
@@ -27,8 +27,7 @@ const TimerMF = Hoc(Image)
 export default function Router(){
 
   const navigate = useNavigate()
-  const [parmas] = useSearchParams()
-  const [showPreload] = useState(!!parmas.get('tab'))
+  const [showPreload] = useState(!!window.location.search.match('tab'))
 
   const [timestamp, setTimestamp] = useState(0)
 
