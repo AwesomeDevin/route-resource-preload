@@ -142,7 +142,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 					obj.assets.forEach((str: string) => {
 						let type = toType(str);
-						let href = _path.join(publicPath, str)
+						let href =  publicPath.endsWith('/') ? publicPath + str : `${publicPath}/${str}`
 						if (type) tmp.push({ type, href });
 					});
 				});

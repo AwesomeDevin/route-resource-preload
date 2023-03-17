@@ -142,7 +142,9 @@ export default function PreloadLink(props: IProps) {
       getPreloadFiles(to)
       return
     }
-    fetch(publicPath + '/' + filename)
+    const url = publicPath.endsWith('/') ? publicPath + filename : `${publicPath}/${filename}`
+
+    fetch(url)
       .then(res => res.json())
       .then(res => {
         window.routerResourceManifest = res
