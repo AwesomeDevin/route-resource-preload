@@ -22,7 +22,7 @@ declare namespace NameSpaceRouteResourcePreloadPlugin {
 		headers?: true | ((files: Asset[], pattern: Pattern, filemap: FileMap) => any[]);
 		filename?: string;
 		minify?: boolean;
-		basename?: string
+		publicPath?: string
 	}
 }
 
@@ -62,7 +62,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 	constructor(opts: NameSpaceRouteResourcePreloadPlugin.Options) {
 		const { assets, headers, modulePreloadMap, mfPreloadMap, assetPreloadMap  } = opts || {};
-		const { filename = 'route-resource-manifest.json', minify = true,  basename = '' } = opts || {};
+		const { filename = 'route-resource-manifest.json', minify = true,  publicPath = '' } = opts || {};
 		let { routes } = opts || {}
 
 		if (!routes && !modulePreloadMap && !mfPreloadMap && !assetPreloadMap) {
@@ -142,7 +142,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 					obj.assets.forEach((str: string) => {
 						let type = toType(str);
-						let href = _path.join(basename, str)
+						let href = _path.join(publicPath, str)
 						if (type) tmp.push({ type, href });
 					});
 				});

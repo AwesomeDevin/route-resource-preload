@@ -4,7 +4,7 @@ import { loadMap } from './constant'
 interface IProps {
   to: string
   children: React.ReactNode
-  basename?: string
+  publicPath?: string
   onClick?: ()=>void
   filename?: string
   action?: 'init' | 'inview'
@@ -25,7 +25,7 @@ declare global{
 
 
 export default function PreloadLink(props: IProps) {
-  const { to, children,  basename = '', onClick, filename = 'route-resource-manifest.json', action, className } = props
+  const { to, children,  publicPath = '', onClick, filename = 'route-resource-manifest.json', action, className } = props
 
 
   const [preload, setPreload] = useState(false)
@@ -70,7 +70,7 @@ export default function PreloadLink(props: IProps) {
       switch (type) {
         case 'script':
           dom = document.createElement('script')
-          dom.src = href
+          dom.src = `/${href}`
           checkComponentKeys(href, 'script')
           break
         case 'mf':
@@ -142,7 +142,7 @@ export default function PreloadLink(props: IProps) {
       getPreloadFiles(to)
       return
     }
-    fetch(basename + './' + filename)
+    fetch(publicPath + '/' + filename)
       .then(res => res.json())
       .then(res => {
         window.routerResourceManifest = res

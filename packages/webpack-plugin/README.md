@@ -8,7 +8,7 @@
 - Split modules, improving the first screen loading experience of your App. 
 - Minimize dynamic component loading time and providing the best user experience.
 - Support manually to preloading.
-- Support automatic the preloading of resources ( JS / Component / Module-Federation / Svg / Png , Etc) by route and providing the best user experience.
+- Support automatic the preloading of resources ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) by route and providing the best user experience.
 - Support typescript.
 
 ## [DEMO](https://route-resource-preload.netlify.app/)
@@ -108,13 +108,13 @@ loading | A spinner for displaying loading state | FunctionComponent<any> | - |
 submodule | maybe you didn't export default, you need it | string | - | ❎
 
 #### PreloadLink
-> PreloadLink's basename param is the same as RouteResourcePreloadPlugin's basename param
+> PreloadLink's publicPath param is the same as RouteResourcePreloadPlugin's publicPath param
 
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 to | route path to preload | string | - | ✅
 children | children ReactNode | ReactNode | - | ✅
-basename | router basename | string | - | ❎
+publicPath | router publicPath | string | - | ❎
 action | trigger preload action | <a href="#init--inview">string (init / inview)</a> | hover | ❎
 onClick | PreloadLink click event | () => void | - | ❎
 className | PreloadLink classname | string | - | ❎
@@ -123,14 +123,14 @@ className | PreloadLink classname | string | - | ❎
 ## Plugin
 
 #### RouteResourcePreloadPlugin
-> RouteResourcePreloadPlugin's basename param is the same as PreloadLink's basename param
+> RouteResourcePreloadPlugin's publicPath param is the same as PreloadLink's publicPath param
 
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 modulePreloadMap | project's components(modules) | <a href="#modulepreloadmap-object">modulePreloadMap Object</a> | - | ❎
 mfPreloadMap | module-federation's components(modules) | <a href="#mfpreloadmap-object">mfPreloadMap Object</a> | - | ❎
 assetPreloadMap | static assets | <a href="#assetPreloadMap-object">assetPreloadMap Object</a> | - | ❎
-basename | router basename | string | - | ❎
+publicPath | router publicPath | string | - | ❎
 
 
 ## Others
