@@ -55,17 +55,19 @@ webpack: {
   plugins: {
     add: [
       new RouteResourcePreloadPlugin({
-        // project's components(modules), the key is route path
+        // [the-preloading-key]: ['path']
+
+        // project's components(modules)
         modulePreloadMap: {
           "/A": ["../components/A"]
         },
         
-        // module-federation's components(modules), the key is route path
+        // module-federation's components(modules)
         mfPreloadMap: {
           "/MF": ["ling_core/Components"]
         },
         
-        // static assets (just like js/css/png/jpg/font, etc.), the key is route path
+        // static assets (just like js/css/png/jpg/font, etc.)
         assetPreloadMap: {
           "/A": ['https://domain.com/xxx.png']
         }
@@ -94,10 +96,14 @@ const Image = dynamic({
 
 export default function Main(props){
   return <>
-    <PreloadLink to="/A"  onClick={()=>{navigate('/A')}} className="App-link">
+    <PreloadLink key="/A"  onClick={()=>{
+      navigate('/A')
+      }} 
+    >
       Preload Component A
     </PreloadLink>
-    <PreloadLink to="/MF" className="App-link">
+    <PreloadLink key="/MF">
+      {/* react-router-dom to navigate */}
       <Link to="/MF" >Preload MF</Link>
     </PreloadLink>
   </>
@@ -114,29 +120,29 @@ loading | A spinner for displaying loading state | FunctionComponent<any> | - |
 submodule | maybe you didn't export default, you need it | string | - | ❎
 
 #### PreloadLink
-> PreloadLink's publicPath param is the same as RouteResourcePreloadPlugin's publicPath param
+> PreloadLink's `publicPath` is the same as RouteResourcePreloadPlugin's `publicPath`
 
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
-to | route path to preload | string | - | ✅
+key | the preloading key | string | - | ✅
 children | children ReactNode | ReactNode | - | ✅
-publicPath | router publicPath | string | - | ❎
 action | trigger preload action | <a href="#init--inview">string (init / inview)</a> | hover | ❎
 onClick | PreloadLink click event | () => void | - | ❎
 className | PreloadLink classname | string | - | ❎
+publicPath | server publicPath | string | - | ❎
 
 
 ## Plugin
 
 #### RouteResourcePreloadPlugin
-> RouteResourcePreloadPlugin's publicPath param is the same as PreloadLink's publicPath param
+> RouteResourcePreloadPlugin's `publicPath` is the same as PreloadLink's `publicPath`
 
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 modulePreloadMap | project's components(modules) | <a href="#modulepreloadmap-object">modulePreloadMap Object</a> | - | ❎
 mfPreloadMap | module-federation's components(modules) | <a href="#mfpreloadmap-object">mfPreloadMap Object</a> | - | ❎
 assetPreloadMap | static assets | <a href="#assetPreloadMap-object">assetPreloadMap Object</a> | - | ❎
-publicPath | router publicPath | string | - | ❎
+publicPath | server publicPath | string | - | ❎
 
 
 ## Others
@@ -152,7 +158,7 @@ inview | Trigger preload after PreloadLink in the view
 ```js
 {
   "/A": ["../components/A"],
-  // [route-path]: ['your components path']
+  // [the-preloading-key]: ['your components path']
 }
 ```
 
@@ -160,7 +166,7 @@ inview | Trigger preload after PreloadLink in the view
 ```js
 {
   "/MF": ["ling_core/Components"]
-  // [route-path]: ['your components path']
+  // [the-preloading-key]: ['your components path']
 }
 ```
 
@@ -168,6 +174,6 @@ inview | Trigger preload after PreloadLink in the view
 ```js
 {
   "/A": ['https://domain.com/xxx.png']
-  // [route-path]: ['your assets link']
+  // [the-preloading-key]: ['your assets link']
 }
 ```

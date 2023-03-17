@@ -2,7 +2,7 @@ import { createElement, useCallback, useEffect, useRef, useState, FunctionCompon
 
 import { loadMap } from './constant'
 interface IProps {
-  to: string
+  key: string
   children: React.ReactNode
   publicPath?: string
   onClick?: ()=>void
@@ -19,13 +19,13 @@ interface IFile {
 
 declare global{
   interface Window {
-    routerResourceManifest: any
+    routerResourcePreloadManifest: any
   }
 }
 
 
 export default function PreloadLink(props: IProps) {
-  const { to, children,  publicPath = '', onClick, filename = 'route-resource-preload-manifest.json', action, className } = props
+  const { key, children,  publicPath = '', onClick, filename = 'route-resource-preload-manifest.json', action, className } = props
 
 
   const [preload, setPreload] = useState(false)
@@ -96,9 +96,9 @@ export default function PreloadLink(props: IProps) {
     setLoaded(true)
   }, [preloadFiles])
 
-  const getPreloadFiles = useCallback((to: string) => {
-    if (!to) return
-    const files = window.routerResourceManifest && window.routerResourceManifest[to]
+  const getPreloadFiles = useCallback((key: string) => {
+    if (!key) return
+    const files = window.routerResourcePreloadManifest && window.routerResourcePreloadManifest[key]
     if (files && files.length && files instanceof Array) {
       setPreloadFiles(files)
     }
@@ -138,8 +138,8 @@ export default function PreloadLink(props: IProps) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    if (window.routerResourceManifest) {
-      getPreloadFiles(to)
+    if (window.routerResourcePreloadManifest) {
+      getPreloadFiles(key)
       return
     }
     const url = publicPath.endsWith('/') ? publicPath + filename : `${publicPath}/${filename}`
@@ -147,10 +147,10 @@ export default function PreloadLink(props: IProps) {
     fetch(url)
       .then(res => res.json())
       .then(res => {
-        window.routerResourceManifest = res
-        getPreloadFiles(to)
+        window.routerResourcePreloadManifest = res
+        getPreloadFiles(key)
       })
-  }, [to])
+  }, [key])
   
   useEffect(()=>{
     if(action === 'init'){
