@@ -8,7 +8,6 @@ interface IComponent {
 interface ILoadMap {
   cache: Record<TRoute, boolean>
   component:  Record<string, IComponent>
-  // component
 }
 
 export const loadMap: ILoadMap = {

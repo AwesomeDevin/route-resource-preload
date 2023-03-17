@@ -1,10 +1,10 @@
-import { createElement, useCallback, useEffect, useRef, useState, FunctionComponent, useMemo } from 'react'
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 
 import { loadMap } from './constant'
 interface IProps {
-  to: string
+  flag: string
   children: React.ReactNode
-  basename?: string
+  publicPath?: string
   onClick?: ()=>void
   filename?: string
   action?: 'init' | 'inview'
@@ -19,13 +19,13 @@ interface IFile {
 
 declare global{
   interface Window {
-    routerResourceManifest: any
+    routerResourcePreloadManifest: any
   }
 }
 
 
 export default function PreloadLink(props: IProps) {
-  const { to, children,  basename = '', onClick, filename = 'route-resource-manifest.json', action, className } = props
+  const { flag, children,  publicPath = '', onClick, filename = 'route-resource-preload-manifest.json', action, className } = props
 
 
   const [preload, setPreload] = useState(false)
@@ -34,15 +34,14 @@ export default function PreloadLink(props: IProps) {
   const [preloadFiles, setPreloadFiles] = useState<IFile[]>([])
   const ref = useRef<HTMLAnchorElement>(null)
 
-  const checkComponentKeys = (href: string, type: 'script' | 'mf')=>{
+  const checkComponentLoaded = (href: string, type: 'script' | 'mf')=>{
     const componentKeys = Object.keys(loadMap.component)
     if(type === 'script'){
       for(let index = 0;index < componentKeys.length; index++){
         const key = componentKeys[index]
-        if(href.match(key)){
-          loadMap.component[key].preload().then(()=>{
-            loadMap.component[key].loaded = true
-          })
+        if(href.match(key) || key.match(href)){
+          if(loadMap.component[key].loaded) return true
+          loadMap.component[key].preload()
           break
         }
       }
@@ -50,9 +49,8 @@ export default function PreloadLink(props: IProps) {
       for(let index = 0;index < componentKeys.length; index++){
         const key = componentKeys[index]
         if(key.match(href)){
-          loadMap.component[key].preload().then(()=>{
-            loadMap.component[key].loaded = true
-          })
+          if(loadMap.component[key].loaded) return true
+          loadMap.component[key].preload()
           break
         }
       }
@@ -69,14 +67,16 @@ export default function PreloadLink(props: IProps) {
       let dom
       switch (type) {
         case 'script':
-          dom = document.createElement('script')
-          dom.src = href
-          checkComponentKeys(href, 'script')
+          if(!checkComponentLoaded(href.toLocaleLowerCase(), 'script')){
+            dom = document.createElement('script')
+            dom.src = href.startsWith('/') ? href : `/${href}`
+          }
           break
         case 'mf':
-          // @ts-ignore
-          mfInfo[0] && window[mfInfo[0]].get('./' + mfInfo[1])
-          checkComponentKeys(mfInfo[1], 'mf')
+          if(!checkComponentLoaded(`${mfInfo[0].toLocaleLowerCase()}_${mfInfo[1].toLocaleLowerCase()}`, 'mf')){
+            // @ts-ignore
+            mfInfo[0] && window[mfInfo[0]].get('./' + mfInfo[1])
+          }
           break
         default:
           dom = document.createElement('link')
@@ -96,9 +96,9 @@ export default function PreloadLink(props: IProps) {
     setLoaded(true)
   }, [preloadFiles])
 
-  const getPreloadFiles = useCallback((to: string) => {
-    if (!to) return
-    const files = window.routerResourceManifest && window.routerResourceManifest[to]
+  const getPreloadFiles = useCallback((key: string) => {
+    if (!key) return
+    const files = window.routerResourcePreloadManifest && window.routerResourcePreloadManifest[key]
     if (files && files.length && files instanceof Array) {
       setPreloadFiles(files)
     }
@@ -138,17 +138,20 @@ export default function PreloadLink(props: IProps) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    if (window.routerResourceManifest) {
-      getPreloadFiles(to)
+    if (window.routerResourcePreloadManifest) {
+      getPreloadFiles(flag)
       return
     }
-    fetch(basename + './' + filename)
+    let url = publicPath.endsWith('/') ? publicPath + filename : `${publicPath}/${filename}`
+
+
+    fetch(url)
       .then(res => res.json())
       .then(res => {
-        window.routerResourceManifest = res
-        getPreloadFiles(to)
+        window.routerResourcePreloadManifest = res
+        getPreloadFiles(flag)
       })
-  }, [to])
+  }, [flag])
   
   useEffect(()=>{
     if(action === 'init'){

@@ -1,4 +1,4 @@
-import { Route, Routes as Switch, Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Route, Routes as Switch, Link, useNavigate } from 'react-router-dom'
 
 
 import { dynamic, PreloadLink } from '@route-resource-preload/react'
@@ -27,8 +27,7 @@ const TimerMF = Hoc(Image)
 export default function Router(){
 
   const navigate = useNavigate()
-  const [parmas] = useSearchParams()
-  const [showPreload] = useState(!!parmas.get('tab'))
+  const [showPreload] = useState(!!window.location.search.match('tab'))
 
   const [timestamp, setTimestamp] = useState(0)
 
@@ -38,9 +37,10 @@ export default function Router(){
 
   return <>
   <div className='tabs'>
+    <p> ❗️correct data requires <strong className='trigger' style={{}}>disable cache</strong> ❗️</p>
       <a href='/'>Test Load</a>
       <a href='/?tab=preload'>Test preload</a>
-    </div>    
+  </div>    
   
   <div className='core'>
     <Switch>
@@ -63,10 +63,10 @@ export default function Router(){
       </Link>
     </div>
      :<div>
-      <PreloadLink to="/A"  onClick={()=>{navigate('/A')}} className="App-link">
+      <PreloadLink flag="/A"  onClick={()=>{navigate('/A')}} className="App-link">
         Preload Component A
       </PreloadLink>
-      <PreloadLink to="/MF" className="App-link">
+      <PreloadLink flag="/MF" className="App-link">
         <Link to="/MF" >Preload MF</Link>
       </PreloadLink>
     </div>}

@@ -2,16 +2,23 @@
 [![Build Size](https://img.shields.io/bundlephobia/minzip/@route-resource-preload/react?label=bundle%20size)](https://bundlephobia.com/result?p=@route-resource-preload/react)
 [![Version](https://img.shields.io/npm/v/@route-resource-preload/react?style=flat)](https://www.npmjs.com/package/@route-resource-preload/react)
 
-🚀 Focus on improving the first screen loading speed of applications and providing the best user experience. 
+
+🚀 Focus on improving the first screen loading speed of applications and providing the best user experience, inspiration comes from [the preloading of NextJS](https://web.dev/route-prefetching-in-nextjs/). 
 
 ## Why do you need route-resource-preload ?
-- Split modules, improving the first screen loading experience of your App. 
+- Split modules loads as needed, improving the first screen loading experience of your App. 
 - Minimize dynamic component loading time and providing the best user experience.
 - Support manually to preloading.
-- Support automatic the preloading of resources ( JS / Component / Module-Federation / Svg / Png , Etc) by route and providing the best user experience.
+- Support automatic the preloading of resources ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) by route and providing the best user experience.
 - Support typescript.
 
-## [DEMO](https://route-resource-preload.netlify.app/)
+## [DEMO TEST](https://route-resource-preload.netlify.app/)
+Component | Normal Load(ms) | Preload (ms)
+--- | --- | ---
+Simple Component (single-resource) | 150 | 1
+Simple Component (single-resource) | 350 | 8
+
+> It can be seen from the table that preloading significantly improves the loading speed of components, especially for complex components, the improvement of loading speed is more obvious. This shows that in complex business scenarios, `preloading can significantly improve page loading speed and user experience`.
 
 ## Install
 ```shell
@@ -49,18 +56,20 @@ webpack: {
   plugins: {
     add: [
       new RouteResourcePreloadPlugin({
-        // project's components(modules), the key is route path
+        // [the-preloading-flag]: ['path']
+
+        // project's components(modules)
         modulePreloadMap: {
           "/A": ["../components/A"]
         },
         
-        // module-federation's components(modules), the key is route path
+        // module-federation's components(modules)
         mfPreloadMap: {
           "/MF": ["ling_core/Components"]
         },
         
-        // static assets (just like js/css/png/jpg/font, etc.), the key is route path
-        assetsPreloadMap: {
+        // static assets (just like js/css/png/jpg/font, etc.)
+        assetPreloadMap: {
           "/A": ['https://domain.com/xxx.png']
         }
       })
@@ -88,10 +97,14 @@ const Image = dynamic({
 
 export default function Main(props){
   return <>
-    <PreloadLink to="/A"  onClick={()=>{navigate('/A')}} className="App-link">
+    <PreloadLink flag="/A"  onClick={()=>{
+      navigate('/A')   // navigate comes from react-router-dom, you can custom your code.
+      }} 
+    >
       Preload Component A
     </PreloadLink>
-    <PreloadLink to="/MF" className="App-link">
+    <PreloadLink flag="/MF">
+      {/* Link comes from react-router-dom, you can custom your code. */}
       <Link to="/MF" >Preload MF</Link>
     </PreloadLink>
   </>
@@ -108,29 +121,29 @@ loading | A spinner for displaying loading state | FunctionComponent<any> | - |
 submodule | maybe you didn't export default, you need it | string | - | ❎
 
 #### PreloadLink
-> PreloadLink's basename param is the same as RouteResourcePreloadPlugin's basename param
+> PreloadLink's `publicPath` is the same as RouteResourcePreloadPlugin's `publicPath`
 
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
-to | route path to preload | string | - | ✅
+flag | the preloading flag | string | - | ✅
 children | children ReactNode | ReactNode | - | ✅
-basename | router basename | string | - | ❎
 action | trigger preload action | <a href="#init--inview">string (init / inview)</a> | hover | ❎
 onClick | PreloadLink click event | () => void | - | ❎
 className | PreloadLink classname | string | - | ❎
+publicPath | server publicPath | string | - | ❎
 
 
 ## Plugin
 
-#### RouteResourcePreloadPlugin
-> RouteResourcePreloadPlugin's basename param is the same as PreloadLink's basename param
+#### Webpack-RouteResourcePreloadPlugin
+> RouteResourcePreloadPlugin's `publicPath` is the same as PreloadLink's `publicPath`
 
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 modulePreloadMap | project's components(modules) | <a href="#modulepreloadmap-object">modulePreloadMap Object</a> | - | ❎
 mfPreloadMap | module-federation's components(modules) | <a href="#mfpreloadmap-object">mfPreloadMap Object</a> | - | ❎
-assetsPreloadMap | static assets | <a href="#assetspreloadmap-object">assetsPreloadMap Object</a> | - | ❎
-basename | router basename | string | - | ❎
+assetPreloadMap | static assets | <a href="#assetPreloadMap-object">assetPreloadMap Object</a> | - | ❎
+publicPath | server publicPath | string | - | ❎
 
 
 ## Others
@@ -146,7 +159,7 @@ inview | Trigger preload after PreloadLink in the view
 ```js
 {
   "/A": ["../components/A"],
-  // [route-path]: ['your components path']
+  // [the-preloading-flag]: ['your components path']
 }
 ```
 
@@ -154,14 +167,14 @@ inview | Trigger preload after PreloadLink in the view
 ```js
 {
   "/MF": ["ling_core/Components"]
-  // [route-path]: ['your components path']
+  // [the-preloading-flag]: ['your components path']
 }
 ```
 
-#### assetsPreloadMap Object
+#### assetPreloadMap Object
 ```js
 {
   "/A": ['https://domain.com/xxx.png']
-  // [route-path]: ['your assets link']
+  // [the-preloading-flag]: ['your assets link']
 }
 ```
