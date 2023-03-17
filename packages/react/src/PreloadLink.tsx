@@ -1,4 +1,4 @@
-import { createElement, useCallback, useEffect, useRef, useState, FunctionComponent, useMemo } from 'react'
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 
 import { loadMap } from './constant'
 interface IProps {

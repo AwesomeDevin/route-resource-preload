@@ -1,6 +1,6 @@
 {
   "name": "@route-resource-preload/webpack-plugin",
-  "version": "1.0.0-beta.9",
+  "version": "1.0.0-beta.10",
   "description": "Focus on improving the first screen loading speed of applications and providing the best user experience.",
   "scripts": {
     "build": "npx vite build && npx tsc -p tsconfig.json --emitDeclarationOnly",

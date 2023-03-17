@@ -31,12 +31,16 @@ export default function dynamic(params: IPrams) {
     const promise = loader()
       .then((res: FunctionComponent<any> | Record<string, FunctionComponent<any>>) => {
         //@ts-ignore
-        module = submodule ? res[submodule] : res 
-        loadMap.component[id].loaded = true
+        module = submodule ? res[submodule] : res
+        if(id){
+          loadMap.component[id].loaded = true
+        }
         return res
       })
       .catch((err: string) => {
-        loadMap.component[id].loaded = true
+        if(id){
+          loadMap.component[id].loaded = true
+        }
         throw new Error(err)
       })
     return promise
@@ -53,16 +57,16 @@ export default function dynamic(params: IPrams) {
   }
 
   const Component = (props: any) => {
-    const [enable, setEnable] = useState( id && loadMap.component[id].loaded ? true : false)
+    const [enable, setEnable] = useState( id && loadMap.component[id]?.loaded ? true : false)
 
     const { onEnd, ...rets } = props
 
     useEffect(() => {
-      if (!loadMap.component[id].loaded || !module) {
+      if (!loadMap.component[id]?.loaded || !module) {
         load().then(() => {
           setEnable(true)
         })
-      } else if (!!loadMap.component[id].loaded && !!module && !enable) {
+      } else if (!!loadMap.component[id]?.loaded && !!module && !enable) {
         setEnable(true)
       }
     }, [])
