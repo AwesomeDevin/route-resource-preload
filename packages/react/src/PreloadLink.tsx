@@ -25,7 +25,7 @@ declare global{
 
 
 export default function PreloadLink(props: IProps) {
-  const { to, children,  publicPath = '', onClick, filename = 'route-resource-manifest.json', action, className } = props
+  const { to, children,  publicPath = '', onClick, filename = 'route-resource-preload-manifest.json', action, className } = props
 
 
   const [preload, setPreload] = useState(false)

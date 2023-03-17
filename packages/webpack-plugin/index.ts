@@ -62,7 +62,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 	constructor(opts: NameSpaceRouteResourcePreloadPlugin.Options) {
 		const { assets, headers, modulePreloadMap, mfPreloadMap, assetPreloadMap  } = opts || {};
-		const { filename = 'route-resource-manifest.json', minify = true,  publicPath = '' } = opts || {};
+		const { filename = 'route-resource-preload-manifest.json', minify = true,  publicPath = '' } = opts || {};
 		let { routes } = opts || {}
 
 		if (!routes && !modulePreloadMap && !mfPreloadMap && !assetPreloadMap) {
