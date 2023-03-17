@@ -16,7 +16,7 @@ declare namespace NameSpaceRouteResourcePreloadPlugin {
 	interface Options {
 		modulePreloadMap?: Record<string, Pattern>
 		mfPreloadMap?: Record<string, Pattern>
-		assetsPreloadMap?: Record<string, Pattern>
+		assetPreloadMap?: Record<string, Pattern>
 		routes?: Record<string, Pattern> | ((input: string) => Filter<string>);
 		assets?: Record<string, string> | ((filepath: string) => Filter<string>);
 		headers?: true | ((files: Asset[], pattern: Pattern, filemap: FileMap) => any[]);
@@ -61,29 +61,35 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 	run: (compilation: any) => void;
 
 	constructor(opts: NameSpaceRouteResourcePreloadPlugin.Options) {
-		const { assets, headers, modulePreloadMap, mfPreloadMap, assetsPreloadMap  } = opts || {};
+		const { assets, headers, modulePreloadMap, mfPreloadMap, assetPreloadMap  } = opts || {};
 		const { filename = 'route-resource-manifest.json', minify = true,  basename = '' } = opts || {};
 		let { routes } = opts || {}
 
-		if (!routes && !modulePreloadMap && !mfPreloadMap && !assetsPreloadMap) {
-			throw new Error('One of routes/modulePreloadMap/mfPreloadMap/assetsPreloadMap mapping is required');
+		if (!routes && !modulePreloadMap && !mfPreloadMap && !assetPreloadMap) {
+			throw new Error('One of routes/modulePreloadMap/mfPreloadMap/assetPreloadMap mapping is required');
 		}
 
 		const modulePreloadKeys = modulePreloadMap ? Object.keys(modulePreloadMap) : []
 		const mfPreloadKeys = mfPreloadMap ? Object.keys(mfPreloadMap) : []
-		const assetsPreloadKeys = assetsPreloadMap ? Object.keys(assetsPreloadMap) : []
+		const assetsPreloadKeys = assetPreloadMap ? Object.keys(assetPreloadMap) : []
 
-
-		if(!routes && modulePreloadKeys.length){
-			routes =  (str) => {
-				for(var index = 0; index < modulePreloadKeys.length; index++){
-					const route = modulePreloadKeys[index]
-					if(modulePreloadMap[route].includes(str)){
-						return route
+		try{
+			if(!routes && modulePreloadKeys.length){
+				routes =  (str) => {
+					for(var index = 0; index < modulePreloadKeys.length; index++){
+						const route = modulePreloadKeys[index]
+						if(!(modulePreloadMap[route])){
+							throw new Error(`404: ${route} Not Found， please check your router.`)
+						}
+						if(modulePreloadMap[route].includes(str)){
+							return route
+						}
 					}
+					return str
 				}
-				return str
 			}
+		} catch (e){
+			throw new Error(e)
 		}
 
 		if(!routes){
@@ -93,6 +99,8 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 		const toRoute = toFunction(routes);
 		const toHeaders = toFunction(headers) || headers === true && toLink;
 		const toType = toFunction(assets) || toAsset;
+
+		
 
 		this.run = bundle => {
 			const Pages = new Map();
@@ -168,7 +176,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 				if(assetsPreloadKeys.length && routes.length){
 					assetsPreloadKeys.forEach(key=>{
-						const preloadAssets = assetsPreloadMap[key]?.map(href=>({type: toType(href), href}))
+						const preloadAssets = assetPreloadMap[key]?.map(href=>({type: toType(href), href}))
 						if(Files[key] && preloadAssets instanceof Array){
 							Files[key] = Files[key].concat(preloadAssets)
 						}else{

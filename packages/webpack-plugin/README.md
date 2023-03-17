@@ -60,7 +60,7 @@ webpack: {
         },
         
         // static assets (just like js/css/png/jpg/font, etc.), the key is route path
-        assetsPreloadMap: {
+        assetPreloadMap: {
           "/A": ['https://domain.com/xxx.png']
         }
       })
@@ -129,7 +129,7 @@ Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 modulePreloadMap | project's components(modules) | <a href="#modulepreloadmap-object">modulePreloadMap Object</a> | - | ❎
 mfPreloadMap | module-federation's components(modules) | <a href="#mfpreloadmap-object">mfPreloadMap Object</a> | - | ❎
-assetsPreloadMap | static assets | <a href="#assetspreloadmap-object">assetsPreloadMap Object</a> | - | ❎
+assetPreloadMap | static assets | <a href="#assetPreloadMap-object">assetPreloadMap Object</a> | - | ❎
 basename | router basename | string | - | ❎
 
 
@@ -158,7 +158,7 @@ inview | Trigger preload after PreloadLink in the view
 }
 ```
 
-#### assetsPreloadMap Object
+#### assetPreloadMap Object
 ```js
 {
   "/A": ['https://domain.com/xxx.png']

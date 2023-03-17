@@ -9,10 +9,13 @@ export default  defineConfig({
   build: {
     // minify: false,
     lib: {
-      entry: [ './src/index.ts'], // 设置入口文件
+      entry: ['./src/index.ts'], // 设置入口文件
 
       name: packageJSON.name, 
       formats: ['es','cjs'],
+      fileName: (format, entryName) => {
+        return `${entryName}.${format}.js`
+      },
     },
     // sourcemap: true, // 输出.map文件
     rollupOptions: {
