@@ -1504,15 +1504,15 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@route-resource-preload/react@^1.0.0-beta.4":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@route-resource-preload/react/-/react-1.0.0-beta.4.tgz#81cd7905abeb53528cdc716512a766eb0bcdf969"
-  integrity sha512-NR17MqpEaBbry3teAbnC0rj+XC2Vde4sQ8pWhXMxDbIx7HD+Xde3XskrHgXSHXYjSo6pr09dh3cV3/aNX3eoZA==
+"@route-resource-preload/react@^1.0.0-beta.11":
+  version "1.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@route-resource-preload/react/-/react-1.0.0-beta.11.tgz#648accd39c518adbf9c0b81108600bdb639013e2"
+  integrity sha512-cA/TFCPyw4qdQ9NGkJ0kAV2x2I3RSBHDbw49/YwJw+bz/0TtKyU5rwENJ2zCTfdtKDFhB1O6Jr48w4eNp1PqLg==
 
-"@route-resource-preload/webpack-plugin@^1.0.0-beta.4":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@route-resource-preload/webpack-plugin/-/webpack-plugin-1.0.0-beta.4.tgz#b86b25733f03437c10436efc3cdcdaad06d21383"
-  integrity sha512-0Y+82QQNvdiMSmwLn7qdypt22F/sTUEaTp10u2WkZ2TiADHYj44mxZvhjRCgcPueYRDISpxf7Q49D0NlIgYAug==
+"@route-resource-preload/webpack-plugin@^1.0.0-beta.11":
+  version "1.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@route-resource-preload/webpack-plugin/-/webpack-plugin-1.0.0-beta.11.tgz#59f06fdd0da9fd53af63a7124b9f6ce0776c027f"
+  integrity sha512-NfoOe9lwNU5X1EO0DKqIvF++gFi4JkILTEXItNolOgPsOt/8s2GsWp1GJy341i2a9GqoGkyGCacYdzh55R8KHw==
 
 "@rushstack/eslint-patch@^1.0.6":
   version "1.2.0"
