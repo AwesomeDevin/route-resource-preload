@@ -1,6 +1,4 @@
-const _path = require('path')
-
-const NAME = 'webpack-route-resource-manifest';
+const NAME = 'webpack-route-resource-preload';
 
 declare namespace NameSpaceRouteResourcePreloadPlugin {
 	type Pattern = string[];
@@ -23,6 +21,7 @@ declare namespace NameSpaceRouteResourcePreloadPlugin {
 		filename?: string;
 		minify?: boolean;
 		publicPath?: string
+		inline?: boolean
 	}
 }
 
@@ -62,7 +61,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 	constructor(opts: NameSpaceRouteResourcePreloadPlugin.Options) {
 		const { assets, headers, modulePreloadMap, mfPreloadMap, assetPreloadMap  } = opts || {};
-		const { filename = 'route-resource-preload-manifest.json', minify = true,  publicPath = '' } = opts || {};
+		const { filename = 'route-resource-preload-manifest.json', minify = true,  publicPath = '', inline = true } = opts || {};
 		let { routes } = opts || {}
 
 		if (!routes && !modulePreloadMap && !mfPreloadMap && !assetPreloadMap) {
@@ -108,7 +107,8 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 			const Files: Record<string, {type: string, href: string}[]> = {};
 
 			try{
-				const { chunks, modules } = bundle.getStats().toJson();
+				const bundleJson = bundle.getStats().toJson()
+				const { chunks, modules } = bundleJson;
 
 				chunks.forEach((chunk: any) => {
 					const { id, files, origins, entry } = chunk;
@@ -149,6 +149,21 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 				function write(data: Record<string, any>) {
 
+					if(inline){
+						const script = Files['*'].find(x => x.type === 'script');
+						const assetPrefix = publicPath ? publicPath : '/'
+						const assetKey = script.href.replace(assetPrefix, '')
+						const asset = bundle.assets[assetKey]
+						if(asset){
+							let nxt = `window.__routerResourcePreloadManifest=${JSON.stringify(data)};`;
+							nxt += asset.source();
+							bundle.assets[assetKey] = {
+								size: () => nxt.length,
+								source: () => nxt
+							};
+						}
+					}
+
 					const str = JSON.stringify(data, null, minify ? 0 : 2);
 					bundle.assets[filename] = {
 						size: () => str.length,
@@ -187,18 +202,17 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 			
 
 				if (!toHeaders) {
-					return write(Files)
+					write(Files)
+				}else{
+					routes.forEach(pattern => {
+						const files = Files[pattern];
+						const headers = toHeaders(files, pattern, Files) || [];
+						Manifest[pattern] = { files, headers };
+					});
+					write(Manifest);
 				}
-
-				routes.forEach(pattern => {
-					const files = Files[pattern];
-					const headers = toHeaders(files, pattern, Files) || [];
-					Manifest[pattern] = { files, headers };
-				});
-
-				return write(Manifest);
 			}catch(e){
-				throw new Error(e)
+				bundle.errors.push(new Error(e))
 			}
 		};
 	}

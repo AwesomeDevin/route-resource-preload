@@ -19,7 +19,7 @@ interface IFile {
 
 declare global{
   interface Window {
-    routerResourcePreloadManifest: any
+    __routerResourcePreloadManifest: any
   }
 }
 
@@ -98,7 +98,7 @@ export default function PreloadLink(props: IProps) {
 
   const getPreloadFiles = useCallback((key: string) => {
     if (!key) return
-    const files = window.routerResourcePreloadManifest && window.routerResourcePreloadManifest[key]
+    const files = window.__routerResourcePreloadManifest && window.__routerResourcePreloadManifest[key]
     if (files && files.length && files instanceof Array) {
       setPreloadFiles(files)
     }
@@ -138,17 +138,16 @@ export default function PreloadLink(props: IProps) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    if (window.routerResourcePreloadManifest) {
+    if (window.__routerResourcePreloadManifest) {
       getPreloadFiles(flag)
       return
     }
     let url = publicPath.endsWith('/') ? publicPath + filename : `${publicPath}/${filename}`
 
-
     fetch(url)
       .then(res => res.json())
       .then(res => {
-        window.routerResourcePreloadManifest = res
+        window.__routerResourcePreloadManifest = res
         getPreloadFiles(flag)
       })
   }, [flag])
