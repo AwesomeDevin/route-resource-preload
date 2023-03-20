@@ -86,7 +86,7 @@ export default function Router(){
         <Link to="/MF" >Preload MF</Link>
       </PreloadLink>
       <PreloadLink flag="/A"  className="App-link" onClick={()=>{setVisible(true)}}>
-        Load Modal
+        PreLoad Modal
       </PreloadLink>
     </div>}
   </div>

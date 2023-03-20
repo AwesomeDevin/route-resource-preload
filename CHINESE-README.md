@@ -114,8 +114,9 @@ export default function Main(props){
 参数 | 描述 | 类型 | 默认值 | 是否必须
 ---- | ---- | ---- | ---- | ---
 loader | 动态加载组件 | () => Promise<FunctionComponent<any> / Record<string, FunctionComponent<any>>> | - | ✅
-loading | 组件加载中状态时渲染 | FunctionComponent<any> | - | 
+loading | 组件加载中状态时渲染 | FunctionComponent<any> | - | ❎
 submodule | 如果你没有默认导出模块，你可能会需要它 | string | - | ❎
+visible | 视图内组件预加载完成后是否立即渲染 (适用于 Modal、Popover 这一类预加载渲染完成但不需立即可见的组件) | boolean | true | ❎
 
 #### PreloadLink
 参数 | 描述 | 类型 | 默认值 | 是否必须
