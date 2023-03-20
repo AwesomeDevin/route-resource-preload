@@ -1,36 +1,42 @@
-import { createElement, FunctionComponent, useEffect, useLayoutEffect, useState } from 'react'
+
+import { ComponentPropsWithRef, ComponentType, createElement, ReactElement, useEffect, useLayoutEffect, useState } from 'react'
 
 import { loadMap } from './constant'
 
-interface IPrams {
-  loader: () => Promise<FunctionComponent<any> | Record<string, FunctionComponent<any>>>
-  loading?: FunctionComponent<any>
+interface IPrams<T> {
+  loader: () => Promise<{ default: T }>
+  loading?: ComponentType<any>
   submodule?: string
   visible?: boolean
+}
+
+interface ExoticComponent<P = {}> {
+  /**
+   * **NOTE**: Exotic components are not callable.
+   */
+  (props: P): (ReactElement|null);
 }
 
 function resolve(obj: any) {
   return obj && obj.__esModule ? obj.default : obj
 }
 
-function render(target: FunctionComponent<any>, props: any) {
+function render(target: ComponentType<any>, props: any) {
   return createElement(resolve(target), props)
 }
 
-export default function dynamic(params: IPrams) {
+export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>): ExoticComponent<ComponentPropsWithRef<T>> & { preload: () => void}  {
   const { loader, loading, submodule, visible = true } = params
 
-  let module: FunctionComponent<any>
+  let module: T
 
   const functionStr = loader.toString()
   const matches = functionStr.match(/"(\w*)"/)
   const id = matches ? matches[1].toLocaleLowerCase() : ''
 
-  
-
   const load = () => {
     const promise = loader()
-      .then((res: FunctionComponent<any> | Record<string, FunctionComponent<any>>) => {
+      .then((res) => {
         //@ts-ignore
         module = submodule ? res[submodule] : res
         if(id){
@@ -48,27 +54,24 @@ export default function dynamic(params: IPrams) {
   }
 
 
-  const preload: () => Promise<FunctionComponent<any> | Record<string, FunctionComponent<any>>> = () => load()
+  const preload = () => load()
 
   if(id){
     loadMap.component[id] = {
       preload,
       loaded: false
     }
-  }
-
-  
+  }  
 
   const Component = (props: any) => {
 
-    if(!visible){
-      return <></>
-    }
-    
+    const { onEnd, ...rets } = props
     const [enable, setEnable] = useState( id && loadMap.component[id]?.loaded ? true : false)
 
-    const { onEnd, ...rets } = props
-
+    if(!visible){
+      return null
+    }
+    
     useEffect(() => {
       if (!loadMap.component[id]?.loaded || !module) {
         load().then(() => {
@@ -85,8 +88,6 @@ export default function dynamic(params: IPrams) {
         onEnd && onEnd()
       }
     },[enable ])
-
-
     
     return enable ? render(module, rets) : loading ? createElement(loading, rets) : null
   }

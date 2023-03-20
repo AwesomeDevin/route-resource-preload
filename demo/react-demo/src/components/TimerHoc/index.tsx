@@ -1,7 +1,7 @@
-import  { useCallback, useRef } from "react";
+import  { ComponentType, useCallback, useRef, ComponentPropsWithRef } from "react";
 
-export default function Hoc(Com: any){
-  function  Timer(props: any){
+export default function Hoc<T extends ComponentType<any>>(Com: T ): T{
+  function  Timer(props: ComponentPropsWithRef<T> & { onEnd: (val: number)=>void} ){
     const { onEnd } = props
     const starTime = useRef({
       second: new Date().getSeconds(),

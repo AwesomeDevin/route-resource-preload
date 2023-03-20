@@ -7,8 +7,9 @@ import Hoc from '../components/TimerHoc'
 import { useCallback, useMemo, useState } from 'react'
 
 
+
 const ComponentA = dynamic({
-  loader: ()=>import('../components/A'),
+  loader: () => import('../components/A'),
   loading: () => <>loading...</>
 })
 
@@ -38,9 +39,8 @@ export default function Router(){
 
   const Modal = useMemo(()=> dynamic({
     visible,
-    loader: () => import('antd'),
+    loader: () => import('antd/es/modal'),
     loading: () => <>loading...</>,
-    submodule: 'Modal'
   }),[visible])
 
   const TimerModal = useMemo(()=>Hoc(Modal),[Modal]) 
@@ -59,10 +59,11 @@ export default function Router(){
       <Route path='/MF' element={<>
         <TimerMF onEnd={setVal} height={250} src="https://img14.360buyimg.com/ling/s516x0_jfs/t1/97522/12/25179/1393762/622aa4c9E4ff1c9d2/3de6b0ab3c754b8d.png" />
         </>} />
+        {/* <ImageA /> */}
     </Switch>
     <div style={{marginTop: 20, color: '#ccc'}}>Component Loading Time: {timestamp} (ms)</div>
 
-    {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}} onEnd={setVal} />}
+    {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}}> This is Modal</TimerModal>}
 
     
         
