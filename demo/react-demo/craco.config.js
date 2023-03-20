@@ -15,7 +15,7 @@ module.exports = async function () {
         add: [
           new RouteResourceManifest({
             modulePreloadMap: {
-              "/A": ["../components/A"]
+              "/A": ["../components/A",'antd']
             },
             mfPreloadMap: {
               "/MF": ["ling_core/Components"]

@@ -116,8 +116,9 @@ export default function Main(props){
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 loader | dynamic import module | () => Promise<FunctionComponent<any> / Record<string, FunctionComponent<any>>> | - | ✅
-loading | A spinner for displaying loading state | FunctionComponent<any> | - | 
+loading | A spinner for displaying loading state | FunctionComponent<any> | - | ❎
 submodule | maybe you didn't export default, you need it | string | - | ❎
+visible | display immediately after the component is loaded | boolean | true | ❎
 
 #### PreloadLink
 > PreloadLink's `publicPath` is the same as RouteResourcePreloadPlugin's `publicPath`

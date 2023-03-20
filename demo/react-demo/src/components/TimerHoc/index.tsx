@@ -6,7 +6,6 @@ export default function Hoc(Com: any){
     const starTime = useRef({
       second: new Date().getSeconds(),
       milliseconds: new Date().getMilliseconds(),
-
     })
 
     const handleCallback = useCallback(() => {

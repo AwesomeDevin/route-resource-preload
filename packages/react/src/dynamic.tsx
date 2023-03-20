@@ -1,4 +1,4 @@
-import { createElement, FunctionComponent, useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { createElement, FunctionComponent, useEffect, useLayoutEffect, useState } from 'react'
 
 import { loadMap } from './constant'
 
@@ -6,6 +6,7 @@ interface IPrams {
   loader: () => Promise<FunctionComponent<any> | Record<string, FunctionComponent<any>>>
   loading?: FunctionComponent<any>
   submodule?: string
+  visible?: boolean
 }
 
 function resolve(obj: any) {
@@ -17,7 +18,7 @@ function render(target: FunctionComponent<any>, props: any) {
 }
 
 export default function dynamic(params: IPrams) {
-  const { loader, loading, submodule } = params
+  const { loader, loading, submodule, visible = true } = params
 
   let module: FunctionComponent<any>
 
@@ -56,7 +57,14 @@ export default function dynamic(params: IPrams) {
     }
   }
 
+  
+
   const Component = (props: any) => {
+
+    if(!visible){
+      return <></>
+    }
+    
     const [enable, setEnable] = useState( id && loadMap.component[id]?.loaded ? true : false)
 
     const { onEnd, ...rets } = props
@@ -78,6 +86,8 @@ export default function dynamic(params: IPrams) {
       }
     },[enable ])
 
+
+    
     return enable ? render(module, rets) : loading ? createElement(loading, rets) : null
   }
 

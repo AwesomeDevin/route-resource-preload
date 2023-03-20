@@ -4,7 +4,7 @@ import { Route, Routes as Switch, Link, useNavigate } from 'react-router-dom'
 import { dynamic, PreloadLink } from '@route-resource-preload/react'
 
 import Hoc from '../components/TimerHoc'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 
 const ComponentA = dynamic({
@@ -26,6 +26,7 @@ const TimerMF = Hoc(Image)
 
 export default function Router(){
 
+  const [visible, setVisible] = useState(false)
   const navigate = useNavigate()
   const [showPreload] = useState(!!window.location.search.match('tab'))
 
@@ -34,6 +35,15 @@ export default function Router(){
   const setVal = useCallback((val: number)=>{
     setTimestamp(val)
   },[])
+
+  const Modal = useMemo(()=> dynamic({
+    visible,
+    loader: () => import('antd'),
+    loading: () => <>loading...</>,
+    submodule: 'Modal'
+  }),[visible])
+
+  const TimerModal = useMemo(()=>Hoc(Modal),[Modal]) 
 
   return <>
   <div className='tabs'>
@@ -52,15 +62,20 @@ export default function Router(){
     </Switch>
     <div style={{marginTop: 20, color: '#ccc'}}>Component Loading Time: {timestamp} (ms)</div>
 
+    {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}} onEnd={setVal} />}
+
     
         
     {!showPreload ? <div>
       <Link to="/A"  className="App-link">
         Load Component A
       </Link>
-      <Link to="/MF" className="App-link">
+      <Link to="/MF" className="App-link" >
         Load MF
       </Link>
+      <span  className="App-link" onClick={()=>{setVisible(true)}}>
+        Load Modal
+      </span>
     </div>
      :<div>
       <PreloadLink flag="/A"  onClick={()=>{navigate('/A')}} className="App-link">
@@ -68,6 +83,9 @@ export default function Router(){
       </PreloadLink>
       <PreloadLink flag="/MF" className="App-link">
         <Link to="/MF" >Preload MF</Link>
+      </PreloadLink>
+      <PreloadLink flag="/A"  className="App-link" onClick={()=>{setVisible(true)}}>
+        Load Modal
       </PreloadLink>
     </div>}
   </div>
