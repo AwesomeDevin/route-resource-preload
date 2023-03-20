@@ -63,7 +63,7 @@ export default function Router(){
     </Switch>
     <div style={{marginTop: 20, color: '#ccc'}}>Component Loading Time: {timestamp} (ms)</div>
 
-    {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}}> This is Modal</TimerModal>}
+    {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}} onEnd={setVal}> This is Modal</TimerModal>}
 
     
         
