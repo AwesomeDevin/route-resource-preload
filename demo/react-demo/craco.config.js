@@ -1,4 +1,4 @@
-const RouteResourceManifest = require('@route-resource-preload/webpack-plugin')
+const RouteResourcePreloadPlugin = require('@route-resource-preload/webpack-plugin')
 const cracoModuleFederation = require('craco-module-federation')
 
 module.exports = async function () {
@@ -13,7 +13,7 @@ module.exports = async function () {
     webpack: {
       plugins: {
         add: [
-          new RouteResourceManifest({
+          new RouteResourcePreloadPlugin({
             modulePreloadMap: {
               "/A": ["../components/A",'antd/es/modal']
             },
