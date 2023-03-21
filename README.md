@@ -10,10 +10,11 @@
 </details>
 
 <details>
-<summary>preload.gif</summary>
+<summary>route-resource-preload.gif</summary>
 
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/preload.gif?raw=true)
 </details>
+As we can see from the gif, the display time of the loading component is greatly reduced by preloading.
 
 ## Why do you need route-resource-preload ?
 - <a href="#dynamic---split-your-component-code-and-load-it-dynamically">`Split modules loads as needed`</a>, improving the first screen loading experience of your App. 
