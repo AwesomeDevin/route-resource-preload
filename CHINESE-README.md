@@ -27,7 +27,7 @@
 npm install @route-resource-preload/webpack-plugin @route-resource-preload/react
 ```
 
-## 在 React 中使用，计划支持 Vue 中
+## 在 React 中使用
 #### 方法 1 - 手动调用预加载
 ```js
 import { dynamic } from '@route-resource-preload/react'
