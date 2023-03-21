@@ -47,7 +47,7 @@ export default function Router(){
 
   return <>
   <div className='tabs'>
-    <p> ❗️correct data requires <strong className='trigger' style={{}}>disable cache</strong> ❗️</p>
+    <p> ❗️correct data requires <strong className='trigger' style={{}}>disable browser cache</strong> ❗️</p>
       <a href='/'>Test Load</a>
       <a href='/?tab=preload'>Test preload</a>
   </div>    
