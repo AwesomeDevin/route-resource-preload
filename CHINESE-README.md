@@ -3,10 +3,10 @@
 🚀 专注于提升应用首屏加载速度，提供最佳用户体验，灵感来自[NextJS的预加载](https://web.dev/route-prefetching-in-nextjs/). 
 
 ## 为什么你需要 route-resource-preload ?
-- 拆分模块按需加载，提升App首屏加载体验. 
-- 最小化动态导入组件的加载时间以提供最佳用户体验.
-- 支持自动预加载资源（JS / Component / Module-Federation / UMD / Svg / Png 等），提供最佳用户体验
-- 支持手动调用预加载
+- 拆分模块按需加载，提升应用首屏加载体验.
+- 尽最大努力地去缩短动态导入组件的加载时间以提供最佳交互体验.
+- 支持自动预加载资源（JS / Component / Module-Federation / UMD / Svg / Png 等）.
+- 支持手动调用预加载.
 - 完备的 typescript 支持.
 
 ## [测试 DEMO](https://route-resource-preload.netlify.app/)
