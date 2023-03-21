@@ -126,7 +126,7 @@ loading | A spinner for displaying loading state | FunctionComponent<any> | - | 
 submodule | maybe you didn't export default, you need it | string | - | ❎
 visible | whether to render immediately after the components in the view are preloaded | boolean | true | ❎
 
-#### dynamic - Automatic the preloading of resources
+#### PreloadLink- Automatic the preloading of resources
 > PreloadLink's `publicPath` is the same as RouteResourcePreloadPlugin's `publicPath`
 
 Param | Description | Type | Default Value | necessary

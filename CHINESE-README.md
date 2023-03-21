@@ -123,7 +123,7 @@ loading | 组件加载中状态时渲染 | FunctionComponent<any> | - | ❎
 submodule | 如果你没有默认导出模块，你可能会需要它 | string | - | ❎
 visible | 视图内组件预加载完成后是否立即渲染 (适用于 Modal、Popover 这一类预加载渲染完成但不需立即可见的组件) | boolean | true | ❎
 
-#### dynamic - 自动触发预加载
+#### PreloadLink - 自动触发预加载
 参数 | 描述 | 类型 | 默认值 | 是否必须
 ---- | ---- | ---- | ---- | ---
 flag | 资源预加载唯一标志 | string | - | ✅
@@ -133,7 +133,7 @@ onClick | PreloadLink 点击事件 | () => void | - | ❎
 className | PreloadLink class | string | - | ❎
 publicPath | 服务端的静态资源存储路径 | string | - | ❎
 
-> PreloadLink 的 `publicPath` 参数与 RouteResourcePreloadPlugin's `publicPath` 参数报纸一致
+> PreloadLink 的 `publicPath` 参数与 RouteResourcePreloadPlugin's `publicPath` 参数往往一致
 
 
 ## Plugin
