@@ -8,7 +8,7 @@
 - `Split modules loads as needed`, improving the first screen loading experience of your App. 
 - `Minimize dynamic component loading time` and providing the best user experience.
 - Support `automatic the preloading of resources` ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) and providing the best user experience. 
-- Support `manually to preloading`.
+- Support `manually to preload`.
 - Support `typescript`.
 
 ## [DEMO TEST](https://route-resource-preload.netlify.app/)
