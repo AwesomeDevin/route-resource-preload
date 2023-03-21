@@ -5,11 +5,11 @@
 🚀 Focus on improving the first screen loading speed of applications and providing the best user experience, inspiration comes from [the preloading of NextJS](https://web.dev/route-prefetching-in-nextjs/). 
 
 ## Why do you need route-resource-preload ?
-- Split modules loads as needed, improving the first screen loading experience of your App. 
-- Minimize dynamic component loading time and providing the best user experience.
-- Support automatic the preloading of resources ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) and providing the best user experience.   
-- Support manually to preloading.
-- Support typescript.
+- `Split modules loads as needed`, improving the first screen loading experience of your App. 
+- `Minimize dynamic component loading time` and providing the best user experience.
+- Support `automatic the preloading of resources` ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) and providing the best user experience. 
+- Support `manually to preloading`.
+- Support `typescript`.
 
 ## [DEMO TEST](https://route-resource-preload.netlify.app/)
 Component | Normal Load(ms) | Preload (ms)
