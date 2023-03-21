@@ -9,6 +9,9 @@
 - 支持<a href="#方法-1---手动调用预加载">`手动调用预加载`</a>.
 - 完备的 `typescript` 支持.
 
+## 为什么选 route-resource-preload 而不是 [react.lazy](https://react.dev/reference/react/lazy#lazy)？
+`route-resource-preload` 在兼顾组件`代码分割`的同时，通过支持对组件的`自动预加载`及`手动预加载`，避免因为组件渲染延迟导致组件交互体验差。
+
 ## 为什么选 route-resource-preload 而不是 [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
 - 可以<a href="#init--inview">`更细节(鼠标 hover 时加载、出现在视图内时加载、visible 时加载、页面初始化时加载)`</a>处控制何时进行资源预加载
 - 支持预加载<a href="#mfpreloadmap-object">`Module-Federation`</a>

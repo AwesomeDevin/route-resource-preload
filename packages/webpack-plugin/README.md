@@ -4,6 +4,19 @@
 
 🚀 Focus on improving the first screen loading speed of applications and providing the best user experience, inspiration comes from [the preloading of NextJS](https://web.dev/route-prefetching-in-nextjs/). 
 
+#### [chinese document](https://github.com/AwesomeDevin/route-resource-preload/blob/main/CHINESE-README.md)
+<details>
+<summary>normal-lazy-load.gif</summary>
+
+![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/nornal-load.gif?raw=true)
+</details>
+
+<details>
+<summary>preload.gif</summary>
+
+![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/preload.gif?raw=true)
+</details>
+
 ## Why do you need route-resource-preload ?
 - <a href="#dynamic---split-your-component-code-and-load-it-dynamically">`Split modules loads as needed`</a>, improving the first screen loading experience of your App. 
 - `Minimize dynamic component loading time` and providing the best user experience.
@@ -11,6 +24,8 @@
 - Support <a href="#method-1---manual-preloading">`manually to preload`</a>.
 - Support `typescript`.
 
+## Why route-resoure-preload over [react.lazy](https://react.dev/reference/react/lazy#lazy)?
+`route-resource-preload` support `code splitting` of components, and support `automatic preloading` and `manual preloading` of components to avoid poor component interaction experience due to component rendering delays.
 ## Why route-resource-preload over [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
 - Control <a href="#init--inview">`when to preload in more detail`</a>
 - Support preload <a href="#mfpreloadmap-object">`Module-Federation`</a>
@@ -180,6 +195,8 @@ inview | Trigger preload after PreloadLink in the view
 ```js
 {
   "/A": ['https://domain.com/xxx.png']
-  // [the-preloading-flag]: ['your assets link']
+  // [the-preloading-flag]: ['your assets link'] (image/font/svg/css/js/...)
 }
 ```
+
+

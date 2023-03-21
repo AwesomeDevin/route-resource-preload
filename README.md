@@ -22,6 +22,8 @@
 - Support <a href="#method-1---manual-preloading">`manually to preload`</a>.
 - Support `typescript`.
 
+## Why route-resoure-preload over [react.lazy](https://react.dev/reference/react/lazy#lazy)?
+`route-resource-preload` support `code splitting` of components, and support `automatic preloading` and `manual preloading` of components to avoid poor component interaction experience due to component rendering delays.
 ## Why route-resource-preload over [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
 - Control <a href="#init--inview">`when to preload in more detail`</a>
 - Support preload <a href="#mfpreloadmap-object">`Module-Federation`</a>
