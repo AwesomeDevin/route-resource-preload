@@ -10,7 +10,9 @@
 </details>
 
 <details>
-<summary>preload.gif</summary>
+<summary>route-resource-preload.gif</summary>
+
+As we can see from the gif, the display time of the loading component is greatly reduced by preloading.
 
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/preload.gif?raw=true)
 </details>
