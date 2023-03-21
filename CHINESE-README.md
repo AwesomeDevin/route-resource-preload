@@ -10,9 +10,9 @@
 - 完备的 `typescript` 支持.
 
 ## 为什么选 route-resource-preload 而不是 [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
-- 可以<a href="#init--inview">更细节(鼠标 hover 时加载、出现在视图内时加载、visible 时加载、页面初始化时加载)</a>处控制何时进行资源预加载
+- 可以<a href="#init--inview">`更细节(鼠标 hover 时加载、出现在视图内时加载、visible 时加载、页面初始化时加载)`</a>处控制何时进行资源预加载
 - 支持预加载<a href="#mfpreloadmap-object">`Module-Federation`</a>
-- 支持预加载更多<a href="#assetPreloadMap-object">静态资源类型</a>
+- 支持预加载更多<a href="#assetPreloadMap-object">`静态资源类型`</a>
 
 ## [测试 DEMO](https://route-resource-preload.netlify.app/)
 资源 | 正常加载(ms) | 预加载 (ms)
