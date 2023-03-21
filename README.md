@@ -1,4 +1,4 @@
-# route-resource-preload 
+# route-resource-preload - Any code can be split 
 
 🚀 Focus on improving the first screen loading speed of applications and providing the best user experience, inspiration comes from [the preloading of NextJS](https://web.dev/route-prefetching-in-nextjs/). 
 

@@ -1,4 +1,4 @@
-# @route-resource-preload/webpack-plugin 
+# @route-resource-preload/webpack-plugin - Any code can be split
 [![Build Size](https://img.shields.io/bundlephobia/minzip/@route-resource-preload/webpack-plugin?label=bundle%20size)](https://bundlephobia.com/result?p=@route-resource-preload/webpack-plugin)
 [![Version](https://img.shields.io/npm/v/@route-resource-preload/webpack-plugin?style=flat)](https://www.npmjs.com/package/@route-resource-preload/webpack-plugin)
 
