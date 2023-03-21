@@ -12,12 +12,12 @@
 - Support `typescript`.
 
 ## Why route-resource-preload over [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
-- Control <a href="#init--inview">`when to preload in more detail`</a>
+- Control <a href="#init--inview">`when to preload in more detail(鼠标 hover 时加载、出现在视图内时加载、visible 时加载)`</a>
 - Support preload <a href="#mfpreloadmap-object">`Module-Federation`</a>
 - Support <a href="#assetPreloadMap-object">`More types`</a> of resource 
 
 ## [DEMO TEST](https://route-resource-preload.netlify.app/)
-Component | Normal Load(ms) | Preload (ms)
+Component | Normal Lazy Load(ms) | Preload (ms)
 --- | --- | ---
 Complex Component (one-resource) | 150 | 1
 Complex Component (six-resource) | 350 | 10
@@ -117,7 +117,7 @@ export default function Main(props){
 
 ## API
 
-#### dynamic
+#### dynamic - Split your component code and load it dynamically
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 loader | dynamic import module | () => Promise<FunctionComponent<any> / Record<string, FunctionComponent<any>>> | - | ✅
@@ -125,7 +125,7 @@ loading | A spinner for displaying loading state | FunctionComponent<any> | - | 
 submodule | maybe you didn't export default, you need it | string | - | ❎
 visible | whether to render immediately after the components in the view are preloaded | boolean | true | ❎
 
-#### PreloadLink
+#### dynamic - Automatic the preloading of resources
 > PreloadLink's `publicPath` is the same as RouteResourcePreloadPlugin's `publicPath`
 
 Param | Description | Type | Default Value | necessary
