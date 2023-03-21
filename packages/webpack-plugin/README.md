@@ -8,8 +8,13 @@
 - `Split modules loads as needed`, improving the first screen loading experience of your App. 
 - `Minimize dynamic component loading time` and providing the best user experience.
 - Support `automatic the preloading of resources` ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) and providing the best user experience. 
-- Support `manually to preload`.
+- Support <a href="#method-1---manual-preloading">`manually to preload`</a>.
 - Support `typescript`.
+
+## Why route-resource-preload over [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
+- Control <a href="#init--inview">`when to preload in more detail`</a>
+- Support preload <a href="#mfpreloadmap-object">`Module-Federation`</a>
+- Support <a href="#assetPreloadMap-object">`More types`</a> of resource 
 
 ## [DEMO TEST](https://route-resource-preload.netlify.app/)
 Component | Normal Load(ms) | Preload (ms)
