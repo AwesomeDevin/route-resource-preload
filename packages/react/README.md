@@ -119,7 +119,7 @@ Param | Description | Type | Default Value | necessary
 loader | dynamic import module | () => Promise<FunctionComponent<any> / Record<string, FunctionComponent<any>>> | - | ✅
 loading | A spinner for displaying loading state | FunctionComponent<any> | - | ❎
 submodule | maybe you didn't export default, you need it | string | - | ❎
-visible | display immediately after the component is loaded | boolean | true | ❎
+visible | whether to render immediately after the components in the view are preloaded | boolean | true | ❎
 
 #### PreloadLink
 > PreloadLink's `publicPath` is the same as RouteResourcePreloadPlugin's `publicPath`
