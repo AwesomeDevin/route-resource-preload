@@ -12,7 +12,7 @@
 - Support `typescript`.
 
 ## Why route-resource-preload over [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
-- Control <a href="#init--inview">`when to preload in more detail(鼠标 hover 时加载、出现在视图内时加载、visible 时加载)`</a>
+- Control <a href="#init--inview">`when to preload in more detail`</a>
 - Support preload <a href="#mfpreloadmap-object">`Module-Federation`</a>
 - Support <a href="#assetPreloadMap-object">`More types`</a> of resource 
 
@@ -180,7 +180,7 @@ inview | Trigger preload after PreloadLink in the view
 ```js
 {
   "/A": ['https://domain.com/xxx.png']
-  // [the-preloading-flag]: ['your assets link']
+  // [the-preloading-flag]: ['your assets link'] (image/font/svg/css/js/...)
 }
 ```
 

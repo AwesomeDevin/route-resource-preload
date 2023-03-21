@@ -178,7 +178,7 @@ inview | PreloadLink 出现在视图后执行
 ```js
 {
   "/A": ['https://domain.com/xxx.png']
-  // [预渲染唯一标志]: ['资源路径']
+  // [预渲染唯一标志]: ['资源路径'] (image/font/svg/css/js/...)
 }
 ```
 
