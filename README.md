@@ -3,6 +3,17 @@
 🚀 Focus on improving the first screen loading speed of applications and providing the best user experience, inspiration comes from [the preloading of NextJS](https://web.dev/route-prefetching-in-nextjs/). 
 
 #### [chinese document](https://github.com/AwesomeDevin/route-resource-preload/blob/main/CHINESE-README.md)
+<details>
+<summary>normal-lazy-load.gif</summary>
+
+![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/nornal-load.gif?raw=true)
+</details>
+
+<details open>
+<summary>preload.gif</summary>
+
+![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/preload.gif?raw=true)
+</details>
 
 ## Why do you need route-resource-preload ?
 - <a href="#dynamic---split-your-component-code-and-load-it-dynamically">`Split modules loads as needed`</a>, improving the first screen loading experience of your App. 
