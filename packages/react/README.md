@@ -6,9 +6,9 @@
 🚀 Focus on improving the first screen loading speed of applications and providing the best user experience, inspiration comes from [the preloading of NextJS](https://web.dev/route-prefetching-in-nextjs/). 
 
 ## Why do you need route-resource-preload ?
-- `Split modules loads as needed`, improving the first screen loading experience of your App. 
+- <a href="#dynamic---split-your-component-code-and-load-it-dynamically">`Split modules loads as needed`</a>, improving the first screen loading experience of your App. 
 - `Minimize dynamic component loading time` and providing the best user experience.
-- Support `automatic the preloading of resources` ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) and providing the best user experience. 
+- Support <a href="#preloadlink--automatic-the-preloading-of-resources">`automatic the preloading of resources`</a> ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) and providing the best user experience. 
 - Support <a href="#method-1---manual-preloading">`manually to preload`</a>.
 - Support `typescript`.
 
@@ -52,7 +52,7 @@ export default function Main(props){
 }
 ```
 
-#### Method 2 - Automatic preloading by route.
+#### Method 2 - Automatic preloading.
 Step 1: First, you need add **plugin** in your build config.
 ```js
 const RouteResourcePreloadPlugin = require('@route-resource-preload/webpack-plugin')
