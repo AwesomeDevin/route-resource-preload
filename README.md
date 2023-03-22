@@ -135,11 +135,11 @@ export default function Main(props){
 #### dynamic - Split your component code and load it dynamically
 
 ```js
-const Image = dynamic({
-  loader: ()=>import('xxx/Components'),
+const Modal = dynamic({
+  loader: () => import('xxx/Modal'),
   // loading: () => <>loading...</>,
   // suspense: true,
-  // submodule: 'Image',
+  // submodule: 'submodule',
   // visible: true,
 })
 ```
