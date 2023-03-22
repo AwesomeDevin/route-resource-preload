@@ -1,13 +1,14 @@
 
-import { ComponentPropsWithRef, ComponentType, createElement, ReactElement, useEffect, useLayoutEffect, useState } from 'react'
+import { ComponentPropsWithRef, ComponentType, createElement, ReactElement, useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 
 import { loadMap } from './constant'
 
-interface IPrams<T> {
-  loader: () => Promise<{ default: T }>
+interface IPrams<T extends ComponentType<any>> {
+  loader: () => Promise<Record<string, T>>
   loading?: ComponentType<any>
   submodule?: string
   visible?: boolean
+  suspense?: boolean
 }
 
 interface ExoticComponent<P = {}> {
@@ -25,14 +26,41 @@ function render(target: ComponentType<any>, props: any) {
   return createElement(resolve(target), props)
 }
 
+
+
 export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>): ExoticComponent<ComponentPropsWithRef<T> & {onEnd?: ()=>void}> & { preload: () => void}  {
-  const { loader, loading, submodule, visible = true } = params
+  const { loader, loading, submodule, visible = true, suspense } = params
 
   let module: T
 
   const functionStr = loader.toString()
   const matches = functionStr.match(/"(\w*)"/)
   const id = matches ? matches[1].toLocaleLowerCase() : ''
+
+  function fetchData(): <T extends Promise<any>>(fn:T) => T extends Promise<infer U> ? U: never {
+    let status = "pending"
+    let data: any = null
+    let promise: any = null
+    return (fn) => {
+      switch(status){
+        case "pending": {
+          const p = Promise.resolve(fn)
+            .then(res => {
+              status = "resolved"
+              data = res
+            })
+            status = "loading"
+            promise = p
+            throw promise
+        };
+        case "loading": throw promise;
+        case "resolved": return data;
+        default: break;
+      }
+    }
+  }
+  
+  const promiseFetch = fetchData()
 
   const load = () => {
     const promise = loader()
@@ -42,7 +70,7 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
         if(id){
           loadMap.component[id].loaded = true
         }
-        return res
+        return module
       })
       .catch((err: string) => {
         if(id){
@@ -66,21 +94,11 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
   const Component = (props: any) => {
 
     const { onEnd, ...rets } = props
-    const [enable, setEnable] = useState( id && loadMap.component[id]?.loaded ? true : false)
+    const [enable, setEnable] = useState( id && loadMap.component[id]?.loaded && module ? true : false)
 
     if(!visible){
       return <></>
     }
-    
-    useEffect(() => {
-      if (!loadMap.component[id]?.loaded || !module) {
-        load().then(() => {
-          setEnable(true)
-        })
-      } else if (!!loadMap.component[id]?.loaded && !!module && !enable) {
-        setEnable(true)
-      }
-    }, [])
 
 
     useLayoutEffect(()=>{
@@ -88,6 +106,23 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
         onEnd && onEnd()
       }
     },[enable ])
+    
+
+    const suspenseDom = useCallback(()=>promiseFetch(load()),[])
+
+    if(suspense && !enable){
+      return render(suspenseDom(), rets)
+    }
+    
+    useEffect(() => {
+      if (!!loadMap.component[id]?.loaded && !!module && !enable) {
+        setEnable(true)
+      }else if(!enable){
+        load().then(() => {
+          setEnable(true)
+        })
+      }
+    }, [])
     
     return enable ? render(module, rets) : loading ? createElement(loading, rets) : <></>
   }

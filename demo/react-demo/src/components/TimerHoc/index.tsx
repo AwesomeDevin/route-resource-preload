@@ -9,6 +9,7 @@ export default function Hoc(Com: any ){
     })
 
     const handleCallback = useCallback(() => {
+      console.log('starTime.current.milliseconds',starTime.current.milliseconds)
       const date = new Date()
       const second = date.getSeconds() - starTime.current.second
       const milliseconds = date.getMilliseconds() - starTime.current.milliseconds
