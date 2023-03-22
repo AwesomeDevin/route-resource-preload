@@ -33,7 +33,7 @@ As we can see from the gif, the display time of the loading component is greatly
 ## [DEMO TEST](https://route-resource-preload.netlify.app/)
 Component | Normal Lazy Load(ms) | Preload (ms)
 --- | --- | ---
-Complex Component (one-resource) | 150 | 1
+Simple Component (one-resource) | 150 | 1
 Complex Component (six-resource) | 350 | 10
 
 > It can be seen from the table that preloading significantly improves the loading speed of components, especially for complex components, the improvement of loading speed is more obvious. This shows that in complex business scenarios, `preloading can significantly improve component loading speed and user experience`.
