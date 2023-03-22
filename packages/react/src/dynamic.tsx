@@ -69,7 +69,7 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
     const [enable, setEnable] = useState( id && loadMap.component[id]?.loaded ? true : false)
 
     if(!visible){
-      return null
+      return <></>
     }
     
     useEffect(() => {
@@ -89,7 +89,7 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
       }
     },[enable ])
     
-    return enable ? render(module, rets) : loading ? createElement(loading, rets) : null
+    return enable ? render(module, rets) : loading ? createElement(loading, rets) : <></>
   }
 
   return Object.assign(Component, { preload })
