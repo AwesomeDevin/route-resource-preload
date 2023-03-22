@@ -85,6 +85,8 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
 
   const preload = () => load()
 
+  const suspenseDom = () => promiseFetch(load())
+
   if(id){
     loadMap.component[id] = {
       preload,
@@ -109,8 +111,6 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
     },[enable ])
     
 
-    const suspenseDom = useCallback(()=>promiseFetch(load()),[])
-    console.log('suspense && !enable',suspense , enable, loadMap.component, id, suspense && !enable)
     if(suspense && !enable){
       return render(suspenseDom(), rets)
     }
