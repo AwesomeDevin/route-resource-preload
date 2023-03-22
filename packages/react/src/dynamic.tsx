@@ -25,7 +25,7 @@ function render(target: ComponentType<any>, props: any) {
   return createElement(resolve(target), props)
 }
 
-export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>): ExoticComponent<ComponentPropsWithRef<T> & {onEnd: ()=>void}> & { preload: () => void}  {
+export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>): ExoticComponent<ComponentPropsWithRef<T> & {onEnd?: ()=>void}> & { preload: () => void}  {
   const { loader, loading, submodule, visible = true } = params
 
   let module: T
