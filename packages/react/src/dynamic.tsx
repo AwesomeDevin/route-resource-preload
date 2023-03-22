@@ -1,5 +1,5 @@
 
-import { ComponentPropsWithRef, ComponentType, createElement, ReactElement, useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { ComponentPropsWithRef, ComponentType, createElement, ReactElement, useCallback, useEffect, useState } from 'react'
 
 import { loadMap } from './constant'
 
@@ -34,7 +34,8 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
   let module: T
 
   const functionStr = loader.toString()
-  const matches = functionStr.match(/"(\w*)"/)
+  console.log('functionStr',functionStr)
+  const matches = functionStr.match(/"([^"]*)"/)
   const id = matches ? matches[1].toLocaleLowerCase() : ''
 
   function fetchData(): <T extends Promise<any>>(fn:T) => T extends Promise<infer U> ? U: never {
@@ -87,7 +88,7 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
   if(id){
     loadMap.component[id] = {
       preload,
-      loaded: false
+      loaded: loadMap.component[id]?.loaded || false
     }
   }  
 
@@ -101,15 +102,15 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
     }
 
 
-    useLayoutEffect(()=>{
-      if(enable ){
+    useEffect(()=>{
+      if(enable){
         onEnd && onEnd()
       }
     },[enable ])
     
 
     const suspenseDom = useCallback(()=>promiseFetch(load()),[])
-
+    console.log('suspense && !enable',suspense , enable, loadMap.component, id, suspense && !enable)
     if(suspense && !enable){
       return render(suspenseDom(), rets)
     }

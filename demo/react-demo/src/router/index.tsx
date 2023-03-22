@@ -4,7 +4,9 @@ import { Route, Routes as Switch, Link, useNavigate } from 'react-router-dom'
 import { dynamic, PreloadLink } from '@route-resource-preload/react'
 
 import Hoc from '../components/TimerHoc'
-import {   useCallback, useMemo, useState } from 'react'
+import {  
+  Suspense,
+   useCallback, useMemo, useState } from 'react'
 
 
 
@@ -58,7 +60,7 @@ export default function Router(){
       <a href='/'>Test Load</a>
       <a href='/?tab=preload'>Test preload</a>
   </div>    
-  {/* <Suspense fallback="suspense loading..."> */}
+  <Suspense fallback="suspense loading...">
   <div className='core'>
     <Switch>
       <Route path='*' element={<div style={{height: 250, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>This in Index</div>} />
@@ -97,6 +99,6 @@ export default function Router(){
       </PreloadLink>
     </div>}
   </div>
-  {/* </Suspense> */}
+  </Suspense>
   </>
 }
