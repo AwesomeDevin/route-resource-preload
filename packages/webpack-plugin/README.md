@@ -141,6 +141,23 @@ loading | A spinner for displaying loading state | FunctionComponent<any> | - | 
 submodule | maybe you didn't export default, you need it | string | - | ❎
 visible | whether to render immediately after the components in the view are preloaded | boolean | true | ❎
 
+> `dynamic` will return a HOC with `onEnd` prop, which will call back after the component is dynamically rendered to adapt to complex and changeable business scenarios, such as custom loading package elements/or computing component rendering time-consuming, etc.
+
+```js
+function CustomLoading (props: { moduleName: string }) {
+  const { moduleName } = props
+  const [loading, setLoading] = useState(true)
+  const Com = useMemo(()=>dynamic({ loader: () => import(`${moduleName}`)}),[moduleName])
+
+  // custom loading
+  return <Spin spinning={loading}>
+    <Com onEnd={()=>{ setLoading(false)}}  />
+  </Spin>
+}
+
+<CustomLoading moduleName={moduleName} />
+```
+
 #### PreloadLink- Automatic the preloading of resources
 > PreloadLink's `publicPath` is the same as RouteResourcePreloadPlugin's `publicPath`
 

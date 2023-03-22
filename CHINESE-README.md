@@ -126,6 +126,23 @@ loading | 组件加载中状态时渲染 | FunctionComponent<any> | - | ❎
 submodule | 如果你没有默认导出模块，你可能会需要它 | string | - | ❎
 visible | 视图内组件预加载完成后是否立即渲染 (适用于 Modal、Popover 这一类预加载渲染完成但不需立即可见的组件) | boolean | true | ❎
 
+> `dynamic` 返回的高阶组件，携带了一个 `onEnd` prop，会在组件动态渲染完后进行回调，以适应复杂多变的业务场景，如自定义loading包裹元素/或计算组件渲染耗时等。
+
+```js
+function CustomLoading (props: { moduleName: string }) {
+  const { moduleName } = props
+  const [loading, setLoading] = useState(true)
+  const Com = useMemo(()=>dynamic({ loader: () => import(`${moduleName}`)}),[moduleName])
+
+  // 自定义loading包裹元素
+  return <Spin spinning={loading}>
+    <Com onEnd={()=>{ setLoading(false)}}  />
+  </Spin>
+}
+
+<CustomLoading moduleName={moduleName} />
+```
+
 #### PreloadLink - 自动触发预加载
 参数 | 描述 | 类型 | 默认值 | 是否必须
 ---- | ---- | ---- | ---- | ---
@@ -136,7 +153,7 @@ onClick | PreloadLink 点击事件 | () => void | - | ❎
 className | PreloadLink class | string | - | ❎
 publicPath | 服务端的静态资源存储路径 | string | - | ❎
 
-> PreloadLink 的 `publicPath` 参数与 RouteResourcePreloadPlugin's `publicPath` 参数往往一致
+> `PreloadLink` 的 `publicPath` 参数与 `RouteResourcePreloadPlugin` 的 `publicPath` 参数往往一致
 
 
 ## Plugin
