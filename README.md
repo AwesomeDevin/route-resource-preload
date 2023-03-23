@@ -150,7 +150,7 @@ loader | dynamic import module | () => Promise<FunctionComponent<any> / Record<s
 loading | A spinner for displaying loading state | FunctionComponent<any> | - | ❌
 submodule | maybe you didn't export default, you need it | string | - | ❌
 visible | whether to render immediately after the components in the view are preloaded | boolean | true | ❌
-suspense |  use react <Suspense> for displaying loading state | boolean | - | ❌
+suspense |  use react `<Suspense>` for displaying loading state | boolean | - | ❌
 
 > `dynamic` will return a HOC with `onEnd` prop, which will call back after the component is dynamically rendered to adapt to complex and changeable business scenarios, such as custom loading package elements/or computing component rendering time-consuming, etc.
 
