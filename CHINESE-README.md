@@ -126,7 +126,7 @@ loader | 动态加载组件 | () => Promise<FunctionComponent<any> / Record<stri
 loading | 组件加载中状态时渲染 | FunctionComponent<any> | - | ❌
 submodule | 如果你没有默认导出模块，你可能会需要它 | string | - | ❌
 visible | 视图内组件预加载完成后是否立即渲染 (适用于 Modal、Popover 这一类预加载渲染完成但不需立即可见的组件) | boolean | true | ❌
-suspense | 是否使用 React <Suspense> 组件用于加载中状态渲染 | boolean | - | ❌
+suspense | 是否使用 React `<Suspense>` 组件用于加载中状态渲染 | boolean | - | ❌
 
 > `dynamic` 返回的高阶组件，携带了一个 `onEnd` prop，会在组件动态渲染完后进行回调，以适应复杂多变的业务场景，如自定义loading包裹元素/或计算组件渲染耗时等。
 
