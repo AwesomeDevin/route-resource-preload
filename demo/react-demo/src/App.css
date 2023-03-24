@@ -71,16 +71,28 @@ h1{
   color: #333 !important;
 }
 
-.tabs::after{
+.tabs a {
+  position: relative;
+  width: auto !important;
+  padding: 0 30px;
+  margin: 0;
+}
+
+
+.tabs a::after{
   content: '';
   display: block;
-  position: absolute;
-  left: 50%;
-  bottom: 23px;
-  transform: translateX(-50%);
   width: 1px;
-  height: 20px;
-  background-color: #000;
+  height: 25px;
+  background-color: #ccc;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.tabs a:nth-child(2)::after{
+  display: none;
 }
 
 h1{

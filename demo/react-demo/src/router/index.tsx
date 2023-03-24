@@ -6,19 +6,27 @@ import { dynamic, PreloadLink } from '@route-resource-preload/react'
 import Hoc from '../components/TimerHoc'
 import {  
   Suspense,
-   useCallback, useMemo, useState } from 'react'
+  useCallback,
+  useMemo,
+  useState 
+} from 'react'
+//@ts-ignore
+import _ from 'lodash'
 
+
+const getNow = dynamic({ loader: () => import('../utils'), submodule: 'getNow', type: 'jslib' })
+
+const moment = dynamic({ loader: ()=>import('moment') })
 
 
 const ComponentA = dynamic({
-  //@ts-ignore
   loader: () => import('../components/A'),
   loading: () => <>loading...</>,
   // suspense: true,
 })
 
+
 const Image = dynamic({
-  // @ts-ignore
   loader: ()=>import('ling_core/Components'),
   loading: () => <>loading...</>,
   // suspense: true,
@@ -32,12 +40,13 @@ const TimerA = Hoc(ComponentA)
 const TimerMF = Hoc(Image)
 
 
-
 export default function Router(){
 
   const [visible, setVisible] = useState(false)
   const navigate = useNavigate()
-  const [showPreload] = useState(!!window.location.search.match('tab'))
+  const [showType] = useState<'preload' | 'js-lib' | ''>(window.location.search.match('preload') ? 'preload' : (window.location.search.match('js-lib')? 'js-lib' : ''))
+  
+
 
   const [timestamp, setTimestamp] = useState(0)
 
@@ -54,11 +63,32 @@ export default function Router(){
 
   const TimerModal = useMemo(()=>Hoc(Modal),[Modal]) 
 
+  const getTime = useCallback(()=>{
+    getNow.preload().then(res=>{
+      alert('new Date(): ' + res().toLocaleString())
+    })
+  } ,[])
+
+
+  const getMomentTime = useCallback(()=>{
+    moment.preload().then(res=>{
+      console.log(res)
+      // alert('moment(): '+ res().format('LLLL'))
+    })
+    
+  },[])
+
+
+  const executeLodash = useCallback(()=>{
+    alert('_.difference([3, 2, 1], [4, 2]): ' + _.difference([3, 2, 1], [4, 2]))
+  },[])
+
   return <>
   <div className='tabs'>
     <p> ❗️correct data requires <strong className='trigger' style={{}}>disable browser cache</strong> ❗️</p>
       <a href='/'>Test Load</a>
       <a href='/?tab=preload'>Test preload</a>
+      <a href='/?tab=js-lib'>Test js-lib</a>
   </div>    
   <Suspense fallback="suspense loading...">
   <div className='core'>
@@ -73,10 +103,8 @@ export default function Router(){
     <div style={{marginTop: 20, color: '#ccc'}}>Component Loading Time: {timestamp} (ms)</div>
 
     {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}} onEnd={setVal}> This is Modal</TimerModal>}
-
-    
         
-    {!showPreload ? <div>
+    {!showType && <div>
       <Link to="/A"  className="App-link">
         Load Component A
       </Link>
@@ -86,8 +114,9 @@ export default function Router(){
       <span  className="App-link" onClick={()=>{setVisible(true)}}>
         Load Modal
       </span>
-    </div>
-     :<div>
+    </div>}
+    {
+      showType === 'preload' && <div>
       <PreloadLink flag="/A"  onClick={()=>{navigate('/A')}} className="App-link">
         Preload Component A
       </PreloadLink>
@@ -97,7 +126,23 @@ export default function Router(){
       <PreloadLink flag="/A"  className="App-link" onClick={()=>{setVisible(true)}}>
         PreLoad Modal
       </PreloadLink>
-    </div>}
+    </div>
+    }
+
+{
+      showType === 'js-lib' && <div>
+      <div   onClick={getTime} className="App-link">
+        Dynamic Load Local-JS-Lib
+      </div>
+      <div   onClick={getMomentTime} className="App-link">
+        Dynamic Load Moment-JS
+      </div>
+      <div   onClick={executeLodash} className="App-link">
+        Dynamic Load Lodash-JS
+      </div>
+      
+    </div>
+    }
   </div>
   </Suspense>
   </>
