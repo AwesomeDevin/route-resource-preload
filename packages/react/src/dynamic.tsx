@@ -1,16 +1,15 @@
 
-import { ComponentPropsWithRef, ComponentType, createElement, ReactElement, useCallback, useEffect, useState } from 'react'
+import { ComponentPropsWithRef, ComponentType, createElement, ReactElement, useEffect, useState } from 'react'
 
 import { loadMap } from './constant'
 
 
-interface IPrams<T extends unknown> {
-  loader: () => Promise<Record<string, T>>
+interface IPrams<U extends string | number | symbol,  T extends unknown> {
+  loader: () => Promise<{default: T }> | Promise<Record<U, unknown>>
   loading?: ComponentType<unknown>
-  submodule?: string
+  submodule?: U
   visible?: boolean
   suspense?: boolean
-  type?: 'component' | 'js-lib'
 }
 
 interface ExoticComponent<P = {}> {
@@ -34,10 +33,10 @@ function render(target: ComponentType<any>, props: any) {
 
 
 
-export default function dynamic<T extends unknown>(params: IPrams<T>): T extends ComponentType<any> ? TPreloadComponent<T> : TPreloadModule<T> {
-  const { loader, loading, submodule, visible = true, suspense, type = 'component' } = params
+export default function dynamic<U extends string | number | symbol, T extends unknown>(params: IPrams<U, T>): T extends ComponentType<any> ? TPreloadComponent<T> : TPreloadModule<T> {
+  const { loader, loading, submodule, visible = true, suspense } = params
 
-  let module: T
+  let module: T 
 
   const functionStr = loader.toString()
   const matches = functionStr.match(/"([^"]*)"/)
@@ -66,13 +65,13 @@ export default function dynamic<T extends unknown>(params: IPrams<T>): T extends
     }
   }
   
-  const promiseFetch = fetchData()
+  const promiseFetch = fetchData() 
 
   const load = () => {
     const promise = loader()
       .then((res) => {
         //@ts-ignore
-        module = submodule ? res[submodule] : res
+        module = submodule ? resolve(res[submodule]) : resolve(res)
         if(id){
           loadMap.component[id].loaded = true
         }
@@ -90,16 +89,14 @@ export default function dynamic<T extends unknown>(params: IPrams<T>): T extends
 
   const preload = () => load()
 
+  const suspenseDom = () => promiseFetch(load())
+
   if(id){
     loadMap.component[id] = {
       preload,
       loaded: loadMap.component[id]?.loaded || false
     }
   }  
-
-  // if(type === 'js-lib'){
-  //   return Object.assign(load, { preload }) as T extends ComponentType<any> ? never : TPreloadModule<T>
-  // }
 
 
   const Component = (props: any) => {
@@ -119,9 +116,9 @@ export default function dynamic<T extends unknown>(params: IPrams<T>): T extends
     },[enable ])
     
 
-    const suspenseDom = useCallback(()=>promiseFetch(load()),[]) as () => T extends ComponentType<any> ? ComponentType<any> : never
     if(suspense && !enable){
-      return render(suspenseDom(), rets)
+      
+      return render(suspenseDom as ComponentType<any>, rets)
     }
     
     useEffect(() => {
@@ -133,7 +130,9 @@ export default function dynamic<T extends unknown>(params: IPrams<T>): T extends
         })
       }
     }, [])
-    return enable ? render(module as  ComponentType<any>, rets) : loading ? createElement(loading, rets) : <></>
+    
+    return enable ? render(module as ComponentType<any>, rets) : loading ? render(loading, rets) : <></>
   }
+
   return Object.assign(Component, { preload }) as T extends ComponentType<any> ? TPreloadComponent<T> : never
 }

@@ -24,6 +24,7 @@ As we can see from the gif, the display time of the loading component is greatly
 - Support <a href="#preloadlink--automatic-the-preloading-of-resources">`automatic the preloading of resources`</a> ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) and providing the best user experience. 
 - Support <a href="#method-1---manual-preloading">`manually to preload`</a>.
 - Support `typescript`.
+- Support <a href="#dynamic---split-your-component-code-and-load-it-dynamically">`React <Suspense>`</a>.
 
 ## Why route-resoure-preload over [react.lazy](https://react.dev/reference/react/lazy#lazy)?
 `route-resource-preload` support `code splitting` of components, and support `automatic preloading` and `manual preloading` of components to avoid poor component interaction experience due to component rendering delays.
@@ -134,17 +135,29 @@ export default function Main(props){
 ## API
 
 #### dynamic - Split your component code and load it dynamically
+
+```js
+const Image = dynamic({
+  loader: ()=>import('xxx/Components'),
+  // loading: () => <>loading...</>,
+  // suspense: true,
+  // submodule: 'Image',
+  // visible: true,
+})
+```
+
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 loader | dynamic import module | () => Promise<FunctionComponent<any> / Record<string, FunctionComponent<any>>> | - | ✅
-loading | A spinner for displaying loading state | FunctionComponent<any> | - | ❎
-submodule | maybe you didn't export default, you need it | string | - | ❎
-visible | whether to render immediately after the components in the view are preloaded | boolean | true | ❎
+loading | A spinner for displaying loading state | FunctionComponent<any> | - | ❌
+submodule | maybe you didn't export default, you need it | string | - | ❌
+visible | whether to render immediately after the components in the view are preloaded | boolean | true | ❌
+suspense |  use react <Suspense> for displaying loading state | boolean | - | ❌
 
 > `dynamic` will return a HOC with `onEnd` prop, which will call back after the component is dynamically rendered to adapt to complex and changeable business scenarios, such as custom loading package elements/or computing component rendering time-consuming, etc.
 
 ```js
-function CustomLoading (props: { moduleName: string }) {
+function CommonLoading (props: { moduleName: string }) {
   const { moduleName } = props
   const [loading, setLoading] = useState(true)
   const Com = useMemo(()=>dynamic({ loader: () => import(`${moduleName}`)}),[moduleName])
@@ -155,33 +168,58 @@ function CustomLoading (props: { moduleName: string }) {
   </Spin>
 }
 
-<CustomLoading moduleName={moduleName} />
+<CommonLoading moduleName={moduleName} />
 ```
 
 #### PreloadLink- Automatic the preloading of resources
 > PreloadLink's `publicPath` is the same as RouteResourcePreloadPlugin's `publicPath`
+```js
+<PreloadLink  flag="/A"  >
+  Preload Component
+</PreloadLink>
+```
 
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 flag | the preloading flag | string | - | ✅
 children | children ReactNode | ReactNode | - | ✅
-action | trigger preload action | <a href="#init--inview">string (init / inview)</a> | hover | ❎
-onClick | PreloadLink click event | () => void | - | ❎
-className | PreloadLink classname | string | - | ❎
-publicPath | server publicPath | string | - | ❎
+action | trigger preload action | <a href="#init--inview">string (init / inview)</a> | hover | ❌
+onClick | PreloadLink click event | () => void | - | ❌
+className | PreloadLink classname | string | - | ❌
+publicPath | server publicPath | string | - | ❌
 
 
 ## Plugin
 
 #### Webpack-RouteResourcePreloadPlugin
 > RouteResourcePreloadPlugin's `publicPath` is the same as PreloadLink's `publicPath`
+```js
+new RouteResourcePreloadPlugin({
+  // [the-preloading-flag]: ['path']
+
+  // project's components(modules)
+  modulePreloadMap: {
+    "/A": ["../components/A"]
+  },
+
+  // module-federation's components(modules)
+  mfPreloadMap: {
+    "/MF": ["xxx/Components"]
+  },
+
+  // static assets (just like js/css/png/jpg/font, etc.)
+  assetPreloadMap: {
+    "/A": ['https://domain.com/xxx.png']
+  }
+})
+```
 
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
-modulePreloadMap | project's components(modules) | <a href="#modulepreloadmap-object">modulePreloadMap Object</a> | - | ❎
-mfPreloadMap | module-federation's components(modules) | <a href="#mfpreloadmap-object">mfPreloadMap Object</a> | - | ❎
-assetPreloadMap | static assets | <a href="#assetPreloadMap-object">assetPreloadMap Object</a> | - | ❎
-publicPath | server publicPath | string | - | ❎
+modulePreloadMap | project's components(modules) | <a href="#modulepreloadmap-object">modulePreloadMap Object</a> | - | ❌
+mfPreloadMap | module-federation's components(modules) | <a href="#mfpreloadmap-object">mfPreloadMap Object</a> | - | ❌
+assetPreloadMap | static assets | <a href="#assetPreloadMap-object">assetPreloadMap Object</a> | - | ❌
+publicPath | server publicPath | string | - | ❌
 
 
 ## Others
@@ -216,5 +254,3 @@ inview | Trigger preload after PreloadLink in the view
   // [the-preloading-flag]: ['your assets link'] (image/font/svg/css/js/...)
 }
 ```
-
-

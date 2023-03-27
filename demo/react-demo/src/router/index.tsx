@@ -10,13 +10,21 @@ import {
   useMemo,
   useState 
 } from 'react'
+// import { templateSettings } from 'lodash'
 //@ts-ignore
-import _ from 'lodash'
+// import _ from 'lodash'
+// import moment from 'moment'
 
 
-const getNow = dynamic({ loader: () => import('../utils'), submodule: 'getNow', type: 'jslib' })
+
+const getNow = dynamic({ loader: () => import('../utils'), submodule: 'getNow'})
 
 const moment = dynamic({ loader: ()=>import('moment') })
+
+
+const dynamicLodash = dynamic({ loader: ()=>import('lodash') })
+
+
 
 
 const ComponentA = dynamic({
@@ -72,15 +80,24 @@ export default function Router(){
 
   const getMomentTime = useCallback(()=>{
     moment.preload().then(res=>{
-      console.log(res)
+      //@ts-ignore
+      console.log(res instanceof Function ? res() : 1 )
       // alert('moment(): '+ res().format('LLLL'))
     })
+
+    
     
   },[])
 
-
   const executeLodash = useCallback(()=>{
-    alert('_.difference([3, 2, 1], [4, 2]): ' + _.difference([3, 2, 1], [4, 2]))
+    import('lodash').then(res=>{
+      console.log(res.default.after)
+    })
+
+    dynamicLodash.preload().then(res=>{
+
+      console.log(res.after)
+    })
   },[])
 
   return <>
@@ -139,6 +156,7 @@ export default function Router(){
       </div>
       <div   onClick={executeLodash} className="App-link">
         Dynamic Load Lodash-JS
+        {/* {getNow()} */}
       </div>
       
     </div>

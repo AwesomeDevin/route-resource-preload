@@ -7,6 +7,7 @@
 - `尽最大努力地去缩短动态导入组件的加载时间`（可以看作是 suspense loading 组件持续时间）以提供最佳交互体验.
 - 支持<a href="#preloadlink---自动触发预加载">`自动预加载资源`</a>（JS / Component / Module-Federation / UMD / Svg / Png 等）.
 - 支持<a href="#方法-1---手动调用预加载">`手动调用预加载`</a>.
+- 支持`React <Suspense>`。
 - 完备的 `typescript` 支持.
 
 ## 为什么选 route-resource-preload 而不是 [react.lazy](https://react.dev/reference/react/lazy#lazy)？
@@ -122,14 +123,15 @@ export default function Main(props){
 参数 | 描述 | 类型 | 默认值 | 是否必须
 ---- | ---- | ---- | ---- | ---
 loader | 动态加载组件 | () => Promise<FunctionComponent<any> / Record<string, FunctionComponent<any>>> | - | ✅
-loading | 组件加载中状态时渲染 | FunctionComponent<any> | - | ❎
-submodule | 如果你没有默认导出模块，你可能会需要它 | string | - | ❎
-visible | 视图内组件预加载完成后是否立即渲染 (适用于 Modal、Popover 这一类预加载渲染完成但不需立即可见的组件) | boolean | true | ❎
+loading | 组件加载中状态时渲染 | FunctionComponent<any> | - | ❌
+submodule | 如果你没有默认导出模块，你可能会需要它 | string | - | ❌
+visible | 视图内组件预加载完成后是否立即渲染 (适用于 Modal、Popover 这一类预加载渲染完成但不需立即可见的组件) | boolean | true | ❌
+suspense | 是否使用 React <Suspense> 组件用于加载中状态渲染 | boolean | - | ❌
 
 > `dynamic` 返回的高阶组件，携带了一个 `onEnd` prop，会在组件动态渲染完后进行回调，以适应复杂多变的业务场景，如自定义loading包裹元素/或计算组件渲染耗时等。
 
 ```js
-function CustomLoading (props: { moduleName: string }) {
+function CommonLoading (props: { moduleName: string }) {
   const { moduleName } = props
   const [loading, setLoading] = useState(true)
   const Com = useMemo(()=>dynamic({ loader: () => import(`${moduleName}`)}),[moduleName])
@@ -140,7 +142,7 @@ function CustomLoading (props: { moduleName: string }) {
   </Spin>
 }
 
-<CustomLoading moduleName={moduleName} />
+<CommonLoading moduleName={moduleName} />
 ```
 
 #### PreloadLink - 自动触发预加载
@@ -148,10 +150,10 @@ function CustomLoading (props: { moduleName: string }) {
 ---- | ---- | ---- | ---- | ---
 flag | 资源预加载唯一标志 | string | - | ✅
 children | PreloadLink 组件子节点 | ReactNode | - | ✅
-action | 触发预加载的时机 | <a href="#init--inview">string (init / inview)</a> | hover | ❎
-onClick | PreloadLink 点击事件 | () => void | - | ❎
-className | PreloadLink class | string | - | ❎
-publicPath | 服务端的静态资源存储路径 | string | - | ❎
+action | 触发预加载的时机 | <a href="#init--inview">string (init / inview)</a> | hover | ❌
+onClick | PreloadLink 点击事件 | () => void | - | ❌
+className | PreloadLink class | string | - | ❌
+publicPath | 服务端的静态资源存储路径 | string | - | ❌
 
 > `PreloadLink` 的 `publicPath` 参数与 `RouteResourcePreloadPlugin` 的 `publicPath` 参数往往一致
 
@@ -161,10 +163,10 @@ publicPath | 服务端的静态资源存储路径 | string | - | ❎
 #### Webpack-RouteResourcePreloadPlugin
 参数 | 描述 | 类型 | 默认值 | 是否必须
 ---- | ---- | ---- | ---- | ---
-modulePreloadMap | 预加载项目内组件映射 | <a href="#modulepreloadmap-object">modulePreloadMap Object</a> | - | ❎
-mfPreloadMap | 预加载 module-federation 组件映射 | <a href="#mfpreloadmap-object">mfPreloadMap Object</a> | - | ❎
-assetPreloadMap | 静态资源映射 | <a href="#assetPreloadMap-object">assetPreloadMap Object</a> | - | ❎
-publicPath | 服务端的静态资源存储路径 | string | - | ❎
+modulePreloadMap | 预加载项目内组件映射 | <a href="#modulepreloadmap-object">modulePreloadMap Object</a> | - | ❌
+mfPreloadMap | 预加载 module-federation 组件映射 | <a href="#mfpreloadmap-object">mfPreloadMap Object</a> | - | ❌
+assetPreloadMap | 静态资源映射 | <a href="#assetPreloadMap-object">assetPreloadMap Object</a> | - | ❌
+publicPath | 服务端的静态资源存储路径 | string | - | ❌
 
 > PreloadLink 的 `publicPath` 参数与 RouteResourcePreloadPlugin's `publicPath` 参数报纸一致
 
