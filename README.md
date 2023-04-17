@@ -3,6 +3,8 @@
 🚀 Focus on improving the first screen loading speed of applications and providing the best user experience, inspiration comes from [the preloading of NextJS](https://web.dev/route-prefetching-in-nextjs/). 
 
 #### [chinese document](https://github.com/AwesomeDevin/route-resource-preload/blob/main/CHINESE-README.md)
+
+## Comparison
 <details>
 <summary>Based-on-react.lazy-normal-loading-effect.gif</summary>
 
@@ -14,6 +16,7 @@
 
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/preload.gif?raw=true)
 </details>
+
 As we can see from the gif, the display time of the loading component is greatly reduced by `route-resource-preload` relative to `react.lazy`.
 
 ## Why do you need route-resource-preload ?
