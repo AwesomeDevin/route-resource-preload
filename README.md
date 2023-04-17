@@ -2,7 +2,7 @@
 
 🚀 Focus on improving the first screen loading speed of applications and providing the best user experience, inspiration comes from [the preloading of NextJS](https://web.dev/route-prefetching-in-nextjs/). 
 
-#### [chinese document](https://github.com/AwesomeDevin/route-resource-preload/blob/main/CHINESE-README.md)
+#### [中文文档](https://github.com/AwesomeDevin/route-resource-preload/blob/main/CHINESE-README.md)
 
 ## Comparison
 <details>
