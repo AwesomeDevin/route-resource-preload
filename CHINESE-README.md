@@ -3,13 +3,13 @@
 🚀 route-resource-preload 目的是在不影响用户最佳体验的同时，提升应用首屏加载速度，灵感来自[NextJS的预加载](https://web.dev/route-prefetching-in-nextjs/). 
 
 <details>
-<summary>基于react.lazy正常拆包并加载的效果.gif</summary>
+<summary>基于 react.lazy 正常拆包并加载的效果.gif</summary>
 
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/nornal-load.gif?raw=true)
 </details>
 
 <details open>
-<summary>组件拆包并预加载的效果.gif</summary>
+<summary>基于 route-resource-preload 组件拆包并预加载的效果.gif</summary>
 
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/preload.gif?raw=true)
 </details>
