@@ -173,7 +173,7 @@ function CommonLoading (props: { moduleName: string }) {
 ---- | ---- | ---- | ---- | ---
 flag | 资源预加载唯一标志 | string | - | ✅
 children | PreloadLink 组件子节点 | ReactNode | - | ✅
-action | 触发预加载的时机 | <a href="#init--inview">string (init / inview)</a> | hover | ❌
+action | 触发预加载的时机 | <a href="#init--inview">string (init / inview / hover)</a> | hover | ❌
 onClick | PreloadLink 点击事件 | () => void | - | ❌
 className | PreloadLink class | string | - | ❌
 publicPath | 服务端的静态资源存储路径 | string | - | ❌
@@ -201,6 +201,7 @@ publicPath | 服务端的静态资源存储路径 | string | - | ❌
 --- | ---
 init | PreloadLink 组件渲染后执行
 inview | PreloadLink 出现在视图后执行
+hover | 鼠标悬停在预加载链接中后触发预加载
 
 
 #### modulePreloadMap Object
