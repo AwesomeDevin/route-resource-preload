@@ -2,18 +2,23 @@
 
 🚀 route-resource-preload 目的是在不影响用户最佳体验的同时，提升应用首屏加载速度，灵感来自[NextJS的预加载](https://web.dev/route-prefetching-in-nextjs/). 
 
-<details>
-<summary>基于 react.lazy 正常拆包并加载的效果.gif</summary>
 
+## 效果对比
+<details>
+<summary>基于 react.lazy 正常拆包并加载的效果.gif</summary> 
+
+ 
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/nornal-load.gif?raw=true)
 </details>
 
 <details open>
-<summary>基于 route-resource-preload 组件拆包并预加载的效果.gif</summary>
+<summary>基于 route-resource-preload 组件拆包并预加载的效果.gif</summary>  
 
+  
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/preload.gif?raw=true)
 </details>
-从 gif 中我们可以看到，通过预加载大大减少了组件加载时间。
+
+从 gif 中我们可以看到，相对于使用`react.lazy`，通过`route-resource-preload`预加载大大减少了组件加载时间。
 
 ## 为什么你需要 route-resource-preload ?
 - <a href="#dynamic---拆分你的组件代码并进行动态加载">`拆分模块按需加载`</a>，提升应用首屏加载体验.
