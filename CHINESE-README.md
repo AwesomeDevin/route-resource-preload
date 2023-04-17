@@ -6,7 +6,9 @@
 ## 效果对比
 <details>
 <summary>基于 react.lazy 正常拆包并加载的效果.gif</summary> 
-
+  
+<br />
+  
  
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/nornal-load.gif?raw=true)
 </details>
@@ -14,6 +16,9 @@
 <details open>
 <summary>基于 route-resource-preload 组件拆包并预加载的效果.gif</summary>  
 
+   
+<br />
+  
   
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/preload.gif?raw=true)
 </details>
