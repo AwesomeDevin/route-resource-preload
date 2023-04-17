@@ -201,7 +201,7 @@ publicPath | 服务端的静态资源存储路径 | string | - | ❌
 --- | ---
 init | PreloadLink 组件渲染后执行
 inview | PreloadLink 出现在视图后执行
-hover | 鼠标悬停在预加载链接中后触发预加载
+hover | 鼠标悬停在 PreloadLink 后触发预加载
 
 
 #### modulePreloadMap Object
