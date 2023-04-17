@@ -7,13 +7,17 @@
 ## Comparison
 <details>
 <summary>Based-on-react.lazy-normal-loading-effect.gif</summary>
-
+  
+<br />
+  
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/nornal-load.gif?raw=true)
 </details>
 
 <details open>
 <summary>Based-on-route-resource-preload-effect.gif</summary>
-
+  
+<br />
+  
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/preload.gif?raw=true)
 </details>
 
