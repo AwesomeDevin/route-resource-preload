@@ -188,7 +188,7 @@ Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
 flag | the preloading flag | string | - | ✅
 children | children ReactNode | ReactNode | - | ✅
-action | trigger preload action | <a href="#init--inview">string (init / inview)</a> | hover | ❌
+action | trigger preload action | <a href="#init--inview">string (init / inview / hover)</a> | hover | ❌
 onClick | PreloadLink click event | () => void | - | ❌
 className | PreloadLink classname | string | - | ❌
 publicPath | server publicPath | string | - | ❌
@@ -234,6 +234,7 @@ Value | Description
 --- | ---
 init | Trigger preload after PreloadLink rendering 
 inview | Trigger preload after PreloadLink in the view
+hover | Trigger preload after your mouse hover in the PreloadLink
 
 
 #### modulePreloadMap Object
