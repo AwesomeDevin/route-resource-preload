@@ -4,13 +4,13 @@
 
 #### [chinese document](https://github.com/AwesomeDevin/route-resource-preload/blob/main/CHINESE-README.md)
 <details>
-<summary>normal-lazy-load.gif</summary>
+<summary>Based-on-react.lazy-normal-loading-effect.gif</summary>
 
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/nornal-load.gif?raw=true)
 </details>
 
-<details>
-<summary>route-resource-preload.gif</summary>
+<details open>
+<summary>Based-on-route-resource-preload-effect.gif</summary>
 
 ![](https://github.com/AwesomeDevin/route-resource-preload/blob/main/static/preload.gif?raw=true)
 </details>
