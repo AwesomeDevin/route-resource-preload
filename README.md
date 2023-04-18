@@ -153,8 +153,8 @@ const Modal = dynamic({
 
 Param | Description | Type | Default Value | necessary
 ---- | ---- | ---- | ---- | ---
-loader | dynamic import module | () => Promise<FunctionComponent<any> / Record<string, FunctionComponent<any>>> | - | ✅
-loading | A spinner for displaying loading state | FunctionComponent<any> | - | ❌
+loader | dynamic import module | () => () => Promise<Record<string, T extends ComponentType<unknown>>>| - | ✅
+loading | A spinner for displaying loading state | ComponentType<unknown> | - | ❌
 submodule | maybe you didn't export default, you need it | string | - | ❌
 visible | whether to render immediately after the components in the view are preloaded | boolean | true | ❌
 suspense |  use react `<Suspense>` for displaying loading state | boolean | - | ❌
