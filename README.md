@@ -35,8 +35,8 @@ As we can see from the gif, the display time of the loading component is greatly
 `route-resource-preload` support `code splitting` of components, and support `automatic preloading` and `manual preloading` of components to avoid poor component interaction experience due to component rendering delays.
 ## Why route-resource-preload over [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
 - Control <a href="#init--inview">`when to preload in more detail`</a>
-- Support preload <a href="#mfpreloadmap-object">`Module-Federation`</a>
-- Support <a href="#assetPreloadMap-object">`More types`</a> of resource (image/font/svg/css/js/...)
+- Support preload <a href="#webpack-routeresourcepreloadplugin">`Module-Federation`</a>
+- Support <a href="#webpack-routeresourcepreloadplugin">`More types`</a> of resource (image/font/svg/css/js/...)
 
 ## [DEMO TEST](https://route-resource-preload.netlify.app/)
 Component | Normal Lazy Load(ms) | Preload (ms)
