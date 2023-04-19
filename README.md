@@ -241,7 +241,7 @@ hover | Trigger preload after your mouse hover in the PreloadLink
 ```js
 {
   "/A": ["../components/A"],
-  // [the-preloading-flag]: ['your components path']
+  // [the-preloading-flag]: ['your module-federation's components path']
 }
 ```
 
