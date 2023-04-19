@@ -36,7 +36,7 @@ As we can see from the gif, the display time of the loading component is greatly
 ## Why route-resource-preload over [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
 - Control <a href="#init--inview">`when to preload in more detail`</a>
 - Support preload <a href="#mfpreloadmap-object">`Module-Federation`</a>
-- Support <a href="#assetPreloadMap-object">`More types`</a> of resource 
+- Support <a href="#assetPreloadMap-object">`More types`</a> of resource (image/font/svg/css/js/...)
 
 ## [DEMO TEST](https://route-resource-preload.netlify.app/)
 Component | Normal Lazy Load(ms) | Preload (ms)
@@ -241,7 +241,7 @@ hover | Trigger preload after your mouse hover in the PreloadLink
 ```js
 {
   "/A": ["../components/A"],
-  // [the-preloading-flag]: ['your module-federation's components path']
+  // [the-preloading-flag]: ['your project's components path']
 }
 ```
 
@@ -249,7 +249,7 @@ hover | Trigger preload after your mouse hover in the PreloadLink
 ```js
 {
   "/MF": ["ling_core/Components"]
-  // [the-preloading-flag]: ['your components path']
+  // [the-preloading-flag]: ['your module-federation's components path']
 }
 ```
 
@@ -257,7 +257,7 @@ hover | Trigger preload after your mouse hover in the PreloadLink
 ```js
 {
   "/A": ['https://domain.com/xxx.png']
-  // [the-preloading-flag]: ['your assets link'] (image/font/svg/css/js/...)
+  // [the-preloading-flag]: ['your static assets link'] (image/font/svg/css/js/...)
 }
 ```
 
