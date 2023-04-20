@@ -38,7 +38,7 @@ As we can see from the gif, the display time of the loading component is greatly
 - Support preload <a href="#webpack-routeresourcepreloadplugin">`Module-Federation`</a>
 - Support <a href="#webpack-routeresourcepreloadplugin">`More types`</a> of resource (image/font/svg/css/js/...)
 
-## [DEMO TEST](https://route-resource-preload.netlify.app/)
+## [Online Demo Test](https://route-resource-preload.netlify.app/)
 Component | Normal Lazy Load(ms) | Preload (ms)
 --- | --- | ---
 Simple Component (one-resource) | 150 | 1
