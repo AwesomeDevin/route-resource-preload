@@ -11,14 +11,12 @@ import {
 
 
 const ComponentA = dynamic({
-  //@ts-ignore
   loader: () => import('../components/A'),
   loading: () => <>loading...</>,
   // suspense: true,
 })
 
 const Image = dynamic({
-  // @ts-ignore
   loader: ()=>import('ling_core/Components'),
   loading: () => <>loading...</>,
   // suspense: true,
