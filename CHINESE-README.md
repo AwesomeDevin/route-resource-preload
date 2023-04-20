@@ -41,13 +41,15 @@
 - 支持预加载<a href="#webpack-routeresourcepreloadplugin">`Module-Federation`</a>
 - 支持预加载更多<a href="#webpack-routeresourcepreloadplugint">`静态资源类型`</a>，你可以基于该方式（`assetPreloadMap`）控制 umd 等资源（js/css/font/image/...）预加载过程。
 
-## [测试 DEMO](https://route-resource-preload.netlify.app/)
+## [在线测试 DEMO](https://route-resource-preload.netlify.app/)
 资源 | 正常加载(ms) | 预加载 (ms)
 --- | --- | ---
 简单组件 (单个资源文件) | 150 | 1
 复杂组件 (6个资源文件) | 350 | 10
 
 > 从表中可以看出，预加载显着提升了组件的加载速度，尤其是对于复杂的组件，加载速度的提升更为明显。 这说明在复杂的业务场景下，`预加载可以显着提升页面加载速度和用户体验`.
+
+## [React Demo Source](https://github.com/AwesomeDevin/route-resource-preload/blob/main/demo/react-demo/src/router/index.tsx)
 
 ## Install
 ```shell
