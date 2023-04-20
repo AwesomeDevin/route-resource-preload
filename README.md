@@ -46,6 +46,8 @@ Complex Component (six-resource) | 350 | 10
 
 > It can be seen from the table that preloading significantly improves the loading speed of components, especially for complex components, the improvement of loading speed is more obvious. This shows that in complex business scenarios, `preloading can significantly improve component loading speed and user experience`.
 
+## [React Demo Source](https://github.com/AwesomeDevin/route-resource-preload/blob/main/demo/react-demo/src/router/index.tsx) 
+
 ## Install
 ```shell
 npm install @route-resource-preload/webpack-plugin @route-resource-preload/react
