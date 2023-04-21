@@ -1,12 +1,20 @@
 import { Route, Routes as Switch, Link, useNavigate } from 'react-router-dom'
 
 
-import { dynamic, PreloadLink } from '@route-resource-preload/react'
+import { 
+  dynamic, 
+  PreloadLink, 
+  // Preloader 
+} from '@route-resource-preload/react'
 
 import Hoc from '../components/TimerHoc'
 import {  
   Suspense,
-   useCallback, useMemo, useState } from 'react'
+  useCallback,
+  // useEffect,
+  useMemo,
+  useState 
+} from 'react'
 
 
 
@@ -29,6 +37,8 @@ const TimerA = Hoc(ComponentA)
 
 const TimerMF = Hoc(Image)
 
+// const preloader = new Preloader()
+
 
 
 export default function Router(){
@@ -49,6 +59,11 @@ export default function Router(){
     loader: () => import('antd/es/modal'),
     loading: () => <>loading...</>,
   }),[visible])
+
+  // preloader
+  // useEffect(()=>{
+  //   preloader.run('/MF')
+  // },[])
 
   const TimerModal = useMemo(()=>Hoc(Modal),[Modal]) 
 

@@ -54,7 +54,7 @@ npm install @route-resource-preload/webpack-plugin @route-resource-preload/react
 ```
 
 ## Using in react
-#### Method 1 - Manual Preloading
+#### Method 1 -  Manually To Preload Single Component Based on `**Dynamic**`
 ```js
 import { dynamic } from '@route-resource-preload/react'
 
@@ -64,7 +64,7 @@ const Image = dynamic({
 })
 
 const handleClick = () => {
-  // Manual Preloading
+  // execute preloading
   Image.preload()
 }
 
@@ -75,8 +75,8 @@ export default function Main(props){
 }
 ```
 
-#### Method 2 - Automatic preloading.
-Step 1: First, you need add **plugin** in your build config.
+#### Method 2 -  Manually To Preload Multiple Components
+Step 1: First, you need add `**plugin**` in your build config.
 ```js
 const RouteResourcePreloadPlugin = require('@route-resource-preload/webpack-plugin')
 
@@ -88,17 +88,17 @@ webpack: {
 
         // project's components(modules)
         modulePreloadMap: {
-          "/A": ["../components/A"]
+          "flagA": ["../components/A"]
         },
         
         // module-federation's components(modules)
         mfPreloadMap: {
-          "/MF": ["ling_core/Components"]
+          "flagMF": ["ling_core/Components"]
         },
         
         // static assets (just like js/css/png/jpg/font, etc.)
         assetPreloadMap: {
-          "/A": ['https://domain.com/xxx.png']
+          "flagA": ['https://domain.com/xxx.png']
         }
       })
     ]
@@ -106,7 +106,48 @@ webpack: {
 }
 ```
 
-Step 2: **Dynamic** import component and render **PreloadLink** 
+Step 2: Create a `**Preloader**` and `**run**`
+```js
+import { Preloader } from '@route-resource-preload/react'
+
+const preloader = new Preloader()
+
+// execute preloading
+preloader.run('flagA')
+```
+
+#### Method 3 - Automatic Preloading.
+Step 1: First, you need add `**plugin**` in your build config.
+```js
+const RouteResourcePreloadPlugin = require('@route-resource-preload/webpack-plugin')
+
+webpack: {
+  plugins: {
+    add: [
+      new RouteResourcePreloadPlugin({
+        // [the-preloading-flag]: ['path']
+
+        // project's components(modules)
+        modulePreloadMap: {
+          "flagA": ["../components/A"]
+        },
+        
+        // module-federation's components(modules)
+        mfPreloadMap: {
+          "flagMF": ["ling_core/Components"]
+        },
+        
+        // static assets (just like js/css/png/jpg/font, etc.)
+        assetPreloadMap: {
+          "flagA": ['https://domain.com/xxx.png']
+        }
+      })
+    ]
+  },
+}
+```
+
+Step 2: `**Dynamic**` import component and render `**PreloadLink**`
 ```js
 import { dynamic, PreloadLink } from '@route-resource-preload/react'
 
@@ -125,15 +166,15 @@ const Image = dynamic({
 
 export default function Main(props){
   return <>
-    <PreloadLink flag="/A"  onClick={()=>{
+    <PreloadLink flag="flagA"  onClick={()=>{
       navigate('/A')   // navigate comes from react-router-dom, you can custom your code.
       }} 
     >
       Preload Component A
     </PreloadLink>
-    <PreloadLink flag="/MF">
+    <PreloadLink flag="flagMF">
       {/* Link comes from react-router-dom, you can custom your code. */}
-      <Link to="/MF" >Preload MF</Link>
+      <Link to="flagMF" >Preload MF</Link>
     </PreloadLink>
   </>
 }
@@ -178,10 +219,18 @@ function CommonLoading (props: { moduleName: string }) {
 <CommonLoading moduleName={moduleName} />
 ```
 
-#### PreloadLink- Automatic the preloading of resources
-> PreloadLink's `publicPath` is the same as RouteResourcePreloadPlugin's `publicPath`
+#### Preloader - Manually to preload based on `flag`
 ```js
-<PreloadLink  flag="/A"  >
+const preload = new Preloader(options)
+preload.run('flag') 
+```
+
+
+
+
+#### PreloadLink - Automatic the preloading of resources based on `flag`
+```js
+<PreloadLink  flag="flagA"  >
   Preload Component
 </PreloadLink>
 ```
@@ -193,8 +242,9 @@ children | children ReactNode | ReactNode | - | ✅
 action | trigger preload action | <a href="#init--inview">string (init / inview / hover)</a> | hover | ❌
 onClick | PreloadLink click event | () => void | - | ❌
 className | PreloadLink classname | string | - | ❌
-publicPath | server publicPath | string | - | ❌
+publicPath | yout server publicPath | string | - | ❌
 
+> PreloadLink's `publicPath` is the same as RouteResourcePreloadPlugin's `publicPath`
 
 ## Plugin
 
@@ -206,17 +256,17 @@ new RouteResourcePreloadPlugin({
 
   // project's components(modules)
   modulePreloadMap: {
-    "/A": ["../components/A"]
+    "flagA": ["../components/A"]
   },
 
   // module-federation's components(modules)
   mfPreloadMap: {
-    "/MF": ["xxx/Components"]
+    "flagMF": ["xxx/Components"]
   },
 
   // static assets (just like js/css/png/jpg/font, etc.)
   assetPreloadMap: {
-    "/A": ['https://domain.com/xxx.png']
+    "flagA": ['https://domain.com/xxx.png']
   }
 })
 ```
@@ -226,7 +276,7 @@ Param | Description | Type | Default Value | necessary
 modulePreloadMap | project's components(modules) | <a href="#modulepreloadmap-object">modulePreloadMap Object</a> | - | ❌
 mfPreloadMap | module-federation's components(modules) | <a href="#mfpreloadmap-object">mfPreloadMap Object</a> | - | ❌
 assetPreloadMap | static assets | <a href="#assetPreloadMap-object">assetPreloadMap Object</a> | - | ❌
-publicPath | server publicPath | string | - | ❌
+publicPath | your server publicPath | string | - | ❌
 
 
 ## Others
@@ -242,7 +292,7 @@ hover | Trigger preload after your mouse hover in the PreloadLink
 #### modulePreloadMap Object
 ```js
 {
-  "/A": ["../components/A"],
+  "flagA": ["../components/A"],
   // [the-preloading-flag]: ['your project's components path']
 }
 ```
@@ -250,7 +300,7 @@ hover | Trigger preload after your mouse hover in the PreloadLink
 #### mfPreloadMap Object
 ```js
 {
-  "/MF": ["ling_core/Components"]
+  "flagMF": ["ling_core/Components"]
   // [the-preloading-flag]: ['your module-federation's components path']
 }
 ```
@@ -258,7 +308,7 @@ hover | Trigger preload after your mouse hover in the PreloadLink
 #### assetPreloadMap Object
 ```js
 {
-  "/A": ['https://domain.com/xxx.png']
+  "flagA": ['https://domain.com/xxx.png']
   // [the-preloading-flag]: ['your static assets link'] (image/font/svg/css/js/...)
 }
 ```

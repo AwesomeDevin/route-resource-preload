@@ -1,5 +1,5 @@
 
-import { ComponentPropsWithRef, ComponentType, createElement, ReactElement, useCallback, useEffect, useState } from 'react'
+import { ComponentPropsWithRef, ComponentType, createElement, ReactElement, useEffect, useState } from 'react'
 
 import { loadMap } from './constant'
 
@@ -34,7 +34,6 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
   let module: T
 
   const functionStr = loader.toString()
-  console.log('functionStr',functionStr)
   const matches = functionStr.match(/"([^"]*)"/)
   const id = matches ? matches[1].toLocaleLowerCase() : ''
 

@@ -1,6 +1,6 @@
 {
   "name": "@route-resource-preload/react",
-  "version": "1.0.0-beta.16",
+  "version": "1.0.0-beta.17",
   "description": "Support automatic the preloading of resources ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) and providing the best user experience. ",
   "scripts": {
     "build": "npx vite build && npx tsc -p tsconfig.json --emitDeclarationOnly",
@@ -39,6 +39,9 @@
     "react-preload",
     "react-prefetch"
   ],
+  "peerDependencies": {
+    "react": ">=17.0.0"
+  },
   "author": "AwesomeDevin",
   "license": "MIT",
   "bugs": {

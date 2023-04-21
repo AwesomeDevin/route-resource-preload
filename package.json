@@ -15,9 +15,6 @@
     "url": "https://github.com/AwesomeDevin/route-resource-preload/issues"
   },
   "homepage": "https://github.com/AwesomeDevin/route-resource-preload#readme",
-  "peerDependencies": {
-    "react": ">=17.0.0"
-  },
   "files": [
     "dist/"
   ],

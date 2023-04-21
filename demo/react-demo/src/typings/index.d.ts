@@ -1,4 +1,4 @@
-
+declare module 'ling_core/Components'
 declare module "ling_core/components/image/image" {
   import './image.scss';
   import { ImageProps as AntdImageProps } from 'antd/lib/image';
