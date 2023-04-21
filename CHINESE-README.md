@@ -78,7 +78,49 @@ export default function Main(props){
 }
 ```
 
-#### Method 2 - 自动预加载.
+
+#### Method 2 - 手动预加载多个组件
+Step 1: 首先，你需要添加 **plugin** 到你的构建配置中.
+  ```js
+  const RouteResourcePreloadPlugin = require('@route-resource-preload/webpack-plugin')
+
+  webpack: {
+    plugins: {
+      add: [
+        new RouteResourcePreloadPlugin({
+          // [资源预加载唯一标志]: [你的资源路径]
+
+          // project's components(modules)
+          modulePreloadMap: {
+            "flagA": ["../components/A"]
+          },
+
+          // module-federation's components(modules)
+          mfPreloadMap: {
+            "flagMF": ["ling_core/Components"]
+          },
+
+          // static assets (just like js/css/png/jpg/font, etc.)
+          assetPreloadMap: {
+            "flagA": ['https://domain.com/xxx.png']
+          }
+        })
+      ]
+    },
+  }
+  ```
+
+Step 2: 创建一个 `Preloader` 并 `run`
+  ```js
+  import { Preloader } from '@route-resource-preload/react'
+
+  const preloader = new Preloader()
+
+  // 执行预加载
+  preloader.run('flagA')
+  ```
+
+#### Method 3 - 自动预加载.
 Step 1: 首先，你需要添加 **plugin** 到你的构建配置中.
 ```js
 const RouteResourcePreloadPlugin = require('@route-resource-preload/webpack-plugin')
