@@ -5,6 +5,7 @@ const getFilesFromGlobal = (flag: string) => {
   if (files && files.length && files instanceof Array) {
     return files
   }
+  return []
 }
 
 export const initAllPreloadFiles = async (options: {publicPath: string, filename: string}) => {
@@ -25,13 +26,13 @@ export const initAllPreloadFiles = async (options: {publicPath: string, filename
 }
 
 export const getPreloadFilesFromFlag = async (flag: string, options: {publicPath: string, filename: string}) => {
-  if (!flag) return
+  if (!flag) return []
   
   if (global.__routerResourcePreloadManifest) {
     return getFilesFromGlobal(flag)
   }
 
-  return initAllPreloadFiles(options).then(res => {
+  return initAllPreloadFiles(options).then(() => {
     return getFilesFromGlobal(flag)
   })
 }

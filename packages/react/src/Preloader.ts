@@ -3,21 +3,27 @@ import { fetchFiles, getPreloadFilesFromFlag, initAllPreloadFiles } from "./util
 
 interface IOption{
   publicPath: string
-  filename: string
+  filename?: string
 }
 
 
 export default class Preloader {
   flag: string
   publicPath?: string
-  filename?: string
-  option?: IOption
+  filename: string
+  option: {
+    publicPath: string
+    filename: string
+  }
   files: IFile[]
 
   constructor(option?: IOption){
     this.publicPath = option?.publicPath || ''
     this.filename = option?.filename || manifestFileName
-    this.option = option
+    this.option = {
+      publicPath: this.publicPath,
+      filename: this.filename
+    }
 
     initAllPreloadFiles({
       publicPath: this.publicPath,
