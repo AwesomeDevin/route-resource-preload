@@ -79,7 +79,7 @@ export default function Main(props){
 ```
 
 
-#### Method 2 - 手动预加载多个组件
+#### 方法 2 - 手动预加载多个组件
 Step 1: 首先，你需要添加 **plugin** 到你的构建配置中.
   ```js
   const RouteResourcePreloadPlugin = require('@route-resource-preload/webpack-plugin')
@@ -120,7 +120,7 @@ Step 2: 创建一个 `Preloader` 并 `run`
   preloader.run('flagA')
   ```
 
-#### Method 3 - 自动预加载.
+#### 方法 3 - 自动预加载.
 Step 1: 首先，你需要添加 **plugin** 到你的构建配置中.
 ```js
 const RouteResourcePreloadPlugin = require('@route-resource-preload/webpack-plugin')
@@ -211,6 +211,18 @@ function CommonLoading (props: { moduleName: string }) {
 
 <CommonLoading moduleName={moduleName} />
 ```
+
+#### Preloader - 基于标识(flag)手动预加载
+```js
+const preload = new Preloader(options)
+
+preload.run('flag') // webpack 插件中的预渲染唯一标识
+```
+参数 | 描述 | 类型 | 默认值 | 是否必须
+---- | ---- | ---- | ---- | ---
+publicPath |	服务端的静态资源存储路径 |	string |	-	 | ❌
+
+> `Preloader` 的 `publicPath`参数与 `RouteResourcePreloadPlugin` 的 `publicPath` 参数往往一致
 
 #### PreloadLink - 自动触发预加载
 参数 | 描述 | 类型 | 默认值 | 是否必须
