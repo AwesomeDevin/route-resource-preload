@@ -73,7 +73,7 @@ export const fetchFiles = (files: IFile[]) => {
         case 'script':
           if(!checkComponentLoaded(href.toLocaleLowerCase(), 'script')){
             dom = document.createElement('script')
-            dom.src = href.startsWith('/') ? href : `/${href}`
+            dom.src = (href.startsWith('/') || href.startsWith('http')) ? href : `/${href}`
           }
           break
         case 'mf':

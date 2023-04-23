@@ -22,6 +22,7 @@ declare namespace NameSpaceRouteResourcePreloadPlugin {
 		minify?: boolean;
 		publicPath?: string
 		inline?: boolean
+		exclude?: RegExp
 	}
 }
 
@@ -60,7 +61,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 	run: (compilation: any) => void;
 
 	constructor(opts: NameSpaceRouteResourcePreloadPlugin.Options) {
-		const { assets, headers, modulePreloadMap, mfPreloadMap, assetPreloadMap  } = opts || {};
+		const { assets, headers, modulePreloadMap, mfPreloadMap, assetPreloadMap, exclude  } = opts || {};
 		const { filename = 'route-resource-preload-manifest.json', minify = true,  publicPath = '', inline = true } = opts || {};
 		let { routes } = opts || {}
 
@@ -143,7 +144,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 					obj.assets.forEach((str: string) => {
 						let type = toType(str);
 						let href = publicPath.endsWith('/') ? publicPath + str : `${publicPath}/${str}`
-						if (type) tmp.push({ type, href });
+						if (type && (!exclude || !exclude.test(href))) tmp.push({ type, href });
 					});
 				});
 
@@ -178,7 +179,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 				if(mfPreloadKeys.length && routes.length){
 					mfPreloadKeys.forEach(key=>{
 						routes.forEach(route=>{
-							if(mfPreloadMap[key].includes(route)){
+							if(mfPreloadMap[key].includes(route) && (!exclude || !exclude.test(route))){
 								if(! (Files[key] instanceof Array)){
 									Files[key] = []
 								}
@@ -191,7 +192,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 				if(assetsPreloadKeys.length && routes.length){
 					assetsPreloadKeys.forEach(key=>{
-						const preloadAssets = assetPreloadMap[key]?.map(href=>({type: toType(href), href}))
+						const preloadAssets = assetPreloadMap[key]?.filter(href=> (!exclude || !exclude.test(href)))?.map(href=>({type: toType(href), href}))
 						if(Files[key] && preloadAssets instanceof Array){
 							Files[key] = Files[key].concat(preloadAssets)
 						}else{
@@ -199,7 +200,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 						}
 					})
 				}
-			
+				
 
 				if (!toHeaders) {
 					write(Files)

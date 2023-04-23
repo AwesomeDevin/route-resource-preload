@@ -22,7 +22,7 @@ module.exports = async function () {
             },
             assetPreloadMap: {
               "/A": ['https://img14.360buyimg.com/ling/s516x0_jfs/t1/97522/12/25179/1393762/622aa4c9E4ff1c9d2/3de6b0ab3c754b8d.png']
-            }
+            },
           })
         ]
       },
