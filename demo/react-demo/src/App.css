@@ -98,6 +98,7 @@ p{
 .tabs a{
   display: inline-block;
   width: 200px;
+  font-size: 28px;
 }
 .tabs a:hover{
   color: black;
