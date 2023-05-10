@@ -90,7 +90,10 @@ export const fetchFiles = (files: IFile[]) => {
           dom.crossOrigin = 'crossorigin'
           break
       }
-      dom && document.head.appendChild(dom)
+      if(dom){
+        document.head.appendChild(dom)
+        document.head.removeChild(dom)
+      }
     }
 
     files.forEach(file => {
