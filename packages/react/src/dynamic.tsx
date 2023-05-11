@@ -86,7 +86,7 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
 
   const suspenseDom = () => promiseFetch(load())
 
-  if(id){
+  if(id && !['/','./'].includes(id)){
     loadMap.component[id] = {
       preload,
       loaded: loadMap.component[id]?.loaded || false
