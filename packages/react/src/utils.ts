@@ -92,7 +92,6 @@ export const fetchFiles = (files: IFile[]) => {
       }
       if(dom){
         document.head.appendChild(dom)
-        document.head.removeChild(dom)
       }
     }
 
