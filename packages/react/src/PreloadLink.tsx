@@ -29,7 +29,13 @@ export default function PreloadLink(props: IProps) {
   }, [preloadFiles])
 
   const load = useCallback(() => {
-    requestIdleCallback(fetch, { timeout: 1000 })
+    if(typeof requestIdleCallback === 'undefined'){
+      setTimeout(()=>{
+        fetch()
+      },0)
+    }else{
+      requestIdleCallback(fetch, { timeout: 1000 })
+    }
   },[fetch])
 
   const handleMouseEnter = useCallback(() => {
