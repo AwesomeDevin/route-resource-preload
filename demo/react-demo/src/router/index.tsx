@@ -31,6 +31,7 @@ const Image = dynamic({
   submodule: 'Image'
 })
 
+
 // const lazyImage = lazy(()=>import('ling_core/Components'))
 
 const TimerA = Hoc(ComponentA)
