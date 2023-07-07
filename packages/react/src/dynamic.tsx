@@ -67,13 +67,13 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
       .then((res) => {
         //@ts-ignore
         module = submodule ? res[submodule] : res
-        if(id){
+        if(id && loadMap.component[id]){
           loadMap.component[id].loaded = true
         }
         return module
       })
       .catch((err: string) => {
-        if(id){
+        if(id && loadMap.component[id]){
           loadMap.component[id].loaded = true
         }
         throw new Error(err)
