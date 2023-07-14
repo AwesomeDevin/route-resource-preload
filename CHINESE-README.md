@@ -34,9 +34,11 @@
 - 完备的 `typescript` 支持.
 
 ## 为什么选 route-resource-preload 而不是 [react.lazy](https://react.dev/reference/react/lazy#lazy)？
-`route-resource-preload` 在兼顾组件`代码分割`的同时，通过支持对组件的`自动预加载`及`手动预加载`，避免因为组件渲染延迟导致组件交互体验差(可以看作是 suspense loading 持续时间，`基于预加载，可以让 loading 持续时间降至最低，避免影响用户体验`)。
+- `基于预加载，可以让 loading 持续时间降至最低，避免影响用户体验`:  `route-resource-preload` 在兼顾组件`代码分割`的同时，通过支持对组件的`自动预加载`及`手动预加载`，避免因为组件渲染延迟导致组件交互体验差(可以看作是 suspense loading 持续时间)。
 
-## 为什么选 route-resource-preload 而不是 [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
+## 为什么预加载要选 route-resource-preload 而不是 [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
+
+- 支持资源`分阶段预加载`（如基于路由按需加载）
 - 可以<a href="#init--inview">`更细节(鼠标 hover 时加载、出现在视图内时加载、visible 时加载、页面初始化时加载)`</a>处控制何时进行资源预加载
 - 支持预加载<a href="#webpack-routeresourcepreloadplugin">`Module-Federation`</a>
 - 支持预加载更多<a href="#webpack-routeresourcepreloadplugint">`静态资源类型`</a>，你可以基于该方式（`assetPreloadMap`）控制 umd 等资源（js/css/font/image/...）预加载过程。
