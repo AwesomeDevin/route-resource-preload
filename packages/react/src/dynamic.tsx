@@ -76,7 +76,7 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
         if(id && loadMap.component[id]){
           loadMap.component[id].loaded = true
         }
-        throw new Error(err)
+        return Promise.reject(err)
       })
     return promise
   }
