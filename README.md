@@ -318,6 +318,9 @@ hover | Trigger preload after your mouse hover in the PreloadLink
 ```
 
 
+## Stargazers 
 [![Stargazers repo roster for @AwesomeDevin/route-resource-preload](https://reporoster.com/stars/AwesomeDevin/route-resource-preload)](https://github.com/AwesomeDevin/route-resource-preload/stargazers)
 
+
+## Forkers 
 [![Forkers repo roster for @AwesomeDevin/route-resource-preload](https://reporoster.com/forks/AwesomeDevin/route-resource-preload)](https://github.com/AwesomeDevin/route-resource-preload/network/members)
