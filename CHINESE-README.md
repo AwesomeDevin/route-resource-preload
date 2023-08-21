@@ -30,6 +30,7 @@
 - `尽最大努力地去缩短动态导入组件的加载时间`（可以看作是 suspense loading 组件持续时间）以提供最佳交互体验.
 - 支持<a href="#preloadlink---自动触发预加载">`自动预加载资源`</a>（JS / Component / Module-Federation / UMD / Svg / Png 等）.
 - 支持<a href="#方法-1---手动调用预加载">`手动调用预加载`</a>.
+- 支持`JS函数拆包及预加载`.
 - 支持`React <Suspense>`。
 - 完备的 `typescript` 支持.
 
