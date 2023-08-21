@@ -8,7 +8,6 @@ import { Route, Routes as Switch, Link, useNavigate } from 'react-router-dom'
 import { 
   dynamic, 
   PreloadLink, 
-  // Preloader 
 } from '@route-resource-preload/react'
 
 import Hoc from '../components/TimerHoc'
