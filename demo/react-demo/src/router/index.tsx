@@ -1,5 +1,10 @@
 import { Route, Routes as Switch, Link, useNavigate } from 'react-router-dom'
 
+// import { designFormatParam } from 'ling_biz/MultipleUpload'
+// import AnglePicker from 'ling_biz/AnglePicker'
+// import { Image } from 'ling_core/Components'
+
+import A from 'ling_biz/MultipleUpload'
 
 import { 
   dynamic, 
@@ -11,35 +16,51 @@ import Hoc from '../components/TimerHoc'
 import {  
   Suspense,
   useCallback,
+  useEffect,
   // useEffect,
   useMemo,
   useState 
 } from 'react'
 
+// console.log(designFormatParam)
 
 
 const ComponentA = dynamic({
   loader: () => import('../components/A'),
   loading: () => <>loading...</>,
   // suspense: true,
+  submodule: 'B',
 })
 
 const Image = dynamic({
   loader: ()=>import('ling_core/Components'),
   loading: () => <>loading...</>,
   // suspense: true,
-  submodule: 'Image'
+  submodule: 'Image',
 })
 
+const MultipleUpload = dynamic({
+  loader: ()=> import('ling_biz/MultipleUpload'),
+  loading: () => <>loading...</>,
+  type: 'component'
+  // suspense: true,
+})
 
-// const lazyImage = lazy(()=>import('ling_core/Components'))
+const designFormatParam = dynamic({
+  loader: ()=> import('ling_biz/MultipleUpload'),
+  loading: () => <>loading...</>,
+  type: 'function',
+  submodule: 'designFormatParam',
+  // suspense: true,
+})
 
 const TimerA = Hoc(ComponentA)
 
 const TimerMF = Hoc(Image)
 
-// const preloader = new Preloader()
+// @ts-ignore
 
+// const preloader = new Preloader()
 
 
 export default function Router(){
@@ -68,6 +89,12 @@ export default function Router(){
 
   const TimerModal = useMemo(()=>Hoc(Modal),[Modal]) 
 
+  useEffect(()=>{
+    // designFormatParam().then(res=>{
+    //   console.log(res)
+    // })
+  },[])
+
   return <>
   <div className='tabs'>
     <p> ❗️correct data requires <strong className='trigger' style={{}}>disable browser cache</strong> ❗️</p>
@@ -82,13 +109,12 @@ export default function Router(){
       <Route path='/MF' element={<>
         <TimerMF onEnd={setVal} height={250} src="https://img14.360buyimg.com/ling/s516x0_jfs/t1/97522/12/25179/1393762/622aa4c9E4ff1c9d2/3de6b0ab3c754b8d.png" />
         </>} />
-        {/* <ImageA /> */}
     </Switch>
     <div style={{marginTop: 20, color: '#ccc'}}>Component Loading Time: {timestamp} (ms)</div>
 
     {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}} onEnd={setVal}> This is Modal</TimerModal>}
 
-    
+    {/* <ModalB visible ><div>123</div></ModalB> */}
         
     {!showPreload ? <div>
       <Link to="/A"  className="App-link">

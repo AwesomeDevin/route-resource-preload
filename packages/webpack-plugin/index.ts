@@ -106,7 +106,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 			const Pages = new Map();
 			const Manifest: Record<string, any> = {};
 			const Files: Record<string, {type: string, href: string}[]> = {};
-			const logger = bundle.getLogger(NAME);
+			// const logger = bundle.getLogger(NAME);
 
 			try{
 				const bundleJson = bundle.getStats().toJson()

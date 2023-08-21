@@ -1,22 +1,25 @@
 
-import { ComponentPropsWithRef, ComponentType, createElement, ReactElement, useEffect, useState } from 'react'
+import { ComponentType, createElement, ReactElement, useEffect, useState } from 'react'
 
 import { loadMap } from './constant'
 
-interface IPrams<T extends ComponentType<any>> {
-  loader: () => Promise<Record<string, T>>
+
+
+interface IResMap<R> {
+  component: R & {onEnd?: ()=>void}
+  function: () => Promise<R> 
+}
+interface IPrams<T, P, K> {
+  loader: () => Promise<T>
   loading?: ComponentType<any>
-  submodule?: string
+  submodule?: K
   visible?: boolean
   suspense?: boolean
+  type?: P
 }
 
-interface ExoticComponent<P = {}> {
-  /**
-   * **NOTE**: Exotic components are not callable.
-   */
-  (props: P): (ReactElement|null);
-}
+type TModule<T extends { default: any }, K extends keyof T = 'default'> = T extends Record<K, infer U> ? U : never
+
 
 function resolve(obj: any) {
   return obj && obj.__esModule ? obj.default : obj
@@ -28,16 +31,19 @@ function render(target: ComponentType<any>, props: any) {
 
 
 
-export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>): ExoticComponent<ComponentPropsWithRef<T> & {onEnd?: ()=>void}> & { preload: () => void}  {
-  const { loader, loading, submodule, visible = true, suspense } = params
+export default function dynamic<T extends { default: any }, P extends keyof IResMap<T> = 'component', K extends keyof T = 'default'>(params: IPrams<T, P, K>) {
+  
+  const { loader, loading, submodule, visible = true, suspense} = params
 
-  let module: T
+  const type = (params.type || 'component') as P
+
+  let module: TModule<T, K>
 
   const functionStr = loader.toString()
   const matches = functionStr.match(/"([^"]*)"/)
   const id = matches ? matches[1].toLocaleLowerCase() : ''
 
-  function fetchData(): <T extends Promise<any>>(fn:T) => T extends Promise<infer U> ? U: never {
+  function fetchData(): <F extends Promise<any>>(fn:F) => F extends Promise<infer U> ? U: never {
     let status = "pending"
     let data: any = null
     let promise: any = null
@@ -65,8 +71,7 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
   const load = () => {
     const promise = loader()
       .then((res) => {
-        //@ts-ignore
-        module = submodule ? res[submodule] : res
+        module = res[submodule] || res.default
         if(id && loadMap.component[id]){
           loadMap.component[id].loaded = true
         }
@@ -111,6 +116,8 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
     
 
     if(suspense && !enable){
+
+      // @ts-ignore
       return render(suspenseDom(), rets)
     }
     
@@ -124,8 +131,14 @@ export default function dynamic<T extends ComponentType<any>>(params: IPrams<T>)
       }
     }, [])
     
+    // @ts-ignore
     return enable ? render(module, rets) : loading ? createElement(loading, rets) : <></>
   }
 
-  return Object.assign(Component, { preload })
+  const res: IResMap<TModule<T, K>>= {
+    component: Component as TModule<T, K> & {onEnd?: ()=>void},
+    function: load
+  }
+  
+  return Object.assign(res[type],{ preload })
 }
