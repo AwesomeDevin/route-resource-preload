@@ -39,13 +39,13 @@ export const getPreloadFilesFromFlag = async (flag: string, options: {publicPath
 
 
 export const checkComponentLoaded = (href: string, type: 'script' | 'mf') => {
-  const componentKeys = Object.keys(loadMap.component)
+  const componentKeys = Object.keys(loadMap.module)
   if(type === 'script'){
     for(let index = 0;index < componentKeys.length; index++){
       const key = componentKeys[index]
       if(href.match(key) || key.match(href)){
-        if(loadMap.component[key].loaded) return true
-        loadMap.component[key].preload()
+        if(loadMap.module[key].loaded) return true
+        loadMap.module[key].preload()
         break
       }
     }
@@ -53,8 +53,8 @@ export const checkComponentLoaded = (href: string, type: 'script' | 'mf') => {
     for(let index = 0;index < componentKeys.length; index++){
       const key = componentKeys[index]
       if(key.match(href)){
-        if(loadMap.component[key].loaded) return true
-        loadMap.component[key].preload()
+        if(loadMap.module[key].loaded) return true
+        loadMap.module[key].preload()
         break
       }
     }

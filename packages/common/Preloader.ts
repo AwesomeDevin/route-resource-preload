@@ -1,5 +1,5 @@
-import { IFile, manifestFileName } from "./constant"
-import { fetchFiles, getPreloadFilesFromFlag, initAllPreloadFiles } from "./utils"
+import { IFile, manifestFileName } from './constant'
+import { fetchFiles, getPreloadFilesFromFlag, initAllPreloadFiles } from './utils'
 
 interface IOption{
   publicPath: string

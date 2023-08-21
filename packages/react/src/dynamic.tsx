@@ -1,13 +1,11 @@
 
-import { ComponentType, createElement, ReactElement, useEffect, useState } from 'react'
+import { ComponentType, createElement, useEffect, useState } from 'react'
 
-import { loadMap } from './constant'
-
-
+import { loadMap } from '../../common/constant'
 
 interface IResMap<R> {
   component: R & {onEnd?: ()=>void}
-  function: () => Promise<R> 
+  utils: () => Promise<R> 
 }
 interface IPrams<T, P, K> {
   loader: () => Promise<T>
@@ -72,14 +70,14 @@ export default function dynamic<T extends { default: any }, P extends keyof IRes
     const promise = loader()
       .then((res) => {
         module = res[submodule] || res.default
-        if(id && loadMap.component[id]){
-          loadMap.component[id].loaded = true
+        if(id && loadMap.module[id]){
+          loadMap.module[id].loaded = true
         }
         return module
       })
       .catch((err: string) => {
-        if(id && loadMap.component[id]){
-          loadMap.component[id].loaded = true
+        if(id && loadMap.module[id]){
+          loadMap.module[id].loaded = true
         }
         return Promise.reject(err)
       })
@@ -92,16 +90,16 @@ export default function dynamic<T extends { default: any }, P extends keyof IRes
   const suspenseDom = () => promiseFetch(load())
 
   if(id && !['/','./'].includes(id)){
-    loadMap.component[id] = {
+    loadMap.module[id] = {
       preload,
-      loaded: loadMap.component[id]?.loaded || false
+      loaded: loadMap.module[id]?.loaded || false
     }
   }  
 
   const Component = (props: any) => {
 
     const { onEnd, ...rets } = props
-    const [enable, setEnable] = useState( id && loadMap.component[id]?.loaded && module ? true : false)
+    const [enable, setEnable] = useState( id && loadMap.module[id]?.loaded && module ? true : false)
 
     if(!visible){
       return <></>
@@ -122,7 +120,7 @@ export default function dynamic<T extends { default: any }, P extends keyof IRes
     }
     
     useEffect(() => {
-      if (!!loadMap.component[id]?.loaded && !!module && !enable) {
+      if (!!loadMap.module[id]?.loaded && !!module && !enable) {
         setEnable(true)
       }else if(!enable){
         load().then(() => {
@@ -137,7 +135,7 @@ export default function dynamic<T extends { default: any }, P extends keyof IRes
 
   const res: IResMap<TModule<T, K>>= {
     component: Component as TModule<T, K> & {onEnd?: ()=>void},
-    function: load
+    utils: load
   }
   
   return Object.assign(res[type],{ preload })

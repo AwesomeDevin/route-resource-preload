@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "target": "es6",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "lib": ["ES2017", "dom"],
+    "outDir": "dist/typings",
+    "declaration": true,
+    "jsx": "react-jsx",
+    "emitDeclarationOnly":true
+  },
+  "include": ["./"]
+}
