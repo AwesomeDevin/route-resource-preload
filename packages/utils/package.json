@@ -1,7 +1,7 @@
 {
-  "name": "@route-resource-preload/util",
+  "name": "@route-resource-preload/utils",
   "version": "1.0.0-beta.1",
-  "description": "Support automatic split code of JS",
+  "description": "Support automatic split util code of JS",
   "scripts": {
     "build": "npx vite build && npx tsc -p tsconfig.json --emitDeclarationOnly",
     "pub": "npm publish --access public",
