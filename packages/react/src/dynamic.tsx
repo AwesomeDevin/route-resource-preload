@@ -4,8 +4,8 @@ import { ComponentType, createElement, useEffect, useState } from 'react'
 import { loadMap } from '../../common/constant'
 
 interface IResMap<R> {
-  component: R & {onEnd?: ()=>void}
-  utils: () => Promise<R> 
+  component: R & { onEnd?: ()=>void }
+  util: () => Promise<R> 
 }
 interface IPrams<T, P, K> {
   loader: () => Promise<T>
@@ -135,7 +135,7 @@ export default function dynamic<T extends { default: any }, P extends keyof IRes
 
   const res: IResMap<TModule<T, K>>= {
     component: Component as TModule<T, K> & {onEnd?: ()=>void},
-    utils: load
+    util: load
   }
   
   return Object.assign(res[type],{ preload })
