@@ -1,10 +1,17 @@
 
-import { ComponentType, createElement, useEffect, useState } from 'react'
+import { ComponentType, ComponentPropsWithRef, ReactElement, createElement, useEffect, useState } from 'react'
 
 import { loadMap } from '../../common/constant'
 
+interface ExoticComponent<P = {}> {
+  /**
+   * **NOTE**: Exotic components are not callable.
+   */
+  (props: P): (ReactElement|null);
+}
+
 interface IResMap<R> {
-  component: R & { onEnd?: ()=>void }
+  component: ExoticComponent<ExoticComponent<R> & { onEnd?: ()=>void }> 
   util: () => Promise<R> 
 }
 interface IPrams<T, P, K> {
@@ -134,7 +141,7 @@ export default function dynamic<T extends { default: any }, P extends keyof IRes
   }
 
   const res: IResMap<TModule<T, K>>= {
-    component: Component as TModule<T, K> & {onEnd?: ()=>void},
+    component: Component,
     util: load
   }
   

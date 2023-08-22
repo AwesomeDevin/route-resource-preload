@@ -3,13 +3,6 @@ lockfileVersion: '6.0'
 importers:
 
   .:
-    dependencies:
-      '@route-resource-preload/react':
-        specifier: ^1.0.0-beta.15
-        version: link:packages/react
-      '@route-resource-preload/webpack-plugin':
-        specifier: ^1.0.0-beta.11
-        version: link:packages/webpack-plugin
     devDependencies:
       '@types/node':
         specifier: ^18.15.0
@@ -35,6 +28,8 @@ importers:
       react:
         specifier: '>=17.0.0'
         version: 17.0.0
+
+  packages/utils: {}
 
   packages/webpack-plugin: {}
 
