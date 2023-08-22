@@ -23,21 +23,20 @@ import {
 // console.log(designFormatParam)
 
 
-const B = dynamic({
-  loader: () => import('../components/A'),
-  loading: () => <>loading...</>,
-  type: 'component',
-  // suspense: true,
-  submodule: 'B',
-})
-
-// const ComponentA = lazy(()=>import('../components/A'))
-
-// const ComponentA = dynamic({
-//   loader: ()=>import('../components/A'),
+// const B = dynamic({
+//   loader: () => import('../components/A'),
 //   loading: () => <>loading...</>,
+//   type: 'util',
 //   // suspense: true,
+//   submodule: 'B',
 // })
+
+
+const ComponentA = dynamic({
+  loader: ()=>import('../components/A'),
+  loading: () => <>loading...</>,
+  // suspense: true,
+})
 
 // const MultipleUpload = dynamic({
 //   loader: ()=> import('ling_biz/MultipleUpload'),
@@ -53,7 +52,7 @@ const Image = dynamic({
 })
 
 
-// const TimerA = Hoc(ComponentA)
+const TimerA = Hoc(ComponentA)
 
 const TimerMF = Hoc(Image)
 
@@ -84,7 +83,7 @@ export default function Router(){
   const TimerModal = useMemo(()=>Hoc(Modal),[Modal]) 
 
   useEffect(()=>{
-    console.log(B)
+    // console.log(B())
   },[])
 
   return <>
@@ -99,7 +98,7 @@ export default function Router(){
       <Route path='*' element={<div style={{height: 250, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>This in Index</div>} />
       <Route path='/A' element={
       <div style={{height: 250, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        {/* <TimerA onEnd={setVal} /> */}
+        <TimerA onEnd={setVal} />
         </div>} />
       <Route path='/MF' element={<>
         <TimerMF onEnd={setVal} height={250} src="https://img14.360buyimg.com/ling/s516x0_jfs/t1/97522/12/25179/1393762/622aa4c9E4ff1c9d2/3de6b0ab3c754b8d.png" />
