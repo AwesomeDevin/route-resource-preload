@@ -1,7 +1,7 @@
 {
-  "name": "@route-resource-preload/react",
-  "version": "1.0.0-beta.25",
-  "description": "Support automatic the preloading of resources ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) and providing the best user experience. ",
+  "name": "@route-resource-preload/utils",
+  "version": "1.0.0-beta.1",
+  "description": "Support automatic split util code of JS",
   "scripts": {
     "build": "npx vite build && npx tsc -p tsconfig.json --emitDeclarationOnly",
     "pub": "npm publish --access public",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/AwesomeDevin/route-resource-preload.git"
   },
-  "types": "./dist/typings/react/src/index.d.ts",
+  "types": "./dist/typings/index.d.ts",
   "module": "./dist/index.es.js",
   "main": "./dist/index.cjs.js",
   "sideEffects": false,
@@ -22,7 +22,7 @@
     "node": ">=14"
   },
   "keywords": [
-    "react-code-splitting",
+    "js-code-splitting",
     "prefetch",
     "preload",
     "route-prefetch",
@@ -36,13 +36,8 @@
     "router-resource-preload",
     "router-resource-prefetch",
     "route-resource-preload",
-    "route-resource-prefetch",
-    "react-preload",
-    "react-prefetch"
+    "route-resource-prefetch"
   ],
-  "peerDependencies": {
-    "react": ">=17.0.0"
-  },
   "author": "AwesomeDevin",
   "license": "MIT",
   "bugs": {

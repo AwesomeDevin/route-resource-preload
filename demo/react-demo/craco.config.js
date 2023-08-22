@@ -26,6 +26,13 @@ module.exports = async function () {
           })
         ]
       },
-    }
+    },
+    configure: (webpackConfig, { env, paths }) => {
+      /* ... */
+
+      webpackConfig.optimization.usedExports = true
+
+      return webpackConfig;
+    },
   }
 }

@@ -1,13 +1,13 @@
 type TRoute = string
 
-interface IComponent {
+interface IModule {
   preload: ()=>Promise<unknown>
   loaded: boolean
 }
 
 interface ILoadMap {
   cache: Record<TRoute, boolean>
-  component:  Record<string, IComponent>
+  module:  Record<string, IModule>
 }
 
 interface IGlobal {
@@ -21,10 +21,11 @@ export interface IFile {
 
 export const loadMap: ILoadMap = {
   cache: {},
-  component: {}
+  module: {}
 }
 
 export const manifestFileName = 'route-resource-preload-manifest.json'
 
+export const PLUGIN_NAME = 'webpack-route-resource-preload';
 
 export const global: IGlobal = typeof window === 'undefined' ? {}  : window as IGlobal
