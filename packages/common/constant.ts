@@ -26,4 +26,6 @@ export const loadMap: ILoadMap = {
 
 export const manifestFileName = 'route-resource-preload-manifest.json'
 
+export const PLUGIN_NAME = 'webpack-route-resource-preload';
+
 export const global: IGlobal = typeof window === 'undefined' ? {}  : window as IGlobal

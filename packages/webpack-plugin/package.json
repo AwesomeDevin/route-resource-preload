@@ -1,6 +1,6 @@
 {
   "name": "@route-resource-preload/webpack-plugin",
-  "version": "1.0.0-beta.21",
+  "version": "1.0.0-beta.22",
   "description": "Focus on improving the first screen loading speed of applications and providing the best user experience.",
   "scripts": {
     "build": "npx vite build && npx tsc -p tsconfig.json --emitDeclarationOnly",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/AwesomeDevin/route-resource-preload.git"
   },
-  "types": "./dist/typings/index.d.ts",
+  "types": "./dist/typings/webpack-plugin/index.d.ts",
   "module": "./dist/index.mjs",
   "main": "./dist/index.js",
   "sideEffects": false,

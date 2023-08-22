@@ -1,4 +1,5 @@
-const NAME = 'webpack-route-resource-preload';
+
+import { manifestFileName, PLUGIN_NAME } from '../common/constant'
 
 declare namespace NameSpaceRouteResourcePreloadPlugin {
 	type Pattern = string[];
@@ -62,7 +63,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 	constructor(opts: NameSpaceRouteResourcePreloadPlugin.Options) {
 		const { assets, headers, modulePreloadMap, mfPreloadMap, assetPreloadMap, exclude  } = opts || {};
-		const { filename = 'route-resource-preload-manifest.json', minify = true,  publicPath = '', inline = true } = opts || {};
+		const { filename = manifestFileName, minify = true,  publicPath = '', inline = true } = opts || {};
 		let { routes } = opts || {}
 
 		if (!routes && !modulePreloadMap && !mfPreloadMap && !assetPreloadMap) {
@@ -222,7 +223,7 @@ class RouteResourcePreloadPlugin implements IRouteResourcePreloadPlugin  {
 
 	apply(compiler: any) {
 		if (compiler.hooks !== void 0) {
-			compiler.hooks.emit.tap(NAME, this.run);
+			compiler.hooks.emit.tap(PLUGIN_NAME, this.run);
 		} else {
 			compiler.plugin('emit', this.run);
 		}

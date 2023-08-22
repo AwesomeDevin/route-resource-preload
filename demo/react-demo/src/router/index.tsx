@@ -26,8 +26,8 @@ import {
 const B = dynamic({
   loader: () => import('../components/A'),
   loading: () => <>loading...</>,
+  type: 'component',
   // suspense: true,
-  type: 'function',
   submodule: 'B',
 })
 
@@ -42,7 +42,6 @@ const B = dynamic({
 // const MultipleUpload = dynamic({
 //   loader: ()=> import('ling_biz/MultipleUpload'),
 //   loading: () => <>loading...</>,
-//   type: 'component'
 //   // suspense: true,
 // })
 
