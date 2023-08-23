@@ -111,7 +111,7 @@ export default function Router(){
 
     {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}} onEnd={setVal}> This is Modal</TimerModal>}
 
-        <Image />
+        <Image onEnd={()=>{}} />
     {/* <ModalB visible ><div>123</div></ModalB> */}
         
     {!showPreload ? <div>

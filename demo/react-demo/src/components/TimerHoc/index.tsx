@@ -1,22 +1,26 @@
-import  {useCallback, useRef } from "react";
+import  { ComponentType, useCallback, useRef } from "react";
 
-export default function Hoc(Com: any ){
-  function  Timer(props: any){
-    const { onEnd } = props
+
+export default function Hoc<T>(Com: ComponentType<T>){
+
+  function  Timer(props: T & {onEnd?: (time: number) => void }){
+
+    const { onEnd, ...rets } = props
     const starTime = useRef({
       second: new Date().getSeconds(),
       milliseconds: new Date().getMilliseconds(),
     })
 
     const handleCallback = useCallback(() => {
-      console.log('starTime.current.milliseconds',starTime.current.milliseconds)
       const date = new Date()
       const second = date.getSeconds() - starTime.current.second
       const milliseconds = date.getMilliseconds() - starTime.current.milliseconds
       onEnd && onEnd(second * 1000 + milliseconds)
     }, [onEnd]);
   
-    return <Com {...props} onEnd={handleCallback} />
+ 
+    return <Com {...rets as T} onEnd={handleCallback} />
   }
   return Timer
 }
+

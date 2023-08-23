@@ -1,6 +1,6 @@
 
 
-import { loadMap } from '../../common/constant'
+import { loadMap } from './constant'
 
 interface IPrams<T, K> {
   loader: () => Promise<T>

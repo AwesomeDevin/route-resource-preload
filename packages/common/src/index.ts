@@ -1,5 +1,5 @@
 import dynamic from './dynamic'
-import Preloader from '../../common/Preloader'
+import Preloader from './Preloader'
 
 export {
   dynamic,

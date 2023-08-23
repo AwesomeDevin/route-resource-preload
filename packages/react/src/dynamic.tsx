@@ -1,7 +1,7 @@
 
-import { ComponentType, ComponentPropsWithRef, ReactElement, createElement, useEffect, useState, ElementType } from 'react'
+import { ComponentType, ComponentPropsWithRef, ReactElement, createElement, useEffect, useState, CElement, Component } from 'react'
 
-import { loadMap } from '../../common/constant'
+import { loadMap } from '../../common/src/constant'
 
 interface ExoticComponent<P = {}> {
   /**
@@ -12,7 +12,7 @@ interface ExoticComponent<P = {}> {
 
 type TPreloadType = 'component' | 'util'
 
-type TPreloadComponent<R> = ComponentPropsWithRef<ExoticComponent<R>> & { onEnd: () => void }
+type TPreloadComponent<R> = R & {onEnd?: ()=>void }
 
 type TPreloadUtil<R> = () => Promise<R>
 
@@ -147,7 +147,7 @@ export default function dynamic<T extends { default: any },  K extends keyof T =
   }
 
   const res: IResMap<typeof module> = {
-    component: Component as TPreloadComponent<typeof module>,
+    component: Component as any,
     util: load
   }
 

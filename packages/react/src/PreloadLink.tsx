@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 
-import { IFile,  manifestFileName } from '../../common/constant'
-import { fetchFiles, getPreloadFilesFromFlag } from '../../common/utils'
+import { IFile,  manifestFileName } from '../../common/src/constant'
+import { fetchFiles, getPreloadFilesFromFlag } from '../../common/src/utils'
 interface IProps {
   flag: string
   children: React.ReactNode

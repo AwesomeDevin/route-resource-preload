@@ -1,5 +1,5 @@
 {
-  "name": "@route-resource-preload/utils",
+  "name": "@route-resource-preload/common",
   "version": "1.0.0-beta.1",
   "description": "Support automatic split util code of JS",
   "scripts": {

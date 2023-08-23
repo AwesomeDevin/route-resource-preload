@@ -1,5 +1,5 @@
 
-import { manifestFileName, PLUGIN_NAME } from '../common/constant'
+import { manifestFileName, PLUGIN_NAME } from '../common/src/constant'
 
 declare namespace NameSpaceRouteResourcePreloadPlugin {
 	type Pattern = string[];
