@@ -48,6 +48,7 @@ const Image = dynamic({
   loader: ()=> import('ling_core/Components'),
   loading: () => <>loading...</>,
   submodule: 'Image',
+  type: 'component'
   // suspense: true,
 })
 
@@ -108,6 +109,7 @@ export default function Router(){
 
     {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}} onEnd={setVal}> This is Modal</TimerModal>}
 
+        <Image />
     {/* <ModalB visible ><div>123</div></ModalB> */}
         
     {!showPreload ? <div>

@@ -1,5 +1,5 @@
 
-import { ComponentType, ComponentPropsWithRef, ReactElement, createElement, useEffect, useState } from 'react'
+import { ComponentType, ComponentPropsWithRef, ReactElement, createElement, useEffect, useState, ElementType } from 'react'
 
 import { loadMap } from '../../common/constant'
 
@@ -10,11 +10,20 @@ interface ExoticComponent<P = {}> {
   (props: P): (ReactElement|null);
 }
 
+type TPreloadType = 'component' | 'util'
+
+type TPreloadComponent<R> = ComponentPropsWithRef<ExoticComponent<R>> & { onEnd: () => void }
+
+type TPreloadUtil<R> = () => Promise<R>
+
+type TResult<P, R> = P extends 'component' ? TPreloadComponent<R> : TPreloadUtil<R>
+
 interface IResMap<R> {
-  component: ExoticComponent<ExoticComponent<R> & { onEnd?: ()=>void }> 
-  util: () => Promise<R> 
+  component: TPreloadComponent<R>
+  util: TPreloadUtil<R>
 }
-interface IPrams<T, P, K> {
+
+interface IPrams<T, K, P> {
   loader: () => Promise<T>
   loading?: ComponentType<any>
   submodule?: K
@@ -23,7 +32,7 @@ interface IPrams<T, P, K> {
   type?: P
 }
 
-type TModule<T extends { default: any }, K extends keyof T = 'default'> = T extends Record<K, infer U> ? U : never
+type TModule<T extends { default: any },  K extends keyof T = 'default'> = T extends Record<K, infer U> ? U : never
 
 
 function resolve(obj: any) {
@@ -36,11 +45,10 @@ function render(target: ComponentType<any>, props: any) {
 
 
 
-export default function dynamic<T extends { default: any }, P extends keyof IResMap<T> = 'component', K extends keyof T = 'default'>(params: IPrams<T, P, K>) {
+export default function dynamic<T extends { default: any },  K extends keyof T = 'default', P extends TPreloadType = 'component'>(params: IPrams<T,  K, P>) {
   
   const { loader, loading, submodule, visible = true, suspense} = params
-
-  const type = (params.type || 'component') as P
+  const type =  (params.type || 'component') as P
 
   let module: TModule<T, K>
 
@@ -140,10 +148,12 @@ export default function dynamic<T extends { default: any }, P extends keyof IRes
     return enable ? render(module, rets) : loading ? createElement(loading, rets) : <></>
   }
 
-  const res: IResMap<TModule<T, K>>= {
-    component: Component,
+  const res: IResMap<typeof module> = {
+    component: Component as ComponentPropsWithRef<ExoticComponent<typeof module>> & { onEnd: () => void },
     util: load
   }
+
+  // const result: TResult<typeof type, typeof module> = res[type]
   
   return Object.assign(res[type],{ preload })
 }
