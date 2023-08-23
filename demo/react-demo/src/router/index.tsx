@@ -1,8 +1,9 @@
 import { Route, Routes as Switch, Link, useNavigate } from 'react-router-dom'
 
-// import { designFormatParam } from 'ling_biz/MultipleUpload'
+import MultipleUpload, { designFormatParam as Test } from 'ling_biz/MultipleUpload'
 // import AnglePicker from 'ling_biz/AnglePicker'
-// import { Image } from 'ling_core/Components'
+import { Image as ImageTest } from 'ling_core/Components'
+
 
 
 import { 
@@ -12,6 +13,7 @@ import {
 
 import Hoc from '../components/TimerHoc'
 import {  
+  ComponentType,
   Suspense,
   useCallback,
   useEffect,
@@ -19,7 +21,12 @@ import {
   useMemo,
   useState 
 } from 'react'
+import { TPreloadComponent } from './a'
+// import { TPreloadComponent } from '@route-resource-preload/react/dist/typings/react/src/dynamic'
 
+
+
+const t: TPreloadComponent<typeof ImageTest>
 // console.log(designFormatParam)
 
 
@@ -42,6 +49,7 @@ const designFormatParam = dynamic({
   loader: ()=> import('ling_biz/MultipleUpload'),
   loading: () => <>loading...</>,
   submodule: 'designFormatParam',
+  type: 'util'
   // suspense: true,
 })
 

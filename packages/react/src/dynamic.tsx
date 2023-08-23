@@ -1,20 +1,13 @@
 
-import { ComponentType, ComponentPropsWithRef, ReactElement, createElement, useEffect, useState, CElement, Component } from 'react'
+import { ComponentType, createElement, useEffect, useState} from 'react'
 
 import { loadMap } from '../../common/src/constant'
 
-interface ExoticComponent<P = {}> {
-  /**
-   * **NOTE**: Exotic components are not callable.
-   */
-  (props: P): (ReactElement|null);
-}
-
 type TPreloadType = 'component' | 'util'
 
-type TPreloadComponent<R> = R & {onEnd?: ()=>void }
+export type TPreloadComponent<R> = R extends ComponentType<infer P> ? ComponentType< P & {onEnd?: ()=>void}> : any
 
-type TPreloadUtil<R> = () => Promise<R>
+export type TPreloadUtil<R> = () => Promise<R>
 
 interface IResMap<R> {
   component: TPreloadComponent<R>
