@@ -3,7 +3,7 @@ import  { ComponentType, useCallback, useRef } from "react";
 
 export default function Hoc<T>(Com: ComponentType<T>){
 
-  function  Timer(props: T & {onEnd?: (time: number) => void }){
+  function  Timer(props: Omit<T, 'onEnd'> & {onEnd?: (time: number) => void }){
 
     const { onEnd, ...rets } = props
     const starTime = useRef({

@@ -13,7 +13,6 @@ import {
 
 import Hoc from '../components/TimerHoc'
 import {  
-  ComponentType,
   Suspense,
   useCallback,
   useEffect,
@@ -21,12 +20,9 @@ import {
   useMemo,
   useState 
 } from 'react'
-import { TPreloadComponent } from './a'
-// import { TPreloadComponent } from '@route-resource-preload/react/dist/typings/react/src/dynamic'
 
 
 
-const t: TPreloadComponent<typeof ImageTest>
 // console.log(designFormatParam)
 
 
@@ -45,13 +41,13 @@ const ComponentA = dynamic({
   // suspense: true,
 })
 
-const designFormatParam = dynamic({
-  loader: ()=> import('ling_biz/MultipleUpload'),
-  loading: () => <>loading...</>,
-  submodule: 'designFormatParam',
-  type: 'util'
-  // suspense: true,
-})
+// const designFormatParam = dynamic({
+//   loader: ()=> import('ling_biz/MultipleUpload'),
+//   loading: () => <>loading...</>,
+//   submodule: 'designFormatParam',
+//   type: 'util'
+//   // suspense: true,
+// })
 
 
 const Image = dynamic({
@@ -119,9 +115,6 @@ export default function Router(){
 
     {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}} onEnd={setVal}> This is Modal</TimerModal>}
 
-        <Image onEnd={()=>{}} />
-    {/* <ModalB visible ><div>123</div></ModalB> */}
-        
     {!showPreload ? <div>
       <Link to="/A"  className="App-link">
         Load Component A
