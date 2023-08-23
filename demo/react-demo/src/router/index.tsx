@@ -38,11 +38,13 @@ const ComponentA = dynamic({
   // suspense: true,
 })
 
-// const MultipleUpload = dynamic({
-//   loader: ()=> import('ling_biz/MultipleUpload'),
-//   loading: () => <>loading...</>,
-//   // suspense: true,
-// })
+const designFormatParam = dynamic({
+  loader: ()=> import('ling_biz/MultipleUpload'),
+  loading: () => <>loading...</>,
+  submodule: 'designFormatParam',
+  // suspense: true,
+})
+
 
 const Image = dynamic({
   loader: ()=> import('ling_core/Components'),

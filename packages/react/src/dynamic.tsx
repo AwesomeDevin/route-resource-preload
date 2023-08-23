@@ -16,8 +16,6 @@ type TPreloadComponent<R> = ComponentPropsWithRef<ExoticComponent<R>> & { onEnd:
 
 type TPreloadUtil<R> = () => Promise<R>
 
-type TResult<P, R> = P extends 'component' ? TPreloadComponent<R> : TPreloadUtil<R>
-
 interface IResMap<R> {
   component: TPreloadComponent<R>
   util: TPreloadUtil<R>
@@ -149,11 +147,9 @@ export default function dynamic<T extends { default: any },  K extends keyof T =
   }
 
   const res: IResMap<typeof module> = {
-    component: Component as ComponentPropsWithRef<ExoticComponent<typeof module>> & { onEnd: () => void },
+    component: Component as TPreloadComponent<typeof module>,
     util: load
   }
 
-  // const result: TResult<typeof type, typeof module> = res[type]
-  
   return Object.assign(res[type],{ preload })
 }
