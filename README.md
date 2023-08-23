@@ -28,15 +28,20 @@ As we can see from the gif, the display time of the loading component is greatly
 - `Minimize dynamic component loading time` and providing the best user experience.
 - Support <a href="#method-3---automatic-preloading">`automatic the preloading of resources`</a> ( JS / Component /  Module-Federation / UMD / Svg / Png , Etc) and providing the best user experience. 
 - Support <a href="#method-1----manually-to-preload-single-component-based-on-dynamic">`manually to preload`</a>.
+- Support lazy-loading、code-splitting and preloading of `non-component`.
 - Support `typescript`.
 - Support <a href="#dynamic---split-your-component-code-and-load-it-dynamically">`React <Suspense>`</a>.
 
 ## Why route-resoure-preload over [react.lazy](https://react.dev/reference/react/lazy#lazy)?
-`route-resource-preload` support `code splitting` of components, and support `automatic preloading` and `manual preloading` of components to avoid poor component interaction experience due to component rendering delays.
+- Support `automatic preloading` and `manual preloading` of components to avoid poor component interaction experience due to component rendering delays.
+- Support code-splitting and preloading of `non-component`
+
 ## Why route-resource-preload over [webpack-prefetch/preload and loadable-components-prefetch/preload](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)?
 - Control <a href="#preloadlink---automatic-the-preloading-of-resources-based-on-flag">`when to preload in more detail`</a>
 - Support preload <a href="#webpack-routeresourcepreloadplugin">`Module-Federation`</a>
 - Support <a href="#webpack-routeresourcepreloadplugin">`More types`</a> of resource (image/font/svg/css/js/...)
+- Support lazy-loading、code-splitting and preloading of `non-component`.
+- Support `typescript`.
 
 ## [Online Demo Test](https://route-resource-preload.netlify.app/)
 Component | Normal Lazy Load(ms) | Preload (ms)
