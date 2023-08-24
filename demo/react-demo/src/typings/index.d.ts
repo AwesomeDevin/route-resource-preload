@@ -1,6 +1,8 @@
 /// <reference types="react" />
 
-declare module "ling_core/Image" 
+declare module "ling_core/Image"  {
+  export default function Image(props: { height?: number, src: string }): JSX.Element;
+}
 
 declare module "ling_core/components/affix" {
   export { default } from 'antd/lib/affix';
