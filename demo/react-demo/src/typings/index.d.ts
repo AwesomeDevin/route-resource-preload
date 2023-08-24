@@ -1,5 +1,7 @@
 /// <reference types="react" />
 
+declare module "ling_core/Image" 
+
 declare module "ling_core/components/affix" {
   export { default } from 'antd/lib/affix';
   export * from 'antd/lib/affix';

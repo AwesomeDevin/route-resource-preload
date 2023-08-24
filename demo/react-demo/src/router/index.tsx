@@ -1,29 +1,17 @@
 import { Route, Routes as Switch, Link, useNavigate } from 'react-router-dom'
-
-// import MultipleUpload, { designFormatParam as Test } from 'ling_biz/MultipleUpload'
-// import AnglePicker from 'ling_biz/AnglePicker'
-// import { Image as ImageTest } from 'ling_core/Components'
-
-
-
 import { 
   dynamic, 
   PreloadLink, 
 } from '@route-resource-preload/react'
-
 import Hoc from '../components/TimerHoc'
 import {  
   Suspense,
   useCallback,
   useEffect,
-  // useEffect,
   useMemo,
   useState 
 } from 'react'
 
-
-
-// console.log(designFormatParam)
 
 
 // const B = dynamic({
@@ -51,11 +39,9 @@ const ComponentA = dynamic({
 
 
 const Image = dynamic({
-  loader: ()=> import('ling_core/Components'),
+  loader: ()=> import('ling_core/Image'),
   loading: () => <>loading...</>,
-  submodule: 'Image',
-  type: 'component'
-  // suspense: true,
+  // submodule: 'Image',
 })
 
 
