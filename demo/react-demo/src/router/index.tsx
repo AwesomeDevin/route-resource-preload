@@ -1,8 +1,8 @@
 import { Route, Routes as Switch, Link, useNavigate } from 'react-router-dom'
 
-import MultipleUpload, { designFormatParam as Test } from 'ling_biz/MultipleUpload'
+// import MultipleUpload, { designFormatParam as Test } from 'ling_biz/MultipleUpload'
 // import AnglePicker from 'ling_biz/AnglePicker'
-import { Image as ImageTest } from 'ling_core/Components'
+// import { Image as ImageTest } from 'ling_core/Components'
 
 
 
