@@ -1,10 +1,8 @@
 import React from "react"
 
 
-interface IA {
-  name: string
-}
-export default function A(props: IA){
+
+export default function A(){
   return <div>This is Component A</div>
 }
 
