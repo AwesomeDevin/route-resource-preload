@@ -7,10 +7,10 @@ import Hoc from '../components/TimerHoc'
 import {  
   Suspense,
   useCallback,
-  useEffect,
   useMemo,
   useState 
 } from 'react'
+
 
 
 
@@ -36,6 +36,12 @@ const ComponentA = dynamic({
 //   type: 'util'
 //   // suspense: true,
 // })
+
+const a = dynamic({
+  loader: ()=> import('./test-hook'),
+  // submodule: 'a',
+  type: 'util'
+})
 
 
 const Image = dynamic({
@@ -71,13 +77,13 @@ export default function Router(){
     // suspense: true,
     loader: () => import('antd/es/modal'),
     loading: () => <>loading...</>,
+    
   }),[visible])
 
   const TimerModal = useMemo(()=>Hoc(Modal),[Modal]) 
 
-  useEffect(()=>{
-    // console.log(B())
-  },[])
+  console.log(a().then(res=>{console.log(res)}))
+  
 
   return <>
   <div className='tabs'>

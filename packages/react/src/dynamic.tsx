@@ -14,7 +14,7 @@ interface IResMap<R> {
   util: TPreloadUtil<R>
 }
 
-interface IPrams<T, K, P> {
+interface IPrams<T , K, P> {
   loader: () => Promise<T>
   loading?: ComponentType<any>
   submodule?: K
