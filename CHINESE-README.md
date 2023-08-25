@@ -192,7 +192,7 @@ export default function Main(props){
 #### dynamic - 拆分你的组件代码，并进行动态加载
 参数 | 描述 | 类型 | 默认值 | 是否必须
 ---- | ---- | ---- | ---- | ---
-loader | 动态加载组件 | () => Promise<Record<string, T extends ComponentType<unknown>>> | - | ✅
+loader | 动态加载组件 | () => Promise<T extends { default?: any }> | - | ✅
 loading | 组件加载中状态时渲染 | ComponentType<unknown> | - | ❌
 submodule | 如果你没有默认导出模块，你可能会需要它 | string | - | ❌
 visible | 视图内组件预加载完成后是否立即渲染 (适用于 Modal、Popover 这一类预加载渲染完成但不需立即可见的组件) | boolean | true | ❌
