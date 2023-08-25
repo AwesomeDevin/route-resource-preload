@@ -14,6 +14,7 @@ import {
   useState 
 } from 'react'
 import { createRoot } from 'react-dom/client'
+import React from 'react'
 import { Switch as SwitchCom, Input } from 'antd'
 
 // import { useIntervalLog } from './test-hook'
@@ -59,9 +60,42 @@ function Wrapper(props: any){
     })
   },[])
 
-  
-
   return <>{ref.current && <ComponentWithUseA params={props.params} hook={ref.current}/>}</>
+}
+
+
+const initRoot = () => {
+  const dom = document.createElement('div')
+  document.body.appendChild(dom)
+  const root = createRoot(dom)
+  document.body.removeChild(dom)
+  return root
+}
+
+const updateComponent = ({params, root}: { params: any, root?: any} ) => {
+  root.render(<Wrapper params={params} />)
+}
+
+const unmount = (root: any) => {
+  root.unmount()
+}
+
+
+const createRootRender = ({params, root}: { params: any, root?: any} ) => {
+
+  const version = Number(React.version.split('.')[0])
+  if(version < 18){
+    console.warn('not support')
+    return
+  }
+
+  if(!root){
+    // init
+    root = initRoot()
+  }
+  // update
+  updateComponent({params, root})
+  return root
 }
 
 function useAsyncHook(condition = true, params: any){
@@ -71,24 +105,18 @@ function useAsyncHook(condition = true, params: any){
       // destroy component
       if(ref.current){
         setTimeout(()=>{
-          ref.current.unmount()
+          unmount(ref.current)
           ref.current = null
         })
       }
       return
     } else if(ref.current){
       // update props
-      ref.current.render(<Wrapper params={params} />)
+      createRootRender({params, root: ref.current})
       return
     }
     // render component
-    const dom = document.createElement('div')
-    document.body.appendChild(dom)
-    const container = dom
-    const root = createRoot(container)
-    ref.current = root
-    root.render(<Wrapper params={params} />)
-    document.body.removeChild(dom)
+    ref.current = createRootRender({params, root: ref.current})
   },[condition, params])
 }
 
@@ -101,7 +129,7 @@ export default function Router(){
   const [showHook] = useState(!!window.location.search.match('hook'))
 
   const [timestamp, setTimestamp] = useState(0)
-  const [execute, setExecute] = useState(false)
+  const [switchValue, setExecute] = useState(false)
   const [value, setValue] = useState('current count')
 
   const setVal = useCallback((val: number)=>{
@@ -117,7 +145,8 @@ export default function Router(){
 
   const TimerModal = useMemo(()=>Hoc(Modal),[Modal]) 
 
-  useAsyncHook(execute, value)
+  // switchValue is true and dynamic load
+  useAsyncHook(switchValue, value)
 
   return <>
 
@@ -158,7 +187,7 @@ export default function Router(){
     </div>:
       (showHook ? <div>
         <div style={{margin: '20px 0'}}>
-          <SwitchCom style={{marginRight: 20}} checked={execute} onChange={setExecute} />
+          <SwitchCom style={{marginRight: 20}} checked={switchValue} onChange={setExecute} />
           Dynamic Execute Hook
         </div>
         <div style={{display: 'flex', fontSize: 14, alignItems: 'center'}}>
