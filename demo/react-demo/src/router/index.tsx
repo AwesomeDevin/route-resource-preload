@@ -14,7 +14,7 @@ import {
   useState 
 } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Switch as SwitchCom } from 'antd'
+import { Switch as SwitchCom, Input } from 'antd'
 
 // import { useIntervalLog } from './test-hook'
 
@@ -25,21 +25,6 @@ const ComponentA = dynamic({
   loading: () => <>loading...</>,
   // suspense: true,
 })
-
-// const designFormatParam = dynamic({
-//   loader: ()=> import('ling_biz/MultipleUpload'),
-//   loading: () => <>loading...</>,
-//   submodule: 'designFormatParam',
-//   type: 'util'
-//   // suspense: true,
-// })
-
-// const a = dynamic({
-//   loader: ()=> import('./test-hook'),
-//   // submodule: 'a',
-//   type: 'util'
-// })
-
 
 const Image = dynamic({
   loader: ()=> import('ling_core/Image'),
@@ -53,22 +38,17 @@ const TimerA = Hoc(ComponentA)
 const TimerMF = Hoc(Image)
 
 
-
-// const preloader = new Preloader()
-// function useA(hook: any){
-//   hook()
-// }
-
 interface IProps {
   hook: any
+  params?: any
 }
 
 function ComponentWithUseA(props: IProps){
-  props.hook()
+  props.hook(props.params)
   return null
 }
 
-function Wrapper(){
+function Wrapper(props: any){
   const ref = useRef<any>(null)
   const [,setLoaded] = useState(false)
 
@@ -79,13 +59,16 @@ function Wrapper(){
     })
   },[])
 
-  return <>{ref.current && <ComponentWithUseA hook={ref.current}/>}</>
+  
+
+  return <>{ref.current && <ComponentWithUseA params={props.params} hook={ref.current}/>}</>
 }
 
-function useAsyncHook(condition = true){
+function useAsyncHook(condition = true, params: any){
   const ref = useRef<any>(null)
   useEffect(()=>{
     if(!condition) {
+      // destroy component
       if(ref.current){
         setTimeout(()=>{
           ref.current.unmount()
@@ -93,15 +76,20 @@ function useAsyncHook(condition = true){
         })
       }
       return
+    } else if(ref.current){
+      // update props
+      ref.current.render(<Wrapper params={params} />)
+      return
     }
+    // render component
     const dom = document.createElement('div')
     document.body.appendChild(dom)
     const container = dom
     const root = createRoot(container)
     ref.current = root
-    root.render(<Wrapper />)
+    root.render(<Wrapper params={params} />)
     document.body.removeChild(dom)
-  },[condition])
+  },[condition, params])
 }
 
 
@@ -109,11 +97,12 @@ export default function Router(){
 
   const [visible, setVisible] = useState(false)
   const navigate = useNavigate()
-  const [showPreload] = useState(!!window.location.search.match('tab'))
+  const [showPreload] = useState(!!window.location.search.match('tab') && !window.location.search.match('hook'))
+  const [showHook] = useState(!!window.location.search.match('hook'))
 
   const [timestamp, setTimestamp] = useState(0)
   const [execute, setExecute] = useState(false)
-
+  const [value, setValue] = useState('current count')
 
   const setVal = useCallback((val: number)=>{
     setTimestamp(val)
@@ -121,7 +110,6 @@ export default function Router(){
 
   const Modal = useMemo(()=> dynamic({
     visible,
-    // suspense: true,
     loader: () => import('antd/es/modal'),
     loading: () => <>loading...</>,
     
@@ -129,25 +117,21 @@ export default function Router(){
 
   const TimerModal = useMemo(()=>Hoc(Modal),[Modal]) 
 
-  useAsyncHook(execute)
+  useAsyncHook(execute, value)
 
   return <>
 
-
-    {/* {ref.current && <ComponentWithUseA hook={ref.current}/>} */}
-  {/* <wrapperUseComponent /> */}
   <div className='tabs'>
     <p> ❗️correct data requires <strong className='trigger' style={{}}>disable browser cache</strong> ❗️</p>
-      <a href='/'>Test Lazy-Load</a>
-      <a href='/?tab=preload'>Test Preload</a>
+      <a href='/'>Component-Lazy-Load</a>
+      <a href='/?tab=preload'>Component-Dynamic-Preload</a>
+      <a href='/?tab=hook'>Hook-Dynamic-Preload-With-Condition</a>
   </div>    
-
-  <div><SwitchCom checked={execute} onChange={setExecute} />Execute Hook</div>
 
   <Suspense fallback="suspense loading...">
   <div className='core'>
     <Switch>
-      <Route path='*' element={<div style={{height: 250, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>This in Index</div>} />
+      <Route path='*' element={showHook ? <></>:<div style={{height: 250, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>This in Index</div>} />
       <Route path='/A' element={
       <div style={{height: 250, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <TimerA onEnd={setVal} />
@@ -157,24 +141,11 @@ export default function Router(){
         <TimerMF onEnd={setVal} height={250} src="https://img14.360buyimg.com/ling/s516x0_jfs/t1/97522/12/25179/1393762/622aa4c9E4ff1c9d2/3de6b0ab3c754b8d.png" />
         </>} />
     </Switch>
-    <div style={{marginTop: 20, color: '#ccc'}}>Component Loading Time: {timestamp} (ms)</div>
-
-
+    <div style={{ color: '#ccc'}}>{showHook ? 'Hook' : 'Component'} Loading Time: {timestamp} (ms)</div>
 
     {<TimerModal visible={visible} onCancel={()=>{setVisible(false)}} onEnd={setVal}> This is Modal</TimerModal>}
 
-    {!showPreload ? <div>
-      <Link to="/A"  className="App-link">
-        Load Component A
-      </Link>
-      <Link to="/MF" className="App-link" >
-        Load MF
-      </Link>
-      <span  className="App-link" onClick={()=>{setVisible(true)}}>
-        Load Modal
-      </span>
-    </div>
-     :<div>
+    {showPreload && !showHook ? <div>
       <PreloadLink flag="/A"  onClick={()=>{navigate('/A')}} className="App-link">
         Preload Component A
       </PreloadLink>
@@ -184,7 +155,28 @@ export default function Router(){
       <PreloadLink flag="/A"  className="App-link" onClick={()=>{setVisible(true)}}>
         PreLoad Modal
       </PreloadLink>
-    </div>}
+    </div>:
+      (showHook ? <div>
+        <div style={{margin: '20px 0'}}>
+          <SwitchCom style={{marginRight: 20}} checked={execute} onChange={setExecute} />
+          Dynamic Execute Hook
+        </div>
+        <div style={{display: 'flex', fontSize: 14, alignItems: 'center'}}>
+          Message： <Input value={value} onChange={(e)=>{setValue(e.target.value)}} />
+        </div>
+        </div>:
+        <div>
+          <Link to="/A"  className="App-link">
+            Load Component A
+          </Link>
+          <Link to="/MF" className="App-link" >
+            Load MF
+          </Link>
+          <span  className="App-link" onClick={()=>{setVisible(true)}}>
+            Load Modal
+          </span>
+      </div>)
+     }
   </div>
   </Suspense>
   </>

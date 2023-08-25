@@ -13,6 +13,25 @@
   }
 }
 
+.ant-switch{
+  background-color: rgb(9 9 9 / 50%) !important;
+}
+.ant-switch-checked:focus{
+  box-shadow: none !important;
+}
+
+:where(.css-dev-only-do-not-override-17a39f8).ant-switch.ant-switch-checked{
+  background-color: #33bf38 !important;
+}
+
+.ant-switch-inner{
+  margin: 0 6px 0 10px !important;
+}
+
+:where(.css-dev-only-do-not-override-17a39f8).ant-switch .ant-switch-handle{
+  top: 1px !important;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -30,11 +49,11 @@ h1{
 }
 
 .App-link, a {
+
   color: #61dafb !important;
   margin: 0 20px;
   text-decoration: underline !important;;
   cursor: pointer;
- 
 }
 
 .icon{
@@ -62,16 +81,22 @@ h1{
 
 .tabs{
   margin: 40px 0;
-  padding: 15px 0;
+  padding: 20px 0;
   background-color: #fff;
   position: relative;
 }
+
+
 
 .tabs a:hover{
   color: #333 !important;
 }
 
-.tabs::after{
+.tabs p{
+  margin-bottom: 10px;
+}
+
+/* .tabs::after{
   content: '';
   display: block;
   position: absolute;
@@ -81,7 +106,7 @@ h1{
   width: 1px;
   height: 20px;
   background-color: #000;
-}
+} */
 
 h1{
   color: #fff !important;
@@ -96,8 +121,8 @@ p{
 }
 
 .tabs a{
-  display: inline-block;
-  width: 200px;
+  display: block;
+  width: 100%;
   font-size: 28px;
 }
 .tabs a:hover{

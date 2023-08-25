@@ -1,8 +1,11 @@
+import { message } from "antd";
 import { useEffect, useState } from "react";
 
 let timer: NodeJS.Timeout
 
-export function useIntervalLog(){
+
+
+export function useIntervalLog(title: string){
   const [count, setCount] = useState(0)
 
   useEffect(()=>{
@@ -10,12 +13,12 @@ export function useIntervalLog(){
     timer = setTimeout(()=>{
       const now = count
       setCount(now+1)
-      console.log(now)
+      message.info(`${title}：${now}`)
     },1000)
     return ()=>{
       timer && clearTimeout(timer)
     }
-  },[count])
+  },[count, title])
 
 }
 
