@@ -15,8 +15,9 @@ import {
 } from 'react'
 import React from 'react'
 import { Switch as SwitchCom, Input } from 'antd'
+// import { useIntervalLog } from './test-interval-hook'
 
-// import { useIntervalLog } from './test-hook'
+// import { useIntervalLog } from './test-interval-hook'
 
 const version = Number(React.version.split('.')[0])
 
@@ -40,11 +41,15 @@ const TimerMF = Hoc(Image)
 
 interface IProps {
   hook: any
-  params?: any
+  __cb?: (val:any) => void
 }
 
 function ComponentWithUseA(props: IProps){
-  props.hook(props.params)
+  const {__cb, hook} = props
+  const val = hook(props)
+  useEffect(()=>{
+    __cb && __cb(val)
+  },[val,__cb])
   return null
 }
 
@@ -58,8 +63,7 @@ function Wrapper(props: any){
       setLoaded(true)
     })
   },[])
-
-  return <>{ref.current && <ComponentWithUseA params={props.params} hook={ref.current}/>}</>
+  return <>{ref.current && <ComponentWithUseA {...props} hook={ref.current}/>}</>
 }
 
 
@@ -76,7 +80,7 @@ const initRoot = () => {
 }
 
 const updateComponent = ({params, root}: { params: any, root?: any} ) => {
-  root.render(<Wrapper params={params} />)
+  root.render(<Wrapper {...params} />)
 }
 
 const unmount = (root: any) => {
@@ -94,11 +98,11 @@ const renderRoot = async({params, root}: { params: any, root?: any} ) => {
   if(version < 18){
     const { render } = await import('react-dom')
     if(root){
-      render(<Wrapper params={params} />, root);
+      render(<Wrapper {...params} />, root);
     }else{
       const dom = document.createElement('div')
       root = dom
-      render(<Wrapper params={params} />, dom);
+      render(<Wrapper {...params} />, dom);
       // document.body.removeChild(root)
     }
     return root
@@ -113,10 +117,20 @@ const renderRoot = async({params, root}: { params: any, root?: any} ) => {
   return root
 }
 
-function useAsyncHook(condition = true, params: any){
+function useAsyncHook( params: any, enable = true,){
   const ref = useRef<any>(null)
+  const [val, setVal] = useState()
+
+  const handleCb = useCallback((data: any)=>{
+    setVal(data)
+  },[])
+
+  const effectiveParams = useMemo(()=>(Object.assign(params, {__cb: handleCb} )) ,[params, handleCb])
+
+  const renderParams = useMemo(()=>({params: effectiveParams, root: ref.current}),[effectiveParams])
+
   useEffect(()=>{
-    if(!condition) {
+    if(!enable) {
       // destroy component
       if(ref.current){
         setTimeout(()=>{
@@ -127,14 +141,16 @@ function useAsyncHook(condition = true, params: any){
       return
     } else if(ref.current){
       // update props
-      renderRoot({params, root: ref.current})
+      renderRoot(renderParams)
       return
     }
     // render component
-    renderRoot({params, root: ref.current}).then(res=>{
+    renderRoot(renderParams).then(res=>{
       ref.current = res
     })
-  },[condition, params])
+  },[enable, renderParams])
+
+  return val
 }
 
 
@@ -146,8 +162,10 @@ export default function Router(){
   const [showHook] = useState(!!window.location.search.match('hook'))
 
   const [timestamp, setTimestamp] = useState(0)
-  const [switchValue, setExecute] = useState(false)
-  const [value, setValue] = useState('current count')
+  const [enableHook, setExecute] = useState(false)
+  const [title, setTitle] = useState('current count')
+  const [value, setValue] = useState('')
+
 
   const setVal = useCallback((val: number)=>{
     setTimestamp(val)
@@ -162,17 +180,21 @@ export default function Router(){
 
   const TimerModal = useMemo(()=>Hoc(Modal),[Modal]) 
 
-  // switchValue is true and dynamic load
-  useAsyncHook(switchValue, value)
+  const params = useMemo(()=>({title, value}),[title, value])
+
+  // enableHook is true and dynamic load
+  const a = useAsyncHook(params,enableHook)
+
+  console.log('>>',a)
 
   return <>
-
   <div className='tabs'>
     <p> ❗️correct data requires <strong className='trigger' style={{}}>disable browser cache</strong> ❗️</p>
       <a href='/'>Component-Lazy-Load</a>
       <a href='/?tab=preload'>Component-Dynamic-Preload</a>
       <a href='/?tab=hook'>Hook-Dynamic-Preload-With-Condition</a>
   </div>    
+  
 
   <Suspense fallback="suspense loading...">
   <div className='core'>
@@ -203,12 +225,15 @@ export default function Router(){
       </PreloadLink>
     </div>:
       (showHook ? <div>
-        <div style={{margin: '20px 0'}}>
-          <SwitchCom style={{marginRight: 20}} checked={switchValue} onChange={setExecute} />
+        <div style={{marginTop: '20px'}}>
+          <SwitchCom style={{marginRight: 20}} checked={enableHook} onChange={setExecute} />
           Dynamic Execute Hook
         </div>
-        <div style={{display: 'flex', fontSize: 14, alignItems: 'center'}}>
-          Message： <Input value={value} onChange={(e)=>{setValue(e.target.value)}} />
+        <div style={{marginTop: '20px', display: 'flex', fontSize: 14, alignItems: 'center'}}>
+          <label style={{width: 120}}>Title：</label> <Input value={title} onChange={(e)=>{setTitle(e.target.value)}} />
+        </div>
+        <div style={{marginTop: '20px', display: 'flex', fontSize: 14, alignItems: 'center'}}>
+          <label style={{width: 120}}>Content：</label> <Input value={value} onChange={(e)=>{setValue(e.target.value)}} />
         </div>
         </div>:
         <div>

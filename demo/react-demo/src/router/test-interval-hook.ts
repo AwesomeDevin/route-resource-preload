@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 let timer: NodeJS.Timeout
 
-export function useIntervalLog(title: string){
+export function useIntervalLog({title, value} : {title: string, value?: string}){
   const [count, setCount] = useState(0)
 
   useEffect(()=>{
@@ -11,9 +11,10 @@ export function useIntervalLog(title: string){
     timer = setTimeout(()=>{
       const now = count
       setCount(now+1)
-      message.info(`${title}：${now}`)
+      message.info(`${title}：${value || now}`)
     },1000)
-  },[count, title])
+  },[count, title, value])
 
+  return {count}
 }
 
