@@ -13,13 +13,12 @@ import {
   useRef,
   useState 
 } from 'react'
-import { createRoot } from 'react-dom/client'
 import React from 'react'
 import { Switch as SwitchCom, Input } from 'antd'
 
 // import { useIntervalLog } from './test-hook'
 
-
+const version = Number(React.version.split('.')[0])
 
 const ComponentA = dynamic({
   loader: ()=>import('../components/A'),
@@ -54,7 +53,7 @@ function Wrapper(props: any){
   const [,setLoaded] = useState(false)
 
   useEffect(()=>{
-    import('./test-hook').then(res=>{
+    import('./test-interval-hook').then(res=>{
       ref.current = res.useIntervalLog
       setLoaded(true)
     })
@@ -65,11 +64,15 @@ function Wrapper(props: any){
 
 
 const initRoot = () => {
+  let root
   const dom = document.createElement('div')
   document.body.appendChild(dom)
-  const root = createRoot(dom)
-  document.body.removeChild(dom)
-  return root
+  //@ts-ignore
+  return import('react-dom/client').then(({createRoot})=>{
+    root = createRoot(dom)
+    document.body.removeChild(dom)
+    return root
+  })
 }
 
 const updateComponent = ({params, root}: { params: any, root?: any} ) => {
@@ -77,21 +80,33 @@ const updateComponent = ({params, root}: { params: any, root?: any} ) => {
 }
 
 const unmount = (root: any) => {
-  root.unmount()
+  if(version <18){
+    import('react-dom').then(({unmountComponentAtNode} )=>{
+      unmountComponentAtNode(root)
+    })
+  }else{
+    root.unmount()
+  }
 }
 
 
-const createRootRender = ({params, root}: { params: any, root?: any} ) => {
-
-  const version = Number(React.version.split('.')[0])
+const renderRoot = async({params, root}: { params: any, root?: any} ) => {
   if(version < 18){
-    console.warn('not support')
-    return
+    const { render } = await import('react-dom')
+    if(root){
+      render(<Wrapper params={params} />, root);
+    }else{
+      const dom = document.createElement('div')
+      root = dom
+      render(<Wrapper params={params} />, dom);
+      // document.body.removeChild(root)
+    }
+    return root
   }
 
   if(!root){
     // init
-    root = initRoot()
+    root = await initRoot()
   }
   // update
   updateComponent({params, root})
@@ -112,11 +127,13 @@ function useAsyncHook(condition = true, params: any){
       return
     } else if(ref.current){
       // update props
-      createRootRender({params, root: ref.current})
+      renderRoot({params, root: ref.current})
       return
     }
     // render component
-    ref.current = createRootRender({params, root: ref.current})
+    renderRoot({params, root: ref.current}).then(res=>{
+      ref.current = res
+    })
   },[condition, params])
 }
 
