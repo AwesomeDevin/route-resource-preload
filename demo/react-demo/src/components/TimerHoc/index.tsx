@@ -1,7 +1,7 @@
 import  { ComponentType, useCallback, useRef } from "react";
 
 
-export default function Hoc<T>(Com: ComponentType<T>){
+export default function Hoc<T>(Com: ComponentType<T> & { preload: () => Promise<any>; }){
 
   function  Timer(props: Omit<T, 'onEnd'> & {onEnd?: (time: number) => void }){
 
