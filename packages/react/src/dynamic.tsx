@@ -116,12 +116,11 @@ export default function dynamic<T extends Record<string, any>,  K extends keyof 
       if(enable){
         onEnd && onEnd()
       }
-    },[enable ])
+    },[enable, onEnd])
     
 
     if(suspense && !enable){
 
-      // @ts-ignore
       return render(suspenseDom(), rets)
     }
     
@@ -135,7 +134,6 @@ export default function dynamic<T extends Record<string, any>,  K extends keyof 
       }
     }, [])
     
-    // @ts-ignore
     return enable ? render(module, rets) : loading ? createElement(loading, rets) : <></>
   }
 

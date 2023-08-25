@@ -12,8 +12,9 @@ export function useIntervalLog(){
       setCount(now+1)
       console.log(now)
     },1000)
-
-
+    return ()=>{
+      timer && clearTimeout(timer)
+    }
   },[count])
 
 }

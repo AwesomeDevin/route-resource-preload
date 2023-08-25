@@ -6,7 +6,6 @@ interface IProps {
 
 
 export default function A(props: IProps){
-  console.log(props)
   return <div>This is Component A</div>
 }
 
