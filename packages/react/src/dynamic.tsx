@@ -23,7 +23,7 @@ interface IPrams<T , K, P> {
   type?: P
 }
 
-type TModule<T extends { default?: any },  K extends keyof T = 'default'> = T extends Record<K, infer U> ? U : never
+type TModule<T extends Record<string, any>,  K extends keyof T = 'default'> = T extends Record<K, infer U> ? U : never
 
 
 function resolve(obj: any) {
@@ -36,7 +36,7 @@ function render(target: ComponentType<any>, props: any) {
 
 
 
-export default function dynamic<T extends { default?: any },  K extends keyof T = 'default', P extends TPreloadType = 'component'>(params: IPrams<T,  K, P>) {
+export default function dynamic<T extends Record<string, any>,  K extends keyof T = 'default', P extends TPreloadType = 'component'>(params: IPrams<T,  K, P>) {
   
   const { loader, loading, submodule, visible = true, suspense} = params
   const type =  (params.type || 'component') as P
