@@ -6,7 +6,7 @@
 
 ## Comparison
 <details>
-<summary>Based-on-react.lazy-normal-loading-effect.gif</summary>
+<summary>Based-on-react.lazy-normal-loading.gif</summary>
   
 <br />
   
@@ -14,7 +14,7 @@
 </details>
 
 <details open>
-<summary>Based-on-route-resource-preload-effect.gif</summary>
+<summary>Based-on-route-resource-preload.gif</summary>
   
 <br />
   
