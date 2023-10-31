@@ -289,8 +289,10 @@ hover | 鼠标悬停在 PreloadLink 后触发预加载
 
 
 
-## 如果你有任何研发问题，有需要的话可以联系我 📖.      
+## 如果你有任何研发问题，也可以加我好友，拉你入群进行技术交流 📖.
 
-## 其它
+<img src="https://github.com/AwesomeDevin/vue-waterfall2/assets/22369504/ad7bd0b4-e55a-4b22-aac8-3287ad07f746" width="250" />
+
+## 相关内容
 [「原理篇」基于react-route-preload实现的不一样的"代码拆分"+"动态懒加载"+"预加载"实现应用性能及体验兼得。](https://github.com/AwesomeDevin/blog/issues/91)    
 [「社区共建」后续方向与功能开发，欢迎共建](https://github.com/AwesomeDevin/route-resource-preload/milestones)    
